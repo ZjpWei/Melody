@@ -27,6 +27,9 @@
   tag <- args[2]
   
   data.loc <- paste0("./CRC_Real/", tag, "/")
+  if(!dir.exists(paste0(data.loc, "Models"))){
+    dir.create(paste0(data.loc, "Models"))
+  }
   ###############################################################
   load(paste0(data.loc, "prepare_data/data.rel.", s, ".Rdata"))
   data.rel.analysis <- data.rel
