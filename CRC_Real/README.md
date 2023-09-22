@@ -12,9 +12,9 @@ Scripts:
 
 Arguments:
 
-1. `scenario` (`s`): Data scenario.
+1. arg1 (`s`): Data scenario.
 
-2. `file` (`tag`): Folder name for analysis.
+2. arg2 (`tag`): Folder name for analysis.
 
 Examples: 
 
