@@ -19,7 +19,7 @@
   rm(list = ls())
   cat('Starting model building script\n')
   start.time <- proc.time()[1]
-  
+
   args = commandArgs(trailingOnly=TRUE)
   if (length(args)==0) {
     stop("The analysis tag needs to be provided! Exiting...\n")
@@ -29,6 +29,9 @@
   
   set.seed(2023)
   data.loc <- paste0("./CRC_Real/", tag, "/")
+  if(!dir.exists(paste0(data.loc, "Models_batch"))){
+    dir.create(paste0(data.loc, "Models_batch"))
+  }
   load(paste0(data.loc, "prepare_data/data.rel.batch.", s, ".Rdata"))
   L <- length(data.rel.batch)
   K <- ncol(data.rel.batch[[1]]$Y)
