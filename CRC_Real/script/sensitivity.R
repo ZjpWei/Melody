@@ -6,6 +6,13 @@
   ##############################################
   
   library("miMeta")
+  if(!dir.exists("./CRC_Real/CRC_all_K401/summary.stats")){
+    dir.create("./CRC_Real/CRC_all_K401/summary.stats")
+  }
+  if(!dir.exists("./CRC_Real/CRC_all_K401/sensitivity")){
+    dir.create("./CRC_Real/CRC_all_K401/sensitivity")
+  }
+
   rm(list = ls())
   load("./CRC_Real/CRC_all_K401/prepare_data/data.rel.all.Rdata")
   L <- length(data.rel)
