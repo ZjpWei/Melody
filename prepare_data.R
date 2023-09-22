@@ -114,11 +114,11 @@
   save(data.rel, file = paste0(data.loc, "CRC_Real/CRC_all_K401/prepare_data/data.rel.all.Rdata"))
   save(data.rel.batch, file = paste0(data.loc,  "CRC_Real/CRC_all_K401/prepare_data/data.rel.batch.all.Rdata"))
   
-  save(data.rel, file = paste0(data.loc, "Prediction/CRC_ltcvo_K401/prepare_data/data.rel.all.Rdata"))
-  save(data.rel.batch, file = paste0(data.loc,  "Prediction/CRC_ltcvo_K401/prepare_data/data.rel.batch.all.Rdata"))
+  save(data.rel, file = paste0(data.loc, "Prediction/Random_split/prepare_data/data.rel.all.Rdata"))
+  save(data.rel.batch, file = paste0(data.loc,  "Prediction/Random_split/prepare_data/data.rel.batch.all.Rdata"))
   
-  save(data.rel, file = paste0(data.loc, "Prediction/CRC_locvo_K401/prepare_data/data.rel.all.Rdata"))
-  save(data.rel.batch, file = paste0(data.loc,  "Prediction/CRC_locvo_K401/prepare_data/data.rel.batch.all.Rdata"))
+  save(data.rel, file = paste0(data.loc, "Prediction/LOSO/prepare_data/data.rel.all.Rdata"))
+  save(data.rel.batch, file = paste0(data.loc,  "Prediction/LOSO/prepare_data/data.rel.batch.all.Rdata"))
   
   # Save LOSO data for K401
   tmp.data <- data.rel
