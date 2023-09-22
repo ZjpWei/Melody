@@ -9,12 +9,12 @@ Workflow:
 Rscript Melody_abess_RD.R arg1
 ```
 
-2. Perform other comparison methods on original data.
+2. Perform other comparison methods using original data.
 ```console
 Rscript train_models_RD.R arg1
 ```
 
-3. Perform other comparison methods on batch-corrected data.
+3. Perform other comparison methods using batch-corrected data.
 ```console
 Rscript train_batch_models_RD.R arg1
 ```
@@ -40,12 +40,12 @@ Workflow:
 Rscript Melody_abess_LOSO.R arg1 arg2
 ```
 
-2. Perform other comparison methods on original data.
+2. Perform other comparison methods using original data.
 ```console
 Rscript train_models_LOSO.R arg1 arg2
 ```
 
-3. Perform other comparison methods on batch-corrected data.
+3. Perform other comparison methods using batch-corrected data.
 ```console
 Rscript train_batch_models_LOSO.R arg1 arg2
 ```
