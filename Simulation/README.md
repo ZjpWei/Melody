@@ -44,7 +44,7 @@ Rscript AUPRC.R arg1 arg2 arg3
    
    `arg2` (`scenario`): simulation scenario; {`By_taxnum`, `By_pos_prop`, `By_abd_prop`, `By_effsz`, `By_seqdepth`}.
    
-       * signature sparsity: "By_taxnum" *
+       signature sparsity: "By_taxnum"
     
        * signature effect direction: "By_pos_prop"
     
