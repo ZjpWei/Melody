@@ -1,7 +1,7 @@
 # Simulation 
 
 ## Workflow:
-1. Generate simulation data.
+**1. Generate simulation data.**
 ```console
 Rscript prepare_data.R arg1 arg2 arg3 arg4 arg5 arg6
 ```
@@ -19,22 +19,22 @@ Rscript prepare_data.R arg1 arg2 arg3 arg4 arg5 arg6
    
    `arg6` (`mu`): case/control sequence depth unevenness; {`1`(default), `1.25`, `1.5`, `1.75`, `2`}
    
-2. Perform meta-analysis on original data using `miMeta` packages.
+**2. Perform meta-analysis on original data using `miMeta` packages.**
 ```console
 Rscript Melody_abess.R arg1 arg2 arg3
 ```
 
-3. Perform other comparison methods using original data.
+**3. Perform other comparison methods using original data.**
 ```console
 Rscript train_models.R arg1 arg2 arg3
 ```
 
-4. Perform other comparison methods using batch-corrected data.
+**4. Perform other comparison methods using batch-corrected data.**
 ```console
 Rscript train_batch_models.R arg1 arg2 arg3
 ```
 
-5. Caluclate AUPRC
+**5. Caluclate AUPRC**
 ```console
 Rscript AUPRC.R arg1 arg2 arg3
 ```
