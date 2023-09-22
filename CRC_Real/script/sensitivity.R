@@ -91,31 +91,31 @@
   save(summary.stat.study.mixref, file = "./CRC_Real/CRC_all_K401/summary.stats/summary.stat.study.mixref.Rdata")
   ################################ Run Melody models #############################
   # Melody.model.ref1
-  Melody.model.ref1 <- melody.meta.summary(Melody = summary.stat.study.ref1, tune.type = "HBIC")
+  Melody.model.ref1 <- melody.meta.summary(Melody = summary.stat.study.ref1)
   
   save(Melody.model.ref1, file = "./CRC_Real/CRC_all_K401/sensitivity/Melody.model.ref1.Rdata")
   
   # Melody.model.ref2
-  Melody.model.ref2 <- melody.meta.summary(Melody = summary.stat.study.ref2, tune.type = "HBIC")
+  Melody.model.ref2 <- melody.meta.summary(Melody = summary.stat.study.ref2)
   
   save(Melody.model.ref2, file = "./CRC_Real/CRC_all_K401/sensitivity/Melody.model.ref2.Rdata")
   
   # Melody.model.ref3
-  Melody.model.ref3 <- melody.meta.summary(Melody = summary.stat.study.ref3, tune.type = "HBIC")
+  Melody.model.ref3 <- melody.meta.summary(Melody = summary.stat.study.ref3)
   
   save(Melody.model.ref3, file = "./CRC_Real/CRC_all_K401/sensitivity/Melody.model.ref3.Rdata")
   
   # Melody.model.ref4
-  Melody.model.ref4 <- melody.meta.summary(Melody = summary.stat.study.ref4, tune.type = "HBIC")
+  Melody.model.ref4 <- melody.meta.summary(Melody = summary.stat.study.ref4)
   
   save(Melody.model.ref4, file = "./CRC_Real/CRC_all_K401/sensitivity/Melody.model.ref4.Rdata")
   
   # Melody.model.ref5
-  Melody.model.ref5 <- melody.meta.summary(Melody = summary.stat.study.ref5, tune.type = "HBIC")
+  Melody.model.ref5 <- melody.meta.summary(Melody = summary.stat.study.ref5)
   
   save(Melody.model.ref5, file = "./CRC_Real/CRC_all_K401/sensitivity/Melody.model.ref5.Rdata")
   
   # Melody.model.mixref
-  Melody.model.mixref <- melody.meta.summary(Melody = summary.stat.study.mixref, tune.type = "HBIC")
+  Melody.model.mixref <- melody.meta.summary(Melody = summary.stat.study.mixref)
   
   save(Melody.model.mixref, file = "./CRC_Real/CRC_all_K401/sensitivity/Melody.model.mixref.Rdata")
