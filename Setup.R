@@ -20,8 +20,8 @@
   }
   
   # Prediction directory
-  loc.vec <- c("./Prediction/CRC_locvo_K401",
-               "./Prediction/CRC_ltcvo_K401")
+  loc.vec <- c("./Prediction/LOSO",
+               "./Prediction/Random_split")
   
   for(loc in loc.vec){
     if(!dir.exists(loc)){
