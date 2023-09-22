@@ -8,7 +8,7 @@ Run `Setup.R` to create folders.
 
 2. Follow README.md in `CRC_Real` for CRC data analysis.
 
-3. Follow README.md in `Prediction` for Random split prediction and Leave-one-study-out prediction
+3. Follow README.md in `Prediction` for Random-split prediction and Leave-one-study-out prediction
 
 ## 2. Simulation
 
@@ -16,4 +16,4 @@ Run `Setup.R` to create folders.
 
 ## 3. Generate figures
 
-All the script for generating figures in paper are in `figures_script`
+All the scripts for generating figures are in folder `figures_script`
