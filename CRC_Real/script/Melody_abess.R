@@ -19,12 +19,12 @@
   cat('Starting model building script\n')
   start.time <- proc.time()[1]
   
-  # args = commandArgs(trailingOnly=TRUE)
-  # if (length(args)==0) {
-  #   stop("The analysis tag needs to be provided! Exiting...\n")
-  # }
-  s <- "all" #args[1]
-  tag <- "CRC_all_order" #args[2]
+  args = commandArgs(trailingOnly=TRUE)
+  if (length(args)==0) {
+    stop("The analysis tag needs to be provided! Exiting...\n")
+  }
+  s <- args[1]
+  tag <- args[2]
   
   data.loc <- paste0("./CRC_Real/", tag, "/")
   ###############################################################
