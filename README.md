@@ -1,8 +1,12 @@
 # CRC data analysis workflow
 
+## 1. Initialization
+
 Run `Setup.R` to create folders.
 
-## 1. Real data analysis and prediction
+## 2. Analysis
+
+### Real data analysis and prediction
 
 1. Run `prepare_data.R` to generate data for `CRC_Real`.
 
@@ -10,7 +14,7 @@ Run `Setup.R` to create folders.
 
 3. Follow `README.md` in `Prediction` folder for Random-split prediction and Leave-one-study-out prediction
 
-## 2. Simulation
+### Simulation
 
 1. Follow `README.md` in `Simulation` folder for simulation scenarios.
 
