@@ -132,7 +132,7 @@
                                        as.character(l), ".Rdata"))
   }
   
-  # Save data for order "186802 Clostridiales"
+  # Save data for K267 (species under order "186802 Clostridiales")
   filters.order <- (tax$order == "186802 Clostridiales") & filters
   data.rel <- list()
   data.rel.batch <- list()
@@ -148,7 +148,7 @@
   save(data.rel, file = paste0(data.loc, "CRC_Real/CRC_all_order/prepare_data/data.rel.all.Rdata"))
   save(data.rel.batch, file = paste0(data.loc,  "CRC_Real/CRC_all_order/prepare_data/data.rel.batch.all.Rdata"))
   
-  # Save LOSO data for order "186802 Clostridiales"
+  # Save LOSO data for K267 (species under order "186802 Clostridiales")
   tmp.data <- data.rel
   tmp.data.batch <- data.rel.batch
   for(l in 1:length(study)){
