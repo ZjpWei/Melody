@@ -1,6 +1,6 @@
 # Prediction
 
-This file is the workflow for doing Radom-split prediction and Leave-one-study-out prediction.
+This file outlines the workflow for conducting Random-Split Prediction and Leave-One-Study-Out Prediction.
 
 ## Random-split prediction (RD)
 Workflow:
