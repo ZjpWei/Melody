@@ -2,13 +2,13 @@
 
 ## 1. Initialization
 
-Run `Setup.R` to create folders.
+Execute `Setup.R` for setup.
 
 ## 2. Analysis
 
 ### Real data analysis and prediction
 
-1. Run `prepare_data.R` to generate data for `CRC_Real`.
+1. Execute the `prepare_data.R` script to generate the data required for both `CRC_Real` and `Prediction`.
 
 2. Follow `README.md` in `CRC_Real` folder for CRC data analysis.
 
