@@ -23,11 +23,11 @@ Examples:
 Rscript Melody_abess.R all CRC_all_order
 ```
 
-1. To run `train_model.R` for data in `CRC_loso_order` folder with leaving out study `1`.
+2. To run `train_model.R` for data in `CRC_loso_order` folder with leaving out study `1`.
 ```console
 Rscript train_model.R 1 CRC_loso_order
 ```
 
-## Sensitivity: meta-analysis with difference reference taxon
+## Sensitivity: meta-analysis with different reference taxa
 
 1. `sensitivity.R` performs meta-analysis on CRC original data using `miMeta` package with 5 different reference taxa.
