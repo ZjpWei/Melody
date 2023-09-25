@@ -5,6 +5,8 @@
   ##############################################
   
   library("RColorBrewer")
+  library("stringr")
+  library("tidyverse")
   library("ggtext")
   library("cowplot")
   library("grid")
