@@ -1,4 +1,4 @@
-# CRC data analysis workflow
+# Workflow
 
 ## 1. Initialization
 
