@@ -1,5 +1,3 @@
-# Workflow
-
 ## 1. Initialization
 
 Execute `Setup.R` for setup.
