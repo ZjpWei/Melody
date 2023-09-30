@@ -164,7 +164,7 @@
 
     # generate relative abundant data
     Simulate.depth.1 <- rep(0, n)
-    Simulate.depth.1[case.idx.1] <- sample(x = rowSums(Y.study[[l]]), size = length(case.idx.1), replace = TRUE) * mu
+    Simulate.depth.1[case.idx.1] <- sample(x = rowSums(Y.study[[l]]), size = length(case.idx.1), replace = TRUE) * (mu +1)
     Simulate.depth.1[-case.idx.1]<- sample(x = rowSums(Y.study[[l]]), size = n - length(case.idx.1), replace = TRUE)
     Simulate.count.rel.1 = NULL
     for(ll in 1:nrow(Simulate.count.1)){
