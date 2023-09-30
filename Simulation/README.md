@@ -38,20 +38,18 @@ Rscript AUPRC.R arg1 arg2 arg3
 ```
 
    Arguments:
-
+  
    `arg1` (`s`): replicate number; from `1` to `100`.
    
-   `arg2` (`scenario`): simulation scenario; {`By_taxnum`, `By_pos_prop`, `By_abd_prop`, `By_effsz`, `By_seqdepth`}.
+   `arg2` (`scenario`): simulation scenario; {`Sig_number`, `Sig_effdir`, `Sig_effsz`, `Sig_depth`}.
    
-   * signature sparsity: "By_taxnum"
+   * signature sparsity: "Sig_number"
     
-   * signature effect direction: "By_pos_prop"
+   * signature effect direction: "Sig_effdir"
     
-   * signature prevalence: "By_abd_prop"
+   * signature effect size: "Sig_effsz"
     
-   * signature effect size: "By_effsz"
-    
-   * case/control sequence depth unevenness: "By_seqdepth"
+   * case/control sequence depth unevenness: "Sig_depth"
     
    `arg3` (`loc`): factor of scenario;
    
@@ -59,8 +57,6 @@ Rscript AUPRC.R arg1 arg2 arg3
      
    * signature effect direction; {`0.5`, `0.6`, `0.7`, `0.8`, `0.9`, `1`}.
     
-   * signarure prevalence; {`0.2`, `0.3`, `0.4`, `0.5`, `0.6`, `0.7`, `0.8`}.
-    
    * signature effect size; {`0.5`, `1`, `1.5`, `2`, `2.5`, `3`}.
     
-   * case/control sequence depth unevenness; {`1`, `1.25`, `1.5`, `1.75`, `2`}
+   * case/control sequence depth unevenness; {`0`, `0.25`, `0.5`, `0.75`, `1`}
