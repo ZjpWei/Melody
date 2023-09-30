@@ -32,6 +32,10 @@ Rscript Melody.R all CRC_all_order
 Rscript Compared_methods_original.R 1 CRC_loso_order
 ```
 
+## Sensitivity: meta-analysis with difference reference taxon
+
+1. `sensitivity.R` performs meta-analysis on CRC original data using `miMeta` package with 5 different reference taxa.
+
 ## Prediction
 
 This file is the workflow for doing Radom-split prediction and Leave-one-study-out prediction.
