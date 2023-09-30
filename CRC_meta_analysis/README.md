@@ -1,14 +1,18 @@
 # CRC Real Data Analysis
 
+## Prepare data
+
+Excute `Prepare_data.R` to generate data.
+
 ## Data analysis
 
 Scripts:
 
-1. `Melody_abess.R` performs meta-analysis on CRC original data using the `miMeta` package.
+1. `Melody.R` performs meta-analysis on CRC original data using the `miMeta` package.
 
-2. `train_model.R` analyzes CRC original data using other comparison methods.
+2. `Compared_methods_original.R` analyzes CRC original data using other comparison methods.
 
-3. `train_model_batch.R` analyzes CRC batch-corrected data using other comparison methods.
+3. `Compared_methods_batch_corrected.R` analyzes CRC batch-corrected data using other comparison methods.
 
 Arguments:
 
@@ -18,14 +22,14 @@ Arguments:
 
 Examples: 
 
-1. To run `Melody_abess.R` for data in `CRC_all_order` folder with `all` data.
+1. To run `Melody.R` for data in `CRC_all_order` folder with `all` data.
 ```console
-Rscript Melody_abess.R all CRC_all_order
+Rscript Melody.R all CRC_all_order
 ```
 
-1. To run `train_model.R` for data in `CRC_loso_order` folder with leaving out study `1`.
+1. To run `Compared_methods_original.R` for original data in `CRC_loso_order` folder with leaving out study `1`.
 ```console
-Rscript train_model.R 1 CRC_loso_order
+Rscript Compared_methods_original.R 1 CRC_loso_order
 ```
 
 ## Sensitivity: meta-analysis with difference reference taxon
