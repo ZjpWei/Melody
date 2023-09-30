@@ -38,8 +38,6 @@ Rscript Compared_methods_original.R 1 CRC_loso_order
 
 ## Prediction
 
-This file is the workflow for doing Radom-split prediction and Leave-one-study-out prediction.
-
 ## Random-split prediction (RS)
 Workflow:
 1. Perform meta-analysis on original data using `miMeta` packages.
