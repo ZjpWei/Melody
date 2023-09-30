@@ -3,7 +3,7 @@
 ## Workflow:
 **1. Generate simulation data.**
 ```console
-Rscript prepare_data.R arg1 arg2 arg3 arg4 arg5 arg6
+Rscript Prepare_data.R arg1 arg2 arg3 arg4 arg5 arg6
 ```
    Arguments:
 
@@ -13,31 +13,30 @@ Rscript prepare_data.R arg1 arg2 arg3 arg4 arg5 arg6
    
    `arg3` (`pos.pt`): signature effect direction; {`0.5`, `0.6`, `0.7`(default), `0.8`, `0.9`, `1`}.
    
-   `arg4` (`abd.pt`): signarure prevalence; {`0.2`, `0.3`, `0.4`, `0.5`(default), `0.6`, `0.7`, `0.8`}.
+   `arg4` (`effect.sz`): signature effect size; {`0.5`, `1`, `1.5`, `2`(default), `2.5`, `3`}.
    
-   `arg5` (`effect.sz`): signature effect size; {`0.5`, `1`, `1.5`, `2`(default), `2.5`, `3`}.
-   
-   `arg6` (`mu`): case/control sequence depth unevenness; {`1`(default), `1.25`, `1.5`, `1.75`, `2`}
+   `arg5` (`mu`): case/control sequence depth unevenness; {`0`(default), `0.25`, `0.5`, `0.75`, `1`}
    
 **2. Perform meta-analysis on original data using `miMeta` packages.**
 ```console
-Rscript Melody_abess.R arg1 arg2 arg3
+Rscript Melody.R arg1 arg2 arg3
 ```
 
 **3. Perform other comparison methods using original data.**
 ```console
-Rscript train_models.R arg1 arg2 arg3
+Rscript Compared_methods_original.R arg1 arg2 arg3
 ```
 
 **4. Perform other comparison methods using batch-corrected data.**
 ```console
-Rscript train_batch_models.R arg1 arg2 arg3
+Rscript Compared_methods_batch_corrected.R arg1 arg2 arg3
 ```
 
 **5. Caluclate AUPRC**
 ```console
 Rscript AUPRC.R arg1 arg2 arg3
 ```
+
    Arguments:
 
    `arg1` (`s`): replicate number; from `1` to `100`.
