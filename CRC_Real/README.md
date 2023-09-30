@@ -1,3 +1,7 @@
+# Prepare data
+
+Execute the `prepare_data.R` script to generate the data.
+   
 # CRC Real Data Analysis
 
 ## Data analysis
