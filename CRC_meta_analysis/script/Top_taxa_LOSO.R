@@ -21,7 +21,7 @@
   taxa.name <- colnames(data.rel[[1]]$Y)
 
   # Original data
-  for(s in 1:5){
+  for(s in 1:L){
     for(ss in 1:100){
       load(paste0(data.loc, "Models_original/Melody.model.",as.character(s),".",as.character(ss),".Rdata"))
       index <- list()
@@ -75,7 +75,7 @@
   }
 
   # Batch-corrected data
-  for(s in 1:5){
+  for(s in 1:L){
     for(ss in 1:100){
       load(paste0(data.loc, "Models_batch_corrected/Aldex2.model.",as.character(s),".",as.character(ss),".Rdata"))
       Aldex2.names <- rownames(Aldex2.model$glmfit)
