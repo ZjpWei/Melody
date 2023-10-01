@@ -25,13 +25,13 @@
   # signature effect direction: "Sig_effdir"
   # signature effect size: "Sig_effsz"
   # case/control sequence depth unevenness: "Sig_depth"
-  scenario <- as.numeric(args[2])
+  scenario <- args[2]
 
   # arg3: factor for this scenario:
-  loc <- as.numeric(args[3])
+  loc <- args[3]
 
   # Check files
-  data.loc <- paste0("./Models_original/", scenario, "/", loc, "/")
+  data.loc <- paste0("./Simulation/", scenario, "/", loc, "/")
   if(!dir.exists(paste0(data.loc, "AUPRC"))){
     dir.create(paste0(data.loc, "AUPRC"))
   }
