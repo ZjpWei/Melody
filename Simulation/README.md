@@ -2,7 +2,7 @@
 
 **1. Generate simulation data.**
 ```console
-Rscript Prepare_data.R arg1 arg2 arg3 arg4 arg5 arg6
+Rscript Prepare_data.R arg1 arg2 arg3 arg4 arg5
 ```
    Arguments:
 
