@@ -1,6 +1,6 @@
   ##############################################
 #                                                #
-#          Meta-Analysis Model Building          #
+#      Compared methods using original data      #
 #                                                #
   ##############################################
 
