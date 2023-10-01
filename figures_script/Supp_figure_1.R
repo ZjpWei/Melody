@@ -4,13 +4,13 @@
 #                                                #
   ##############################################
 
+  # Packages
   library("phyloseq")
   library("ggplot2")
 
+  ################################## Original ####################################
   rm(list = ls())
   # General
-  set.seed(2023)
-  source("./utility/GDM_utility.R")
   load("./CRC_meta_analysis/data/meta.Rdata")
   load("./CRC_meta_analysis/CRC_all_K849/prepare_data/data.rel.all.Rdata")
   title <- "CRC Real"
@@ -59,14 +59,12 @@
 
   # Closing the graphical device
   dev.off()
-  ##################################. batch. #####################################
 
+  ################################## Batch-corrected ####################################
   rm(list = ls())
-  set.seed(2023)
   load("./CRC_meta_analysis/data/meta.Rdata")
   load("./CRC_meta_analysis/CRC_all_K849/prepare_data/data.rel.batch.all.Rdata")
   title <- "batch corrected"
-  source("./utility/GDM_utility.R")
 
   studymeta <- unique(meta$Study)
   feature.table <- NULL
