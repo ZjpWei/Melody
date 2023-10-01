@@ -4,6 +4,7 @@
 #                                                #
   ##############################################
 
+  # Packages
   library('ggplot2')
   library("tidyverse")
   library("latex2exp")
@@ -13,7 +14,7 @@
   load("./CRC_meta_analysis/CRC_all_K401/prepare_data/data.rel.all.Rdata")
   tax.names <- colnames(data.rel[[1]]$Y)
 
-  # signature effect size
+  # Signature effect size
   data.loc <- "./Simulation/Sig_effsz/"
   facts <- c("sig1", "sig1.5", "sig2", "sig2.5", "sig3")
 
@@ -65,7 +66,7 @@
   # Closing the graphical device
   dev.off()
 
-  # signature sparsity
+  # Signature sparsity
   data.loc <- "./Simulation/Sig_number/"
   facts <- c("d20", "d30", "d40", "d50","d60", "d70","d80")
 
@@ -86,6 +87,7 @@
   PRC_all$x.label <- factor(PRC_all$x.label, levels = unique(PRC_all$x.label), ordered = TRUE)
   PRC_all$method <- factor(PRC_all$method, levels = unique(PRC_all$method), ordered = TRUE)
   PRC_all <- PRC_all[PRC_all$method %in% c("Melody","ALDEx2","ANCOM-BC","BW", "CLR-LASSO"),]
+
   # Customizing the output
   pdf("./figures/figure1_b_sig_number.pdf",         # File name
       width = 4.09, height = 3.57, # Width and height in inches
@@ -114,7 +116,7 @@
   # Closing the graphical device
   dev.off()
 
-  # signature effect direction
+  # Signature effect direction
   data.loc <- "./Simulation/Sig_effdir/"
   facts <- c("p50","p60", "p70", "p80", "p90","p100")
   PRC_all <- data.frame()
@@ -161,7 +163,7 @@
   # Closing the graphical device
   dev.off()
 
-  # case/control sequence depth unevenness
+  # Case/control sequence depth unevenness
   data.loc <- "./Simulation/Sig_depth/"
   facts <- c("seq0", "seq0.25", "seq0.50","seq0.75", "seq1")
   PRC_all <- data.frame()
@@ -179,6 +181,7 @@
   PRC_all$x.label <- factor(PRC_all$x.label, levels = unique(PRC_all$x.label), ordered = TRUE)
   PRC_all$method <- factor(PRC_all$method, levels = unique(PRC_all$method), ordered = TRUE)
   PRC_all <- PRC_all[PRC_all$method %in% c("Melody","ALDEx2","ANCOM-BC","BW", "CLR-LASSO"),]
+
   # Customizing the output
   pdf("./figures/figure1_b_sig_depth.pdf",         # File name
       width = 4.09, height = 3.57, # Width and height in inches
