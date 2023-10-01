@@ -1,7 +1,7 @@
   ##############################################
 #                                                #
 #     Random split: Compared methods using       #
-#              batch-correctd data               #
+#              batch-corrected data               #
 #                                                #
   ##############################################
 
