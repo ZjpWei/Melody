@@ -35,7 +35,7 @@
   scenario <- as.numeric(args[2])
 
   # arg3: factor for this scenario:
-  loc <- as.numeric(args[3])
+  loc <- args[3]
 
   # parameters
   data.loc <- paste0("./Simulation/", scenario, "/", loc, "/")
@@ -45,15 +45,15 @@
   }
 
   # Load data
-  load(paste0("./prepare_data/data.rel.", as.character(s), ".Rdata"))
+  load(paste0(data.loc,"prepare_data/data.rel.", as.character(s), ".Rdata"))
   L <- length(data.rel)
   K <- ncol(data.rel[[1]]$Y)
 
-  study = NULL
+  Study = NULL
   Y.pool = NULL
   X.pool = NULL
   for(l in 1:L){
-    study = c(study, rep(l, length(data.rel[[l]]$X)) )
+    Study = c(Study, rep(l, length(data.rel[[l]]$X)) )
     Y.pool = rbind(Y.pool, data.rel[[l]]$Y)
     X.pool = c(X.pool, data.rel[[l]]$X)
   }
