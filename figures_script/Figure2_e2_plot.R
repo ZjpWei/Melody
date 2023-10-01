@@ -10,7 +10,7 @@
 
   rm(list = ls())
   # General
-  load("./data/tax.Rdata")
+  load("./CRC_meta_analysis/data/tax.Rdata")
   load("./CRC_meta_analysis/CRC_all_K849/prepare_data/data.rel.all.Rdata")
   taxa.name1 <- colnames(data.rel[[1]]$Y)
   load("./CRC_meta_analysis/CRC_all_K401/prepare_data/data.rel.all.Rdata")
