@@ -7,6 +7,7 @@
   library("RColorBrewer")
   library("stringr")
   library("tidyverse")
+  library("ggplot2")
   library("ggtext")
   library("cowplot")
   library("grid")
