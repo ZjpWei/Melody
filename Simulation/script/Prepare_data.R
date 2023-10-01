@@ -38,7 +38,7 @@
   # signature effect size {0.5, 1, 1.5, 2(default), 2.5, 3}
   effect.sz <- as.numeric(args[4])
   # case/control sequence depth unevenness {0(default), 0.25, 0.5, 0.75, 1}
-  mu <-  as.numeric(args[5])
+  mu <- as.numeric(args[5])
 
   # set document location respecting the input parameter above
   # signature sparsity: "Sig_number"
@@ -49,7 +49,7 @@
   loc.vec <- c(Ka == 40, pos.pt == 0.7, effect.sz == 2, mu == 0)
   if(sum(loc.vec) < 3){
     stop("Please only change one factor at the same time.\n")
-  }else if(sum(loc.vec) == 5){
+  }else if(sum(loc.vec) == 4){
     data.loc <- c(paste0("./Simulation/Sig_number/d", as.character(Ka), "/"),
                   paste0("./Simulation/Sig_effdir/p", as.character(pos.pt * 100), "/"),
                   paste0("./Simulation/Sig_effsz/sig", as.character(effect.sz), "/"),
@@ -66,8 +66,17 @@
     }
   }
   for(loc in data.loc){
-    if(!dir.exists(paste0(loc, "prepare_data"))){
+    if(!dir.exists(loc)){
+      dir.create(loc)
       dir.create(paste0(loc, "prepare_data"))
+      dir.create(paste0(loc, "signal"))
+    }else{
+      if(!dir.exists(paste0(loc, "prepare_data"))){
+        dir.create(paste0(loc, "prepare_data"))
+      }
+      if(!dir.exists(paste0(loc, "signal"))){
+        dir.create(paste0(loc, "signal"))
+      }
     }
   }
 
@@ -81,6 +90,7 @@
   load("./Simulation/data/meta.Rdata")
 
   # data processing
+  abd.pt <- 0.5
   meta <- as.data.frame(meta)
   study <- c("AT-CRC", "CN-CRC", "DE-CRC", "FR-CRC", "US-CRC")
   rownames(meta) <- meta$Sample_ID
@@ -189,7 +199,9 @@
   # ################################ data summary ###################################
   # cases and controls
   signal.idx <- colnames(data.rel[[1]]$Y)[signal.idx]
+  for(loc in data.loc){
+    save(data.rel, file = paste0(loc, "prepare_data/data.rel.", as.character(s),".Rdata"))
+    
+    save(signal.idx, file = paste0(loc, "signal/signal.", as.character(s),".Rdata"))
+  }
   
-  save(data.rel, file = paste0(data.loc, "prepare_data/data.rel.", as.character(s),".Rdata"))
-  
-  save(signal.idx, file = paste0(data.loc, "signal/signal.", as.character(s),".Rdata"))
