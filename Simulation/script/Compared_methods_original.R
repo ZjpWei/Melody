@@ -32,7 +32,7 @@
   # signature effect direction: "Sig_effdir"
   # signature effect size: "Sig_effsz"
   # case/control sequence depth unevenness: "Sig_depth"
-  scenario <- as.numeric(args[2])
+  scenario <- args[2]
 
   # arg3: factor for this scenario:
   loc <- args[3]
