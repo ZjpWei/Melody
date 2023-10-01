@@ -16,19 +16,15 @@
   if (length(args)==0) {
     stop("The analysis tag needs to be provided! Exiting...\n")
   }
-  # arg1: replicate number:
-  # from 1 to 100
-  s <- as.numeric(args[1])
-
-  # arg2: simulation scenario:
+  # arg1: simulation scenario:
   # signature sparsity: "Sig_number"
   # signature effect direction: "Sig_effdir"
   # signature effect size: "Sig_effsz"
   # case/control sequence depth unevenness: "Sig_depth"
-  scenario <- args[2]
+  scenario <- args[1]
 
-  # arg3: factor for this scenario:
-  loc <- args[3]
+  # arg2: factor for this scenario:
+  loc <- args[2]
 
   # Check files
   data.loc <- paste0("./Simulation/", scenario, "/", loc, "/")
