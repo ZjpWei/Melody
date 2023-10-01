@@ -5,17 +5,9 @@
   ##############################################
 
   # Packages
-  library("tidyverse")
-  library("coin")
-  library("pROC")
   library("RColorBrewer")
-  library("cowplot")
-  library("vegan")
-  library("labdsv")
-  library("plotrix")
-  library("ggplot2")
-  library("igraph")
-  library("R.matlab")
+  library("stringr")
+  library("tidyverse")
   library("ggtext")
   library("cowplot")
   library("grid")
