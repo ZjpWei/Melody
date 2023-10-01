@@ -1,17 +1,17 @@
   ##############################################
 #                                                #
-#             Supplementary figure 7             #
+#             Supplementary figure 6             #
 #                                                #
   ##############################################
 
-  library(miMeta)
-  library(abess)
-  library(latex2exp)
+  library("miMeta")
+  library("tidyverse")
+  library("latex2exp")
 
   rm(list = ls())
-  load("./CRC_meta_analysis/CRC_all_K401/Models/Melody.model.all.Rdata")
-  best_ref <- Melody.model$delta
-  best_s <- sum(Melody.model$coef!=0)
+  load("./CRC_meta_analysis/CRC_all_K401/sensitivity/Melody.model.ref1.Rdata")
+  best_ref <- Melody.model.ref1$delta
+  best_s <- sum(Melody.model.ref1$coef!=0)
   load("./CRC_meta_analysis/CRC_all_K401/summary.stats/summary.stats.ref1.Rdata")
   source("./utility/meta_utility.R")
   summary.stat.study.ref1 <- Get_lasso_pre(Melody = summary.stat.study.ref1)
