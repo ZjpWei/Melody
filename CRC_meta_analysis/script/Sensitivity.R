@@ -28,16 +28,14 @@
 
   Study <- c()
   Group <- c()
-  Block <- c()
   rel.abd <- c()
   for(l in 1:length(data.rel)){
     Study <- c(Study, rep(as.character(l), nrow(data.rel[[l]]$Y)))
     Group <- c(Group, as.character(data.rel[[l]]$X))
-    Block <- c(Block, factor(data.rel[[l]]$block))
     rel.abd <- rbind(rel.abd, data.rel[[l]]$Y)
   }
   rel.abd <- t(rel.abd)
-  meta <- data.frame(Sample_ID = colnames(rel.abd), Study = Study, Group = Group, Block = Block)
+  meta <- data.frame(Sample_ID = colnames(rel.abd), Study = Study, Group = Group)
   rownames(meta) <- meta$Sample_ID
   ######################## Generate summary statsitics #########################
   # ref1
