@@ -12,8 +12,8 @@
   # General
   load("./CRC_meta_analysis/CRC_all_K401/prepare_data/data.rel.all.Rdata")
   L <- length(data.rel)
+
   # Train Melody model with sequence:
-  # Run models
   L <- length(data.rel)
   Study <- NULL
   Group <- NULL
@@ -27,7 +27,7 @@
   meta <- data.frame(Sample_ID = colnames(rel.abd), Study = Study, Group = Group)
   rownames(meta) <- meta$Sample_ID
 
-  # generate summary statistics
+  # Generate summary statistics
   summary.stat.study <- melody.get.summary(rel.abd = rel.abd,
                                            sample.data = meta,
                                            sample.id = "Sample_ID",
@@ -35,9 +35,10 @@
                                            disease = "Group",
                                            ref = "Coprococcus catus [ref_mOTU_v2_4874]")
 
-  # meta-analysis
-  Melody.model <- melody.meta.summary(Melody = summary.stat.study, tune.type = "HBIC",
-                                      tune.path = "sequence", tune.size.sequence = 1:50,
+  # Meta-analysis
+  Melody.model <- melody.meta.summary(Melody = summary.stat.study, 
+                                      tune.path = "sequence", 
+                                      tune.size.sequence = 1:50,
                                       ouput.best.one = FALSE)
 
   load("./CRC_meta_analysis/data/tax.Rdata")
