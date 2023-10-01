@@ -6,7 +6,6 @@
   ##############################################
 
   library("tidyverse")
-  library("matrixStats")
   library("ggplot2")
 
   rm(list = ls())
