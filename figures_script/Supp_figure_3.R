@@ -4,7 +4,7 @@
 #                                                #
   ##############################################
 
-  library("ggplot2")
+  library("pheatmap")
 
   rm(list = ls())
   # General
