@@ -43,7 +43,7 @@
   est.vals.signed <- est.vals[species.heatmap,"all", drop=FALSE]
   species.heatmap.orderd <- c(rownames(est.vals.signed[order(est.vals.signed[,"all"],decreasing = T),,drop=FALSE]))
 
-  # prepare plotting
+  # Prepare plotting
   est.vals.plot <- est.vals[species.heatmap.orderd, "all"]
   tab.AA.plot <- tab.AA[species.heatmap.orderd,]
   mx <- 2.5
