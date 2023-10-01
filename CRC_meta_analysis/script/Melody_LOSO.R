@@ -5,14 +5,7 @@
   ##############################################
 
   # Packages
-  library('coin')
-  library('phyloseq')
-  library('pracma')
-  library('corpcor')
-  library('abess')
   library("miMeta")
-  library('MASS')
-  library("R6")
 
   # general
   cat('Starting model building script\n')
