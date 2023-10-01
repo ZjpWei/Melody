@@ -100,5 +100,3 @@ Arguments:
 2. `arg2` (`ss`): study number for leaving out.
 3. `arg3` (`methodology`): method; `Aldex2`, `ANCOM`, `BW`, `clrlasso`, `Melody`.
 4. `arg4` (`data.type`): data type; `Original`, `Batch-corrected`.
-
-```
