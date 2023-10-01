@@ -32,10 +32,10 @@
   # signature effect direction: "Sig_effdir"
   # signature effect size: "Sig_effsz"
   # case/control sequence depth unevenness: "Sig_depth"
-  scenario <- as.numeric(args[2])
+  scenario <- args[2]
 
   # arg3: factor for this scenario:
-  loc <- as.numeric(args[3])
+  loc <- args[3]
 
   # parameters
   data.loc <- paste0("./Simulation/", scenario, "/", loc, "/")
@@ -49,12 +49,14 @@
   K <- ncol(data.rel[[1]]$Y)
 
   count <- NULL
+  X.pool = NULL
   Study <- NULL
   Group <- NULL
   for(l in 1:L){
     Group <- c(Group, as.character(data.rel[[l]]$X))
     Study <- c(Study, rep(as.character(l), length(data.rel[[l]]$X)))
     count <- rbind(count, data.rel[[l]]$Y)
+    X.pool = c(X.pool, data.rel[[l]]$X)
   }
   meta <- data.frame(Study = Study, Group = Group)
   meta$Study <- factor(meta$Study, levels = c("1", "2", "3", "4", "5"))
@@ -65,13 +67,7 @@
                                      data = meta)
 
   Y.pool <- t(batch_adj$feature_abd_adj)
-  study = NULL
-  X.pool = NULL
-  for(l in 1:L){
-    study = c(study, rep(l, length(data.rel[[l]]$X)) )
-    X.pool = c(X.pool, data.rel[[l]]$X)
-  }
-
+ 
   # ################################# BW (prop) ################################
   # Log-proportion
   P.pool = Y.pool / rowSums(Y.pool)
