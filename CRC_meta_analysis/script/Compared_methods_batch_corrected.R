@@ -1,9 +1,9 @@
   ##############################################
 #                                                #
-#          Meta-Analysis Model Building          #
+#     Meta-analysis: Compared methods using      #
+#              batch-correctd data               #
 #                                                #
   ##############################################
-
   # Packages
   library('coin')
   library('phyloseq')
