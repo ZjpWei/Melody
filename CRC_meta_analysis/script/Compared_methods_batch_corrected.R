@@ -1,7 +1,6 @@
   ##############################################
 #                                                #
-#     Meta-analysis: Compared methods using      #
-#              batch-correctd data               #
+#   Compared methods using batch-correctd data   #
 #                                                #
   ##############################################
   # Packages
