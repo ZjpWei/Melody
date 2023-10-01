@@ -1,6 +1,7 @@
   ##############################################
 #                                                #
-#          Meta-Analysis Model Building          #
+#          LOSO: Compared methods using          #
+#                 Original data                  #
 #                                                #
   ##############################################
 
