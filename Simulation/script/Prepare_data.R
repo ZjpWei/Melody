@@ -11,15 +11,17 @@
 
   cat('Starting data cleaning script\n')
   start.time <- proc.time()[1]
-  # ################################ Parameters ###################################
-  # set active taxa, the number should be Ka
+  # ################################ Parameters ################################
+  # Set active taxa, the number should be Ka
   signal.idx <- NA
   if(!is.na(signal.idx)){
     stopifnot(is.numeric(signal.idx) & is.vector(signal.idx) & length(signal.idx  == Ka))
   }
-  # sample size vector in absolute data simulation
+
+  # Sample size vector in absolute data simulation
   n.sample <- c(100, 120, 140, 160, 180)
-  # global random seed
+
+  # Global random seed
   seed <- 2023
   # ################################## General #################################
   args = commandArgs(trailingOnly=TRUE)
