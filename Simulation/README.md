@@ -12,7 +12,7 @@ Rscript Prepare_data.R arg1 arg2 arg3 arg4 arg5
    
    `arg3` (`pos.pt`): signature effect direction; {`0.5`, `0.6`, `0.7`(default), `0.8`, `0.9`, `1`}.
    
-   `arg4` (`effect.sz`): signature effect size; {`0.5`, `1`, `1.5`, `2`(default), `2.5`, `3`}.
+   `arg4` (`effect.sz`): signature effect size; {`1`, `1.5`, `2`(default), `2.5`, `3`}.
    
    `arg5` (`mu`): case/control sequence depth unevenness; {`0`(default), `0.25`, `0.5`, `0.75`, `1`}
    
