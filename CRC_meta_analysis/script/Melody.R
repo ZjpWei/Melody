@@ -5,11 +5,6 @@
   ##############################################
 
   # Packages
-  library('coin')
-  library('phyloseq')
-  library('pracma')
-  library('corpcor')
-  library('MASS')
   library("miMeta")
 
   # Parameters
