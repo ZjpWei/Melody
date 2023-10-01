@@ -3,17 +3,10 @@
 #          Figure 2 (b) method overlappinp       #
 #                                                #
   ##############################################
-  library("tidyverse")
-  library("coin")
-  library("pROC")
-  library("yaml")
-  library("RColorBrewer")
-  library("cowplot")
-  library("vegan")
-  library("labdsv")
-  library("plotrix")
-  library("ggplot2")
-  library("igraph")
+
+  # Packages
+  library("pheatmap")
+  library("glmnet")
 
   rm(list = ls())
   load("./CRC_meta_analysis/CRC_all_K401/prepare_data/data.rel.all.Rdata")
