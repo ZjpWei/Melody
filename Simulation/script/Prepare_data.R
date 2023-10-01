@@ -90,7 +90,8 @@
   meta <- meta[sample.id.kp,]
   count <- count[sample.id.kp,]
   len.filter <- colMeans(count != 0) >= 0.2
-
+  count <- count[,len.filter]
+  
   # split data to corresponding study
   L <- length(study)
   K <- ncol(count)
@@ -101,11 +102,11 @@
     condition <- meta$Group[id.set]
     Y.study[[l]] <- count[id.set,]
     X.study[[l]] <- c(condition == 'CRC') + 0
-  }
-
+  }  
+  
   # set random seed
   set.seed(s + seed)
-
+  
   # simulate null data
   data.null <- list()
   for(l in 1:L){
@@ -120,14 +121,14 @@
     colnames(dmData) <- colnames(Y.study[[l]])
     data.null[[l]] <- list(Y = dmData, X = rep(0, nrow(dmData)))
   }
-
+  
   # decide the active taxa
   if(is.na(signal.idx)){
     # random signal
     ave.prop <- colMeans(count / rowSums(count))
     # decide most abundant taxa and less abundant taxa
-    signal.most.abund <- which(ave.prop >= 1e-3 & len.filter)
-    signal.less.abund <- which(ave.prop  < 1e-3 & len.filter)
+    signal.most.abund <- which(ave.prop >= 1e-3)
+    signal.less.abund <- which(ave.prop  < 1e-3)
     signal.m.abd <- sample(signal.most.abund)
     signal.l.abd <- sample(signal.less.abund)
     tmp.signal.idx <- c(signal.m.abd[1:round(abd.pt * Ka)], signal.l.abd[1:(Ka - round(abd.pt * Ka))])
@@ -135,14 +136,14 @@
     signal.sig <- sample(c(rep(TRUE, round(pos.pt * Ka)), rep(FALSE, Ka - round(pos.pt*Ka))))
     signal.idx = sort(tmp.signal.idx)
   }
-
+  
   # add signal
   signal.add <- c()
   tmp.add <- runif(n = Ka, min = 1, max = effect.sz + 1)
   for(l in 1:L){
     signal.add <- rbind(signal.add, tmp.add)
   }
-
+  
   # Add signal to null data
   # simulate the absolute abundant data and compute corresponded relative aboudant data
   data.rel <- list()
@@ -150,10 +151,10 @@
     org.data <- Y.study[[l]]
     c.name <- colnames(org.data)
     n = n.sample[l]
-    # generate absolute abundant data
+    # generate absolute abundant data 
     # shuffle subjects (we always assign the first half subjects to cases)
     case.idx.1 = 1:round(n/2)
-    Simulate.count.1 = data.null[[l]]$Y
+    Simulate.count.1 = data.null[[l]]$Y 
     Simulate.otc.1 = data.null[[l]]$X
     for(ll in 1:Ka){
       if(signal.sig[ll]){
@@ -164,10 +165,10 @@
     }
     Simulate.otc.1[case.idx.1] = 1
     Prob.abs.1 = Simulate.count.1/rowSums(Simulate.count.1)
-
-    # generate relative abundant data
+    
+    # generate relative abundant data 
     Simulate.depth.1 <- rep(0, n)
-    Simulate.depth.1[case.idx.1] <- sample(x = rowSums(Y.study[[l]]), size = length(case.idx.1), replace = TRUE) * (mu +1)
+    Simulate.depth.1[case.idx.1] <- sample(x = rowSums(Y.study[[l]]), size = length(case.idx.1), replace = TRUE) * (mu + 1) 
     Simulate.depth.1[-case.idx.1]<- sample(x = rowSums(Y.study[[l]]), size = n - length(case.idx.1), replace = TRUE)
     Simulate.count.rel.1 = NULL
     for(ll in 1:nrow(Simulate.count.1)){
@@ -184,23 +185,11 @@
     colnames(data.rel[[l]]$Y) <- c.name
     rownames(data.rel[[l]]$Y) <- sample.nm
   }
-
+  
   # ################################ data summary ###################################
   # cases and controls
   signal.idx <- colnames(data.rel[[1]]$Y)[signal.idx]
-  for(l in 1:L){
-    data.rel[[l]]$Y <- data.rel[[l]]$Y[, len.filter]
-  }
-
-  for(loc in data.loc){
-    if(!dir.exists(paste0(loc, "prepare_data"))){
-      dir.create(paste0(loc, "prepare_data"))
-    }
-    if(!dir.exists(paste0(loc, "signal"))){
-      dir.create(paste0(loc, "signal"))
-    }
-    save(data.rel, file = paste0(loc, "prepare_data/data.rel.", as.character(s),".Rdata"))
-
-    save(signal.idx, file = paste0(loc, "signal/signal.", as.character(s),".Rdata"))
-  }
-
+  
+  save(data.rel, file = paste0(data.loc, "prepare_data/data.rel.", as.character(s),".Rdata"))
+  
+  save(signal.idx, file = paste0(data.loc, "signal/signal.", as.character(s),".Rdata"))
