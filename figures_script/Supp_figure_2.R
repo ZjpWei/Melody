@@ -4,6 +4,7 @@
 #                                                #
   ##############################################
 
+  # Packages
   library("ggplot2")
 
   rm(list = ls())
@@ -25,7 +26,6 @@
   }
   df1 <- data.frame(seqdepth = seqdepth, Group = Group, Study = Study)
 
-
   # Customizing the output
   pdf("./figures/Supp_2.pdf",         # File name
       width = 6, height = 5, # Width and height in inches
@@ -36,8 +36,7 @@
     scale_color_manual(
       breaks =c("case", "control"),
       values = c("red", "blue"))  +
-    ggtitle("") +
-    xlab("Study") +
+    ggtitle("") + xlab("Study") +
     theme(panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
           axis.title.y = element_blank(),
