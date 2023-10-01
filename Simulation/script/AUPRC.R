@@ -141,7 +141,7 @@
   }
 
   for(s in 1:100){
-    load(paste0(data.loc, "Simulation_batch_corrected/ANCOMBC.model.",as.character(s),".Rdata"))
+    load(paste0(data.loc, "Models_batch_corrected/ANCOMBC.model.",as.character(s),".Rdata"))
     load(paste0(data.loc, "signal/signal.",as.character(s),".Rdata"))
     rank.fdr <- rank(ANCOMBC.model$res$p_val$labels1)
     true.active <- rep(0, K)
@@ -159,7 +159,7 @@
   }
 
   for(s in 1:100){
-    load(paste0(data.loc, "Simulation_batch_corrected/Aldex2.model.",as.character(s),".Rdata"))
+    load(paste0(data.loc, "Models_batch_corrected/Aldex2.model.",as.character(s),".Rdata"))
     load(paste0(data.loc, "signal/signal.",as.character(s),".Rdata"))
     true.active <- rep(0, K)
     names(true.active) <- tax.names
@@ -178,7 +178,7 @@
   }
 
   for(s in 1:100){
-    load(paste0(data.loc, "Simulation_batch_corrected/BW.prop.model.",as.character(s),".Rdata"))
+    load(paste0(data.loc, "Models_batch_corrected/BW.prop.model.",as.character(s),".Rdata"))
     load(paste0(data.loc, "signal/signal.",as.character(s),".Rdata"))
     rank.fdr <- rank(BW.prop.model$p.val)
     true.active <- rep(0, K)
@@ -196,7 +196,7 @@
   }
 
   for(s in 1:100){
-    load(paste0(data.loc, "Simulation_batch_corrected/CLR.lasso.model.",as.character(s),".Rdata"))
+    load(paste0(data.loc, "Models_batch_corrected/CLR.lasso.model.",as.character(s),".Rdata"))
     load(paste0(data.loc, "signal/signal.",as.character(s),".Rdata"))
     true.active <- rep(0, K)
     names(true.active) <- tax.names
