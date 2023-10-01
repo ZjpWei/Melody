@@ -1,6 +1,7 @@
   ##############################################
 #                                                #
-#          Meta-Analysis Model Building          #
+#     Random split: Compared methods using       #
+#              batch-correctd data               #
 #                                                #
   ##############################################
 
