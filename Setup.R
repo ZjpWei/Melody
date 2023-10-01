@@ -11,7 +11,8 @@
                "./CRC_meta_analysis/CRC_all_order",
                "./CRC_meta_analysis/CRC_loso_K401",
                "./CRC_meta_analysis/CRC_loso_K849",
-               "./CRC_meta_analysis/CRC_loso_order")
+               "./CRC_meta_analysis/CRC_loso_order",
+               "./CRC_meta_analysis/Prediction")
 
   for(loc in loc.vec){
     if(!dir.exists(loc)){
