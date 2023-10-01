@@ -5,6 +5,7 @@
   ##############################################
 
   library("pheatmap")
+  library("miMeta")
 
   rm(list = ls())
   # General
