@@ -3,7 +3,9 @@
 #         Figure 2 (c) method overlapping        #
 #                                                #
   ##############################################
-  library("miMeta")
+
+  # Packages
+  library("pheatmap")
 
   rm(list = ls())
   # Load models
