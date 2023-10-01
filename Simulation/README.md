@@ -28,7 +28,7 @@ Rscript Compared_methods_original.R arg1 arg2 arg3
 
 **4. Perform other comparison methods using batch-corrected data.**
 ```console
-Rscript Compared_methods_batch_corrected.R arg1 arg2
+Rscript Compared_methods_batch_corrected.R arg1 arg2 arg3
 ```
    Arguments:
   
@@ -56,7 +56,7 @@ Rscript Compared_methods_batch_corrected.R arg1 arg2
 
 **5. Caluclate AUPRC**
 ```console
-Rscript AUPRC.R arg1 arg2 arg3
+Rscript AUPRC.R arg1 arg2
 ```
 
    Arguments:
