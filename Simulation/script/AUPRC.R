@@ -6,7 +6,6 @@
 
   # Packages
   library('ggplot2')
-  library('lattice')
   library('glmnet')
 
   # general
