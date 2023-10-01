@@ -52,10 +52,10 @@ Rscript AUPRC.R arg1 arg2 arg3
     
    `arg3` (`loc`): factor of scenario;
    
-   * signature sparsity; {`20`, `30`, `40`, `50`, `60`, `70`, `80`}.
+   * for signature sparsity; {`20`, `30`, `40`, `50`, `60`, `70`, `80`}.
      
-   * signature effect direction; {`0.5`, `0.6`, `0.7`, `0.8`, `0.9`, `1`}.
+   * for signature effect direction; {`0.5`, `0.6`, `0.7`, `0.8`, `0.9`, `1`}.
     
-   * signature effect size; {`0.5`, `1`, `1.5`, `2`, `2.5`, `3`}.
+   * for signature effect size; {`0.5`, `1`, `1.5`, `2`, `2.5`, `3`}.
     
-   * case/control sequence depth unevenness; {`0`, `0.25`, `0.5`, `0.75`, `1`}
+   * for case/control sequence depth unevenness; {`0`, `0.25`, `0.5`, `0.75`, `1`}
