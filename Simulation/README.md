@@ -30,12 +30,6 @@ Rscript Compared_methods_original.R arg1 arg2 arg3
 ```console
 Rscript Compared_methods_batch_corrected.R arg1 arg2 arg3
 ```
-
-**5. Caluclate AUPRC**
-```console
-Rscript AUPRC.R arg1 arg2 arg3
-```
-
    Arguments:
   
    `arg1` (`s`): replicate number; from `1` to `100`.
@@ -51,6 +45,33 @@ Rscript AUPRC.R arg1 arg2 arg3
    * case/control sequence depth unevenness: "Sig_depth"
     
    `arg3` (`loc`): factor of scenario;
+   
+   * for signature sparsity; {`d20`, `d30`, `d40`, `d50`, `d60`, `d70`, `d80`}.
+     
+   * for signature effect direction; {`p50`, `p60`, `p70`, `p80`, `p90`, `p100`}.
+    
+   * for signature effect size; {`sig1`, `sig1.5`, `sig2`, `sig2.5`, `sig3`}.
+    
+   * for case/control sequence depth unevenness; {`seq0`, `seq0.25`, `seq0.5`, `seq0.75`, `seq1`}
+
+**5. Caluclate AUPRC**
+```console
+Rscript AUPRC.R arg1 arg2 arg3
+```
+
+   Arguments:
+
+   `arg1` (`scenario`): simulation scenario; {`Sig_number`, `Sig_effdir`, `Sig_effsz`, `Sig_depth`}.
+   
+   * signature sparsity: "Sig_number"
+    
+   * signature effect direction: "Sig_effdir"
+    
+   * signature effect size: "Sig_effsz"
+    
+   * case/control sequence depth unevenness: "Sig_depth"
+    
+   `arg2` (`loc`): factor of scenario;
    
    * for signature sparsity; {`d20`, `d30`, `d40`, `d50`, `d60`, `d70`, `d80`}.
      
