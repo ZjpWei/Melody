@@ -1,7 +1,7 @@
   ##############################################
 #                                                #
 #          LOSO: Compared methods using          #
-#              batch-correctd data               #
+#              batch-corrected data              #
 #                                                #
   ##############################################
 
