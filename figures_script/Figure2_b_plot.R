@@ -13,7 +13,7 @@
   L <- length(data.rel)
 
   # Load models and data
-  load("./data/tax.Rdata")
+  load("./CRC_meta_analysis/data/tax.Rdata")
   load("./CRC_meta_analysis/CRC_all_K401/Models_original/Melody.model.all.Rdata")
   load("./CRC_meta_analysis/CRC_all_K401/Models_original/BW.prop.model.all.Rdata")
   load("./CRC_meta_analysis/CRC_all_K401/Models_original/ANCOMBC.model.all.Rdata")
