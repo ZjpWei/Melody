@@ -5,7 +5,9 @@
 #                                                #
   ##############################################
 
+  # Packages
   library("miMeta")
+
   if(!dir.exists("./CRC_meta_analysis/CRC_all_K401/summary.stats")){
     dir.create("./CRC_meta_analysis/CRC_all_K401/summary.stats")
   }
