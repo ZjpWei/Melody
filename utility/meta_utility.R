@@ -1,4 +1,4 @@
-#' @import abess
+library("abess")
 
 ######## Utility file for meta-analysis ########
 Get_lasso_pre = function(Melody){
