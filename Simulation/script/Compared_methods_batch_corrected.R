@@ -1,6 +1,6 @@
   ##############################################
 #                                                #
-#          Meta-Analysis Model Building          #
+#   Compared methods using batch-corrected data  #
 #                                                #
   ##############################################
 
