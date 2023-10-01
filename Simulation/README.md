@@ -56,6 +56,6 @@ Rscript AUPRC.R arg1 arg2 arg3
      
    * for signature effect direction; {`p50`, `p60`, `p70`, `p80`, `p90`, `p100`}.
     
-   * for signature effect size; {`sig0.5`, `sig1`, `sig1.5`, `sig2`, `sig2.5`, `sig3`}.
+   * for signature effect size; {`sig1`, `sig1.5`, `sig2`, `sig2.5`, `sig3`}.
     
    * for case/control sequence depth unevenness; {`seq0`, `seq0.25`, `seq0.5`, `seq0.75`, `seq1`}
