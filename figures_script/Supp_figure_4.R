@@ -63,11 +63,11 @@
     }
     load("./CRC_meta_analysis/data/tax.Rdata")
     len.melody <- length(tax.inter)
-    ###############################################
+    # ##############################################################################
     load("./CRC_meta_analysis/CRC_all_K401/prepare_data/data.rel.all.Rdata")
     L <- length(data.rel)
     species.name <- colnames(data.rel[[1]]$Y)
-    ####################
+
     tab.RA <- NULL
     tab.AA <- NULL
     for(l in 1:L){
