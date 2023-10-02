@@ -12,6 +12,7 @@
   library("cowplot")
   library("grid")
   library("gridExtra")
+  library("ggplot2")
 
   rm(list = ls())
   load("./CRC_meta_analysis/data/tax.Rdata")
