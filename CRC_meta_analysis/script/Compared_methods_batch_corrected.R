@@ -35,7 +35,7 @@
   load(paste0(data.loc, "prepare_data/data.rel.batch.", s, ".Rdata"))
   L <- length(data.rel.batch)
   K <- ncol(data.rel.batch[[1]]$Y)
-  #################################################################
+
   study = NULL
   Y.pool = NULL
   X.pool = NULL
