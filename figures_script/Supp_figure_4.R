@@ -140,7 +140,7 @@
     renames <- sub("<i></i>", "", unlist(lapply(sp_strs, paste0, collapse=" ")))
     renames <- paste0(renames, " (",sub("]",")", sub(".*v2_", "", tax.inter.orderd),")"))
     renames <- factor(renames, levels=renames)
-    ########################################################
+    # ##############################################################################
     plot.single.study.heatmap <- function(x){
       df.plot <- NULL
       for(l in x){
@@ -165,7 +165,7 @@
               axis.text = element_blank()) +
         scale_fill_gradientn(colours=col.hm, limits=c(-mx, mx), guide="none")
     }
-    ####################################################
+    # ##############################################################################
 
     plot.single.study.heatmap.ref <- function(x){
       df.plot <- NULL
