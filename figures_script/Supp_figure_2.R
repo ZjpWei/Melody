@@ -10,12 +10,13 @@
   rm(list = ls())
   # General
   load("./CRC_meta_analysis/CRC_all_K849/prepare_data/data.rel.all.Rdata")
+  L <- length(data.rel)
 
   Study <- c()
   Group <- c()
   seqdepth <- c()
   p.values <- c()
-  for(l in 1:5){
+  for(l in 1:L){
     x <- rowSums(data.rel[[l]]$Y[data.rel[[l]]$X==1,])
     y <- rowSums(data.rel[[l]]$Y[data.rel[[l]]$X==0,])
     Group <- c(Group, rep("case", length(x)), rep("control", length(y)))
