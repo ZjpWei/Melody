@@ -64,15 +64,25 @@
     data.rel.test[[l]] <- list(Y = data.rel.batch[[l]]$Y[sort(c(case.id[(case.rg[2]+1):case.rg[3]], control.id[(control.rg[2]+1):control.rg[3]])),],
                                X = data.rel.batch[[l]]$X[sort(c(case.id[(case.rg[2]+1):case.rg[3]], control.id[(control.rg[2]+1):control.rg[3]]))])
   }
-  study = NULL
-  Y.pool = NULL
-  X.pool = NULL
+  study <- NULL
+  Y.pool <- NULL
+  X.pool <- NULL
   for(l in 1:L){
-    study = c(study, rep(l, length(data.rel.analysis[[l]]$X)) )
-    Y.pool = rbind(Y.pool, data.rel.analysis[[l]]$Y)
-    X.pool = c(X.pool, data.rel.analysis[[l]]$X)
+    study <- c(study, rep(l, length(data.rel.analysis[[l]]$X)) )
+    Y.pool <- rbind(Y.pool, data.rel.analysis[[l]]$Y)
+    X.pool <- c(X.pool, data.rel.analysis[[l]]$X)
   }
-
+  
+  ################################# CLR-LASSO ################################
+  # Add pseudo-count 0.5
+  Z.pool <- log(Y.pool + 0.5)
+  
+  clrx_Z <- apply(Z.pool, 2, function(x) x - rowMeans(Z.pool))
+  
+  clrlasso <- cv.glmnet(x = clrx_Z, y = X.pool, nfolds = 5, family = 'binomial')
+  
+  save(clrlasso, file = paste0(data.loc, tag, "/CLR.lasso.model.",as.character(s),".Rdata"))
+  
   ################################# ALDEx2 ###################################
   # function use for ALDEx2
   source("./utility/aldex2.R")
@@ -81,8 +91,8 @@
   outcome <- X.pool
   feature.table <- Y.pool
   names(outcome) <- rownames(feature.table)
-  feature.table = data.frame(t(feature.table))
-  meta.data = data.frame(labels = factor(outcome), study = factor(Study))
+  feature.table <- data.frame(t(feature.table))
+  meta.data <- data.frame(labels = factor(outcome), study = factor(Study))
   colnames(feature.table) <- rownames(meta.data)
 
   ## ALDEx2 will add 0.5 pseudo-count in it's own function.
@@ -101,16 +111,6 @@
 
   # save model
   save(ANCOMBC.model, file = paste0(data.loc, tag, "/ANCOMBC.model.",as.character(s),".Rdata"))
-
-  ################################# CLR-LASSO ################################
-  # Add pseudo-count 0.5
-  Z.pool <- log(Y.pool + 0.5)
-
-  clrx_Z <- apply(Z.pool, 2, function(x) x - rowMeans(Z.pool))
-
-  clrlasso <- cv.glmnet(x = clrx_Z, y = X.pool, nfolds = 5, family = 'binomial')
-
-  save(clrlasso, file = paste0(data.loc, tag, "/CLR.lasso.model.",as.character(s),".Rdata"))
 
   ################################# BW (prop) ################################
   source("./utility/rarify.R")

@@ -35,12 +35,19 @@
   K <- ncol(data.rel.batch[[1]]$Y)
   study <- NULL
   Y.pool <- NULL
-  X.pool<- NULL
+  X.pool <- NULL
   for(l in 1:L){
     study <- c(study, rep(l, length(data.rel.batch[[l]]$X)) )
     Y.pool <- rbind(Y.pool, data.rel.batch[[l]]$Y)
     X.pool <- c(X.pool, data.rel.batch[[l]]$X)
   }
+  ################################# CLR-LASSO ###############################
+  Z.pool <- log(Y.pool + 0.5)
+  clrx_Z <- apply(Z.pool, 2, function(x) x - rowMeans(Z.pool))
+  clrlasso <- cv.glmnet(x = clrx_Z, y = X.pool, nfolds = 5, family = 'binomial')
+  
+  # save model
+  save(clrlasso, file = paste0(data.loc, "Models_batch_corrected/CLR.lasso.model.", s,".Rdata"))
   
   ################################# ALDEx2 ##################################
   # functions for ALDEx2
@@ -69,14 +76,6 @@
   # save model
   save(ANCOMBC.model, file = paste0(data.loc, "Models_batch_corrected/ANCOMBC.model.", s, ".Rdata"))
 
-  ################################# CLR-LASSO ###############################
-  Z.pool <- log(Y.pool + 0.5)
-  clrx_Z <- apply(Z.pool, 2, function(x) x - rowMeans(Z.pool))
-  clrlasso <- cv.glmnet(x = clrx_Z, y = X.pool, nfolds = 5, family = 'binomial')
-
-  # save model
-  save(clrlasso, file = paste0(data.loc, "Models_batch_corrected/CLR.lasso.model.", s,".Rdata"))
-  
   ################################# BW (prop) ###############################
   source("./utility/rarify.R")
   Y.rarify <- NULL

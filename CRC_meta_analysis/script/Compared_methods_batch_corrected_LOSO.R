@@ -60,15 +60,25 @@
     data.rel.train[[l]] <- list(Y = data.rel.batch[[l]]$Y[sort(c(case.id[(case.rg[1]+1):case.rg[2]], control.id[(control.rg[1]+1):control.rg[2]])),],
                                 X = data.rel.batch[[l]]$X[sort(c(case.id[(case.rg[1]+1):case.rg[2]], control.id[(control.rg[1]+1):control.rg[2]]))])
   }
-  study = NULL
-  Y.pool = NULL
-  X.pool = NULL
+  study <- NULL
+  Y.pool <- NULL
+  X.pool <- NULL
   for(l in 1:L){
-    study = c(study, rep(l, length(data.rel.analysis[[l]]$X)) )
-    Y.pool = rbind(Y.pool, data.rel.analysis[[l]]$Y)
-    X.pool = c(X.pool, data.rel.analysis[[l]]$X)
+    study <- c(study, rep(l, length(data.rel.analysis[[l]]$X)) )
+    Y.pool <- rbind(Y.pool, data.rel.analysis[[l]]$Y)
+    X.pool <- c(X.pool, data.rel.analysis[[l]]$X)
   }
-
+  
+  ################################# CLR-LASSO ################################
+  # Add pseudo-count 0.5
+  Z.pool <- log(Y.pool + 0.5)
+  
+  clrx_Z <- apply(Z.pool, 2, function(x) x - rowMeans(Z.pool))
+  
+  clrlasso <- cv.glmnet(x = clrx_Z, y = X.pool, nfolds = 5, family = 'binomial')
+  
+  save(clrlasso, file = paste0(data.loc, tag, "/CLR.lasso.model.",as.character(s),".",as.character(ss), ".Rdata"))
+  
   ################################# ALDEx2 ###################################
   # function use for ALDEx2
   source("./utility/aldex2.R")
@@ -98,21 +108,11 @@
   # save model
   save(ANCOMBC.model, file = paste0(data.loc, tag, "/ANCOMBC.model.",as.character(s),".",as.character(ss), ".Rdata"))
 
-  ################################# CLR-LASSO ################################
-  # Add pseudo-count 0.5
-  Z.pool <- log(Y.pool + 0.5)
-
-  clrx_Z <- apply(Z.pool, 2, function(x) x - rowMeans(Z.pool))
-
-  clrlasso <- cv.glmnet(x = clrx_Z, y = X.pool, nfolds = 5, family = 'binomial')
-
-  save(clrlasso, file = paste0(data.loc, tag, "/CLR.lasso.model.",as.character(s),".",as.character(ss), ".Rdata"))
-
   ################################# BW (prop) ################################
   source("./utility/rarify.R")
   Y.rarify <- NULL
   for(l in 1:L){
-    Y.rarify = rbind(Y.rarify, .rarefy(otu.tab = data.rel.analysis[[l]]$Y, ss = 2023))
+    Y.rarify <- rbind(Y.rarify, .rarefy(otu.tab = data.rel.analysis[[l]]$Y, ss = 2023))
   }
   
   # Proportion normalization
