@@ -54,6 +54,15 @@
     Y.pool <- rbind(Y.pool, data.rel[[l]]$Y)
     X.pool <- c(X.pool, data.rel[[l]]$X)
   }
+  ################################# CLR-LASSO ################################
+  # Add pseudo-count 0.5
+  Z.pool <- log(Y.pool + 0.5)
+  
+  clrx_Z <- apply(Z.pool, 2, function(x) x - rowMeans(Z.pool))
+  
+  clrlasso <- cv.glmnet(x = clrx_Z, y = X.pool, nfolds = 5, family = 'binomial')
+  
+  save(clrlasso, file = paste0(data.loc, tag, "/CLR.lasso.model.",as.character(s),".Rdata"))
   
   ################################# ALDEx2 ###################################
   # function use for ALDEx2
@@ -84,17 +93,6 @@
   # save model
   save(ANCOMBC.model, file = paste0(data.loc, tag, "/ANCOMBC.model.",as.character(s),".Rdata"))
 
-  ################################# CLR-LASSO ################################
-  # Add pseudo-count 0.5
-  Z.pool <- log(Y.pool + 0.5)
-
-  clrx_Z <- apply(Z.pool, 2, function(x) x - rowMeans(Z.pool))
-
-  clrlasso <- cv.glmnet(x = clrx_Z, y = X.pool, nfolds = 5, family = 'binomial')
-
-  save(clrlasso, file = paste0(data.loc, tag, "/CLR.lasso.model.",as.character(s),".Rdata"))
-
-  
   ################################# BW (prop) ################################
   source("./utility/rarify.R")
   Y.rarify <- NULL
@@ -104,10 +102,10 @@
   
   # Proportion normalization
   P.pool <- Y.rarify / rowSums(Y.rarify)
-  pval = NULL
+  pval <- NULL
   for(k in 1:K){
-    BW.data = data.frame(y=P.pool[,k], x = as.factor(X.pool), block=as.factor(Study) )
-    pval = c(pval, pvalue(wilcox_test(y ~ x | block, data=BW.data)) )
+    BW.data <- data.frame(y=P.pool[,k], x = as.factor(X.pool), block=as.factor(Study) )
+    pval <- c(pval, pvalue(wilcox_test(y ~ x | block, data=BW.data)) )
   }
   # multiple testing correction
   BW.prop.model <- data.frame(p.val = pval, q.val = p.adjust(pval, method="BH"),
