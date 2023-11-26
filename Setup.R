@@ -1,8 +1,6 @@
-  ##############################################
-#                                                #
-#                   Files setup                  #
-#                                                #
-  ##############################################
+# =============================================== #
+#                   Files setup                   #
+# =============================================== #
 
   # Check directory and create directory
   # CRC_Real directory
@@ -31,10 +29,16 @@
   }
 
   # Simulation directory
-  loc.vec <- c("./Simulation/Sig_number",
-               "./Simulation/Sig_effdir",
-               "./Simulation/Sig_effsz",
-               "./Simulation/Sig_depth")
+  loc.vec <- c("./Simulation/large",
+               "./Simulation/small",
+               "./Simulation/large/Sig_number",
+               "./Simulation/large/Sig_effdir",
+               "./Simulation/large/Sig_effsz",
+               "./Simulation/large/Sig_depth",
+               "./Simulation/small/Sig_number",
+               "./Simulation/small/Sig_effdir",
+               "./Simulation/small/Sig_effsz",
+               "./Simulation/small/Sig_depth")
 
   for(loc in loc.vec){
     if(!dir.exists(loc)){
