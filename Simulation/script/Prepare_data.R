@@ -30,7 +30,8 @@
   Ka <- as.numeric(args[2])
   # signature effect direction {0.5, 0.6, 0.7(default), 0.8, 0.9, 1}
   pos.pt <- as.numeric(args[3])
-  # signature effect size {0.5, 1, 1.5, 2(default), 2.5, 3}
+  # signature effect size {Lager: 1, 1.5, 2(default), 2.5, 3
+  #                        Small: 4, 4.5, 5(default), 5.5, 6}
   effect.sz <- as.numeric(args[4])
   # case/control sequence depth unevenness {0(default), 0.25, 0.5, 0.75, 1}
   mu <- as.numeric(args[5])
@@ -43,7 +44,14 @@
   # signature effect size: "Sig_effsz"
   # case/control sequence depth unevenness: "Sig_depth"
 
-  loc.vec <- c(Ka == 40, pos.pt == 0.7, effect.sz == 2, mu == 0)
+  # Sample size vector in absolute data simulation
+  if(scenario == "large"){
+    n.sample <- c(100, 120, 140, 160, 180)
+    loc.vec <- c(Ka == 40, pos.pt == 0.7, effect.sz == 2, mu == 0)
+  }else if(scenario == "small"){
+    n.sample <- c(20, 30, 40, 50, 60)
+    loc.vec <- c(Ka == 40, pos.pt == 0.7, effect.sz == 5, mu == 0)
+  }
   if(sum(loc.vec) < 3){
     stop("Please only change one factor at the same time.\n")
   }else if(sum(loc.vec) == 4){
@@ -75,13 +83,6 @@
         dir.create(paste0(loc, "signal"))
       }
     }
-  }
-
-  # Sample size vector in absolute data simulation
-  if(scenario == "large"){
-    n.sample <- c(100, 120, 140, 160, 180)
-  }else if(scenario == "small"){
-    n.sample <- c(20, 30, 40, 50, 60)
   }
   
   # load utility
