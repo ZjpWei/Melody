@@ -35,8 +35,8 @@
   effect.sz <- as.numeric(args[4])
   # case/control sequence depth unevenness {0(default), 0.25, 0.5, 0.75, 1}
   mu <- as.numeric(args[5])
-  # Large/Small sample scenarios {small, large}
-  scenario <- as.numeric(args[6])
+  # Large/Small sample set {small, large}
+  set <- as.numeric(args[6])
   
   # set document location respecting the input parameter above
   # signature sparsity: "Sig_number"
@@ -45,29 +45,29 @@
   # case/control sequence depth unevenness: "Sig_depth"
 
   # Sample size vector in absolute data simulation
-  if(scenario == "large"){
+  if(set == "large"){
     n.sample <- c(100, 120, 140, 160, 180)
     loc.vec <- c(Ka == 40, pos.pt == 0.7, effect.sz == 2, mu == 0)
-  }else if(scenario == "small"){
+  }else if(set == "small"){
     n.sample <- c(20, 30, 40, 50, 60)
     loc.vec <- c(Ka == 40, pos.pt == 0.7, effect.sz == 5, mu == 0)
   }
   if(sum(loc.vec) < 3){
     stop("Please only change one factor at the same time.\n")
   }else if(sum(loc.vec) == 4){
-    data.loc <- c(paste0("./Simulation/", scenario, "/Sig_number/d", as.character(Ka), "/"),
-                  paste0("./Simulation/", scenario, "/Sig_effdir/p", as.character(pos.pt * 100), "/"),
-                  paste0("./Simulation/", scenario, "/Sig_effsz/sig", as.character(effect.sz), "/"),
-                  paste0("./Simulation/", scenario, "/Sig_depth/seq", as.character(mu), "/"))
+    data.loc <- c(paste0("./Simulation/", set, "/Sig_number/d", as.character(Ka), "/"),
+                  paste0("./Simulation/", set, "/Sig_effdir/p", as.character(pos.pt * 100), "/"),
+                  paste0("./Simulation/", set, "/Sig_effsz/sig", as.character(effect.sz), "/"),
+                  paste0("./Simulation/", set, "/Sig_depth/seq", as.character(mu), "/"))
   }else{
     if(which(!loc.vec) == 1){
-      data.loc <-  paste0("./Simulation/", scenario, "/Sig_number/d", as.character(Ka), "/")
+      data.loc <-  paste0("./Simulation/", set, "/Sig_number/d", as.character(Ka), "/")
     }else if(which(!loc.vec) == 2){
-      data.loc <-  paste0("./Simulation/", scenario, "/Sig_effdir/p", as.character(pos.pt * 100), "/")
+      data.loc <-  paste0("./Simulation/", set, "/Sig_effdir/p", as.character(pos.pt * 100), "/")
     }else if(which(!loc.vec) == 3){
-      data.loc <-  paste0("./Simulation/", scenario, "/Sig_effsz/sig", as.character(effect.sz), "/")
+      data.loc <-  paste0("./Simulation/", set, "/Sig_effsz/sig", as.character(effect.sz), "/")
     }else if(which(!loc.vec) == 4){
-      data.loc <-  paste0("./Simulation/", scenario, "/Sig_depth/seq", as.character(mu), "/")
+      data.loc <-  paste0("./Simulation/", set, "/Sig_depth/seq", as.character(mu), "/")
     }
   }
   for(loc in data.loc){
