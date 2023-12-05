@@ -20,7 +20,7 @@ Rscript Prepare_data.R arg1 arg2 arg3 arg4 arg5 arg6
    
    `arg5` (`mu`): case/control sequence depth unevenness; {`0`(default), `0.25`, `0.5`, `0.75`, `1`}
 
-   `arg6` (`set`): large/samll sample size scenario; {large, small}
+   `arg6` (`set`): large/samll sample size set; {large, small}
    
 **2. Perform meta-analysis on original data using `miMeta` packages.**
 ```console
