@@ -351,7 +351,7 @@
   }
   
   # summary
-  PRC <- data.frame(AUPRC, S = S, Method = method, linetype = linetype)
+  PRC <- data.frame(AUPRC, S = S, method = method, linetype = linetype)
 
   PRC$method <- factor(PRC$method, levels = unique(method), ordered = TRUE)
 
