@@ -31,7 +31,7 @@
   PRC_all$x.label[PRC_all$x.label == "sig2.5"] <- "2.5"
   PRC_all$x.label[PRC_all$x.label == "sig3"] <- "3"
   PRC_all$x.label <- factor(PRC_all$x.label, levels = unique(PRC_all$x.label), ordered = TRUE)
-  PRC_all$Method <- factor(PRC_all$Method, levels = unique(PRC_all$Method), ordered = TRUE)
+  PRC_all$Method <- factor(PRC_all$method, levels = unique(PRC_all$method), ordered = TRUE)
   PRC_all <- PRC_all[PRC_all$linetype %in% c("Original","MMUPHin"),]
   PRC_all$linetype[PRC_all$linetype == "MMUPHin"] <- "Batch-corrected"
   PRC_all$scenarios <- "<i>n</i> = 100 ~ 180 <br> Signature effect size"
@@ -66,7 +66,7 @@
     guides(color = guide_legend(order = 1, nrow = 1), linetype = guide_legend(order = 2))
   
   ## Signature sparsity ----
-  data.loc <- "./Simulation_large/Sig_number/"
+  data.loc <- "./Simulation/large/Sig_number/"
   facts <- c("d20", "d30", "d40", "d50","d60", "d70","d80")
   
   PRC_all <- data.frame()
@@ -84,7 +84,7 @@
   PRC_all$x.label[PRC_all$x.label == "d70"] <- "70"
   PRC_all$x.label[PRC_all$x.label == "d80"] <- "80"
   PRC_all$x.label <- factor(PRC_all$x.label, levels = unique(PRC_all$x.label), ordered = TRUE)
-  PRC_all$Method <- factor(PRC_all$Method, levels = unique(PRC_all$Method), ordered = TRUE)
+  PRC_all$Method <- factor(PRC_all$method, levels = unique(PRC_all$method), ordered = TRUE)
   PRC_all <- PRC_all[PRC_all$linetype %in% c("Original","MMUPHin"),]
   PRC_all$linetype[PRC_all$linetype == "MMUPHin"] <- "Batch-corrected"
   PRC_all$scenarios <- "<i>n</i> = 100 ~ 180 <br> Signature number"
@@ -113,7 +113,7 @@
     facet_wrap(facets = vars(scenarios))
   
   ## Signature effect direction ----
-  data.loc <- "./Simulation_large/Sig_effdir/"
+  data.loc <- "./Simulation/large/Sig_effdir/"
   facts <- c("p50","p60", "p70", "p80", "p90","p100")
   PRC_all <- data.frame()
   for(tag in facts){
@@ -129,7 +129,7 @@
   PRC_all$x.label[PRC_all$x.label == "p90"] <- "90"
   PRC_all$x.label[PRC_all$x.label == "p100"] <- "100"
   PRC_all$x.label <- factor(PRC_all$x.label, levels = unique(PRC_all$x.label), ordered = TRUE)
-  PRC_all$Method <- factor(PRC_all$Method, levels = unique(PRC_all$Method), ordered = TRUE)
+  PRC_all$Method <- factor(PRC_all$method, levels = unique(PRC_all$method), ordered = TRUE)
   PRC_all <- PRC_all[PRC_all$linetype %in% c("Original","MMUPHin"),]
   PRC_all$linetype[PRC_all$linetype == "MMUPHin"] <- "Batch-corrected"
   PRC_all$scenarios <- "<i>n</i> = 100 ~ 180 <br> Signature effect direction"
@@ -157,7 +157,7 @@
     facet_wrap(facets = vars(scenarios))
   
   ## Case/control sequence depth unevenness ----
-  data.loc <- "./Simulation_large/Sig_depth/"
+  data.loc <- "./Simulation/large/Sig_depth/"
   facts <- c("seq0", "seq0.25", "seq0.50","seq0.75", "seq1")
   PRC_all <- data.frame()
   for(tag in facts){
@@ -172,7 +172,7 @@
   PRC_all$x.label[PRC_all$x.label == "seq0.75"] <- "0.75"
   PRC_all$x.label[PRC_all$x.label == "seq1"] <- "1"
   PRC_all$x.label <- factor(PRC_all$x.label, levels = unique(PRC_all$x.label), ordered = TRUE)
-  PRC_all$Method <- factor(PRC_all$Method, levels = unique(PRC_all$Method), ordered = TRUE)
+  PRC_all$Method <- factor(PRC_all$method, levels = unique(PRC_all$method), ordered = TRUE)
   PRC_all <- PRC_all[PRC_all$linetype %in% c("Original","MMUPHin"),]
   PRC_all$linetype[PRC_all$linetype == "MMUPHin"] <- "Batch-corrected"
   PRC_all$scenarios <- "<i>n</i> = 100 ~ 180 <br> Sequencing depth unevenness"
@@ -216,7 +216,7 @@
   PRC_all$x.label[PRC_all$x.label == "sig5.5"] <- "5.5"
   PRC_all$x.label[PRC_all$x.label == "sig6"] <- "6"
   PRC_all$x.label <- factor(PRC_all$x.label, levels = unique(PRC_all$x.label), ordered = TRUE)
-  PRC_all$Method <- factor(PRC_all$Method, levels = unique(PRC_all$Method), ordered = TRUE)
+  PRC_all$Method <- factor(PRC_all$method, levels = unique(PRC_all$method), ordered = TRUE)
   PRC_all <- PRC_all[PRC_all$linetype %in% c("Original","MMUPHin"),]
   PRC_all$linetype[PRC_all$linetype == "MMUPHin"] <- "Batch-corrected"
   PRC_all$scenarios <- "<i>n</i> = 20 ~ 60 <br> Signature effect size"
@@ -251,7 +251,7 @@
   
   
   ## Signature sparsity ----
-  data.loc <- "./Simulation_small/Sig_number/"
+  data.loc <- "./Simulation/small/Sig_number/"
   facts <- c("d20", "d30", "d40", "d50","d60", "d70","d80")
   
   PRC_all <- data.frame()
@@ -269,7 +269,7 @@
   PRC_all$x.label[PRC_all$x.label == "d70"] <- "70"
   PRC_all$x.label[PRC_all$x.label == "d80"] <- "80"
   PRC_all$x.label <- factor(PRC_all$x.label, levels = unique(PRC_all$x.label), ordered = TRUE)
-  PRC_all$Method <- factor(PRC_all$Method, levels = unique(PRC_all$Method), ordered = TRUE)
+  PRC_all$Method <- factor(PRC_all$method, levels = unique(PRC_all$method), ordered = TRUE)
   PRC_all <- PRC_all[PRC_all$linetype %in% c("Original","MMUPHin"),]
   PRC_all$linetype[PRC_all$linetype == "MMUPHin"] <- "Batch-corrected"
   PRC_all$scenarios <- "<i>n</i> = 20 ~ 60 <br> Signature number"
@@ -297,7 +297,7 @@
     facet_wrap(facets = vars(scenarios))
   
   ## Signature effect direction ----
-  data.loc <- "./Simulation_small/Sig_effdir/"
+  data.loc <- "./Simulation/small/Sig_effdir/"
   facts <- c("p50","p60", "p70", "p80", "p90","p100")
   PRC_all <- data.frame()
   for(tag in facts){
@@ -313,7 +313,7 @@
   PRC_all$x.label[PRC_all$x.label == "p90"] <- "90"
   PRC_all$x.label[PRC_all$x.label == "p100"] <- "100"
   PRC_all$x.label <- factor(PRC_all$x.label, levels = unique(PRC_all$x.label), ordered = TRUE)
-  PRC_all$Method <- factor(PRC_all$Method, levels = unique(PRC_all$Method), ordered = TRUE)
+  PRC_all$Method <- factor(PRC_all$method, levels = unique(PRC_all$method), ordered = TRUE)
   PRC_all <- PRC_all[PRC_all$linetype %in% c("Original","MMUPHin"),]
   PRC_all$linetype[PRC_all$linetype == "MMUPHin"] <- "Batch-corrected"
   PRC_all$scenarios <- "<i>n</i> = 20 ~ 60 <br> Signature effect direction"
@@ -341,7 +341,7 @@
     facet_wrap(facets = vars(scenarios))
   
   ## Case/control sequence depth unevenness ----
-  data.loc <- "./Simulation_small/Sig_depth/"
+  data.loc <- "./Simulation/small/Sig_depth/"
   facts <- c("seq0", "seq0.25", "seq0.50","seq0.75", "seq1")
   PRC_all <- data.frame()
   for(tag in facts){
@@ -356,7 +356,7 @@
   PRC_all$x.label[PRC_all$x.label == "seq0.75"] <- "0.75"
   PRC_all$x.label[PRC_all$x.label == "seq1"] <- "1"
   PRC_all$x.label <- factor(PRC_all$x.label, levels = unique(PRC_all$x.label), ordered = TRUE)
-  PRC_all$Method <- factor(PRC_all$Method, levels = unique(PRC_all$Method), ordered = TRUE)
+  PRC_all$Method <- factor(PRC_all$method, levels = unique(PRC_all$method), ordered = TRUE)
   PRC_all <- PRC_all[PRC_all$linetype %in% c("Original","MMUPHin"),]
   PRC_all$linetype[PRC_all$linetype == "MMUPHin"] <- "Batch-corrected"
   PRC_all$scenarios <- "<i>n</i> = 20 ~ 60 <br> Sequencing depth unevenness"
