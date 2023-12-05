@@ -20,22 +20,26 @@
   if (length(args)==0) {
     stop("The analysis tag needs to be provided! Exiting...\n")
   }
-  # arg1: replicate number:
+  # arg1: replicate number;
   # from 1 to 100
   s <- as.numeric(args[1])
 
-  # arg2: simulation scenario:
+  # arg2: large/small sample size set;
+  # large/samll
+  set <- args[2]
+
+  # arg3: simulation scenario:
   # signature sparsity: "Sig_number"
   # signature effect direction: "Sig_effdir"
   # signature effect size: "Sig_effsz"
   # case/control sequence depth unevenness: "Sig_depth"
-  scenario <- args[2]
+  scenario <- args[3]
 
-  # arg3: factor for this scenario:
-  loc <- args[3]
+  # arg4: factor for this scenario:
+  loc <- args[4]
 
-  # parameters
-  data.loc <- paste0("./Simulation/", scenario, "/", loc, "/")
+  # Parameters ----
+  data.loc <- paste0("./Simulation/", set, "/", scenario, "/", loc, "/")
   tag <- "Models_original"
   if(!dir.exists(paste0(data.loc, tag))){
     dir.create(paste0(data.loc, tag))
