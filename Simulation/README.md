@@ -12,9 +12,13 @@ Rscript Prepare_data.R arg1 arg2 arg3 arg4 arg5
    
    `arg3` (`pos.pt`): signature effect direction; {`0.5`, `0.6`, `0.7`(default), `0.8`, `0.9`, `1`}.
    
-   `arg4` (`effect.sz`): signature effect size; {`1`, `1.5`, `2`(default), `2.5`, `3`}.
+   `arg4` (`effect.sz`): signature effect size; 
+            - large sample size scenario:{`1`, `1.5`, `2`(default), `2.5`, `3`}.
+            - small sample size scenario:{`4`, `4.5`, `5`(default), `5.5`, `6`}.
    
    `arg5` (`mu`): case/control sequence depth unevenness; {`0`(default), `0.25`, `0.5`, `0.75`, `1`}
+
+   `arg6` (`scenario`): large/samll sample size scenario; {large, small}
    
 **2. Perform meta-analysis on original data using `miMeta` packages.**
 ```console
