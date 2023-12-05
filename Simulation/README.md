@@ -24,17 +24,21 @@ Rscript Prepare_data.R arg1 arg2 arg3 arg4 arg5 arg6
    
 **2. Perform meta-analysis on original data using `miMeta` packages.**
 ```console
-Rscript Melody.R arg1 arg2 arg3
+Rscript Melody.R arg1 arg2 arg3 arg4
+
+Rscript Melody_pool.R arg1 arg2 arg3 arg4
 ```
 
 **3. Perform other comparison methods using original data.**
 ```console
-Rscript Compared_methods_original.R arg1 arg2 arg3
+Rscript Compared_methods_original.R arg1 arg2 arg3 agr4
 ```
 
 **4. Perform other comparison methods using batch-corrected data.**
 ```console
-Rscript Compared_methods_batch_corrected.R arg1 arg2 arg3 arg4
+Rscript Compared_methods_MMUPHin_batch_corrected.R arg1 arg2 arg3 arg4
+
+Rscript Compared_methods_ConQuR_batch_corrected.R arg1 arg2 arg3 arg4
 ```
    Arguments:
   
@@ -68,7 +72,7 @@ Rscript Compared_methods_batch_corrected.R arg1 arg2 arg3 arg4
 
 **5. Caluclate AUPRC**
 ```console
-Rscript AUPRC.R arg1 arg2
+Rscript AUPRC.R arg1 arg2 arg3
 ```
 
    Arguments:
