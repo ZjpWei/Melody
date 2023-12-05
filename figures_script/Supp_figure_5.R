@@ -15,7 +15,7 @@
   
   # Scenario: n = 100 ~ 180 ----
   ## Signature effect size ----
-  data.loc <- "./Simulation_large/Sig_effsz/"
+  data.loc <- "./Simulation/large/Sig_effsz/"
   facts <- c("sig1", "sig1.5", "sig2", "sig2.5", "sig3")
   
   PRC_all <- data.frame()
@@ -200,7 +200,7 @@
   
   # Scenario: n = 20 ~ 60 ----
   ## Signature effect size ----
-  data.loc <- "./Simulation_small/Sig_effsz/"
+  data.loc <- "./Simulation/small/Sig_effsz/"
   facts <- c("sig4", "sig4.5", "sig5", "sig5.5", "sig6")
   
   PRC_all <- data.frame()
