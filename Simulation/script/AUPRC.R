@@ -14,18 +14,22 @@
   if (length(args)==0) {
     stop("The analysis tag needs to be provided! Exiting...\n")
   }
-  # arg1: simulation scenario:
+  # arg1: large/small sample size set;
+  # large/samll
+  set <- args[1]
+
+  # arg2: simulation scenario:
   # signature sparsity: "Sig_number"
   # signature effect direction: "Sig_effdir"
   # signature effect size: "Sig_effsz"
   # case/control sequence depth unevenness: "Sig_depth"
-  scenario <- args[1]
+  scenario <- args[2]
 
-  # arg2: factor for this scenario:
-  loc <- args[2]
+  # arg3: factor for this scenario:
+  loc <- args[3]
 
-  # Check files
-  data.loc <- paste0("./Simulation/", scenario, "/", loc, "/")
+  # Parameters ----
+  data.loc <- paste0("./Simulation/", set, "/", scenario, "/", loc, "/")
   if(!dir.exists(paste0(data.loc, "AUPRC"))){
     dir.create(paste0(data.loc, "AUPRC"))
   }
