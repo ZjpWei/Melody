@@ -86,12 +86,15 @@
   # Proportion normalization
   P.pool <- Y.rarify / rowSums(Y.rarify)
   pval <- NULL
+  statis <- NULL
   for(k in 1:K){
-    BW.data <- data.frame(y=P.pool[,k], x = as.factor(X.pool), block=as.factor(study) )
-    pval <- c(pval, pvalue(wilcox_test(y ~ x | block, data=BW.data)) )
+    BW.data <- data.frame(y = P.pool[,k], x = factor(X.pool, levels = c("1","0")), block=as.factor(study) )
+    pval <- c(pval, pvalue(wilcox_test(y ~ x | block, data = BW.data, )) )
+    statis <- c(statis, statistic(wilcox_test(y ~ x | block, data = BW.data)))
   }
   # multiple testing correction
   BW.prop.model <- data.frame(p.val = pval, q.val = p.adjust(pval, method="BH"),
+                              statis = statis,
                               row.names = colnames(P.pool))
 
   # save model
