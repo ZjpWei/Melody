@@ -1,5 +1,5 @@
 # =============================================== #
-#                    Figure 5                     #
+#                    Figure 6                     #
 # =============================================== #
 
   # Packages ----
@@ -267,7 +267,7 @@
   ggp1 <- ggpubr::ggarrange(p1, p2, p3, p4, p5, p6, nrow = 2, ncol = 3, 
                             common.legend = TRUE, legend = "bottom")
 
-  pdf("./figures/figure5.pdf", width = 14, height = 8, bg = "white")
+  pdf("./figures/figure6.pdf", width = 14, height = 8, bg = "white")
 
   ggpubr::annotate_figure(ggp1, left = grid::textGrob("AUROC", rot = 90, vjust = 0.5, 
                                                       hjust = -0.3, gp = grid::gpar(cex = 1.5)))
