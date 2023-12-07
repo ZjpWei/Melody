@@ -84,7 +84,7 @@
     rownames(Heatmap) <- c("CLR-LASSO", "Melody", "ANCOM-BC", "ALDEx2", "BW")
     
     
-    pdf(paste0("./figures/Supp_3_top", tops,".pdf"), width = 6, height = 5, bg = "white")
+    pdf(paste0("./figures/Supp_figure3_top", tops,".pdf"), width = 6, height = 5, bg = "white")
 
     pheatmap::pheatmap(Heatmap, cluster_rows = FALSE, cluster_cols = FALSE, breaks = c(1:100)/100,
                        display_numbers = TRUE,fontsize_number = 20, fontsize = 15, legend = FALSE)
