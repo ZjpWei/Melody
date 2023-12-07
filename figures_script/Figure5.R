@@ -1,5 +1,5 @@
 # =============================================== #
-#       Figure 6 Stability: All v.s. LOSO         #
+#       Figure 5 Stability: All v.s. LOSO         #
 # =============================================== #
 
   # Packages ----
@@ -243,7 +243,7 @@
     labs(linetype="Pooled data")
 
 # =============================================== #
-#        Figure 6 Stability: K401 v.s. K849       #
+#        Figure 5 Stability: K401 v.s. K849       #
 # =============================================== #
   
   # K401 v.s. K849 ----
@@ -643,7 +643,7 @@
               legend.position = "none",  text = element_text(size=15))
 
 # =============================================== #
-#     Figure 6 Stability: K401 v.s. K267(order)   #
+#     Figure 5 Stability: K401 v.s. K267(order)   #
 # =============================================== #
   
   # K401 v.s. K267 ----
@@ -1052,7 +1052,7 @@
               legend.position = "none",  text = element_text(size=15))
   
   # Generate figures ----
-  pdf("./figures/figure6.pdf", width = 14, height = 6, bg = "white")
+  pdf("./figures/figure5.pdf", width = 14, height = 6, bg = "white")
   
   ggpubr::annotate_figure(ggpubr::ggarrange(p1, p2, p3, nrow = 1, ncol = 3, 
                                             common.legend = TRUE, legend = "bottom"), 
