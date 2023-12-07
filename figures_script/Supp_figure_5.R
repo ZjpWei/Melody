@@ -198,7 +198,7 @@
   }
 
   # Generate figures ----
-  pdf("./figures/Supp_4_RA_heatmap.pdf",         # File name
+  pdf("./figures/Supp_figure4_RA_heatmap.pdf",         # File name
       width = 7.67, height = 3.78, # Width and height in inches
       bg = "white")
 
@@ -209,7 +209,7 @@
 
   dev.off()
 
-  pdf("./figures/Supp_4_AA_heatmap.pdf",         # File name
+  pdf("./figures/Supp_figure4_AA_heatmap.pdf",         # File name
       width = 7.67, height = 3.78, # Width and height in inches
       bg = "white")
 
