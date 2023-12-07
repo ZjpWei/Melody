@@ -94,8 +94,7 @@
   }
   # multiple testing correction
   BW.prop.model <- data.frame(p.val = pval, q.val = p.adjust(pval, method="BH"),
-                              statis = statis,
-                              row.names = colnames(P.pool))
+                              statis = statis, row.names = colnames(P.pool))
 
   # save model
   save(BW.prop.model, file = paste0(data.loc, "Models_batch_corrected/BW.prop.model.", s, ".Rdata"))
