@@ -87,7 +87,7 @@
   renames <- factor(renames, levels=renames)
   rownames(data) <- renames
 
-  pdf("./figures/Supp_figure_4.pdf",         # File name
+  pdf("./figures/Supp_figure4.pdf",         # File name
       width = 20, height = 10, # Width and height in inches
       bg = "white")
   
