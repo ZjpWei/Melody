@@ -25,7 +25,7 @@
   df1 <- data.frame(seqdepth = seqdepth, Group = Group, Study = Study)
 
   ### Generate figures ----
-  pdf("./figures/Supp_2.pdf", width = 6, height = 5, bg = "white")
+  pdf("./figures/Supp_figure2.pdf", width = 6, height = 5, bg = "white")
 
   ggplot(data = df1, aes(x=Study, y=seqdepth, color = Group)) +
     geom_boxplot(position=position_dodge(0.8), width=0.6) +
