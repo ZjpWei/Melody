@@ -90,7 +90,7 @@
                      outcome = as.character(outcome), variable = title)
 
   ### Generate figures ----
-  pdf("./figures/Supp_1_PCoA_batch.pdf", width = 6.14, height = 4.66, bg = "white")
+  pdf("./figures/Supp_figure1_PCoA_batch.pdf", width = 6.14, height = 4.66, bg = "white")
 
   ggplot(PCoA, aes(x=PCo1, y=PCo2, color=Study)) + geom_point() +
     theme(text = element_text(size = 16),
