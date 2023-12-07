@@ -387,7 +387,7 @@
                               common.legend = TRUE, legend = "bottom", label.y = "AUPRC")
   
   # Generate figures ----
-  pdf("./figures/Supp_5.pdf", width = 15, height = 7.5, bg = "white")
+  pdf("./figures/Supp_figure6.pdf", width = 15, height = 7.5, bg = "white")
   
   ggpubr::annotate_figure(pp.all, left = grid::textGrob("AUPRC", rot = 90, vjust = 0.5, hjust = -0.3,
                                                         gp = grid::gpar(cex = 1.5)))
