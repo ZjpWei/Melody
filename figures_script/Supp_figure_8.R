@@ -162,7 +162,7 @@
 
   ggp1 <- ggpubr::ggarrange(p1, p2, p3, p4, p5, p6, nrow = 2, ncol = 3)
 
-  pdf("./figures/Supp_7.pdf", width = 13.67, height = 7.29, bg = "white")
+  pdf("./figures/Supp_figure8.pdf", width = 13.67, height = 7.29, bg = "white")
 
   ggp1
 
