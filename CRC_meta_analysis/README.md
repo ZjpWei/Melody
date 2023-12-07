@@ -27,7 +27,7 @@ Examples:
 Rscript Melody.R all CRC_all_order
 ```
 
-1. To run `Compared_methods_original.R` for original data in `CRC_loso_order` folder with leaving out study `1`.
+2. To run `Compared_methods_original.R` for original data in `CRC_loso_order` folder with leaving out study `1`.
 ```console
 Rscript Compared_methods_original.R 1 CRC_loso_order
 ```
