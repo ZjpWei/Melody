@@ -19,8 +19,7 @@
   }
 
   # Prediction directory
-  loc.vec <- c("./CRC_meta_analysis/Prediction/LOSO",
-               "./CRC_meta_analysis/Prediction/Random_split")
+  loc.vec <- c("./CRC_meta_analysis/Prediction/LOSO")
 
   for(loc in loc.vec){
     if(!dir.exists(loc)){
