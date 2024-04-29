@@ -1,9 +1,11 @@
 # Simulation analysis
 
-## 1. Initialization
+## 1. Prepare data
 
-Execute `Setup.R` for setup.
+Execute `Prepare_data.R` for setup.
 
-## 2. Generate figures
+## 2. Simulation analysis
 
-All the scripts for generating figures are in `figures_script` folder.
+Excute `Simulation.R` to calculate AUPRC for `Melody` and comparison methods.
+
+
