@@ -1,9 +1,3 @@
-# Analysis in Melody
+# Melody annlysis
 
-## 1. Initialization
-
-Execute `Setup.R` for setup.
-
-## 2. Generate figures
-
-All the scripts for generating figures are in `figures_script` folder.
+Please see `README.md` file in each fold to perform CRC data, Microbiome-Metabolite data and Simualtion.
