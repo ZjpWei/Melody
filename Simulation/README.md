@@ -1,11 +1,9 @@
 # Simulation analysis
 
-## 1. Prepare data
+## 1. Independent data simulation analysis
 
-Execute `Prepare_data.R` for setup.
+Execute `1.Simulation_independent.R` to obtain the AUPRC values for Melody and comparison methods using simulated independent data.
 
-## 2. Simulation analysis
+## 2. Longitudinal data Simulation analysis
 
-Excute `Simulation.R` to calculate AUPRC for `Melody` and comparison methods.
-
-
+Execute `2.Simulation_longitudinal.R` to obtain the AUPRC values for Melody and comparison methods using simulated longitudinal data.
