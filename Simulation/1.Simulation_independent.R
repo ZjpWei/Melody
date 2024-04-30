@@ -429,7 +429,7 @@
 
   true.active <- rep(0, nrow(Melody.model$disease$coef))
   names(true.active) <- rownames(Melody.model$disease$coef)
-  true.active[intersect(signal.idx, rownames(Melody.model$disease$coef))] <- 1
+  true.active[intersect(signal.names, rownames(Melody.model$disease$coef))] <- 1
   Paths <- list()
   for(ll in 1:ncol(Melody.model$disease$coef)){
     Paths[[ll]] <- Melody.model$disease$coef[,ll]!=0
@@ -626,7 +626,7 @@
   
   true.active <- rep(0, nrow(Melody.model$disease$coef))
   names(true.active) <- rownames(Melody.model$disease$coef)
-  true.active[intersect(signal.idx, rownames(Melody.model$disease$coef))] <- 1
+  true.active[intersect(signal.names, rownames(Melody.model$disease$coef))] <- 1
   Paths <- list()
   for(ll in 1:ncol(Melody.model$disease$coef)){
     Paths[[ll]] <- Melody.model$disease$coef[,ll]!=0
