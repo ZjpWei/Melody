@@ -1,3 +1,3 @@
 # Melody annlysis
 
-Please see `README.md` file in each fold to perform CRC data analysis, Microbiome-Metabolite data analysis and Simualtion.
+Please see the README.md file in each folder to perform CRC data analysis, Microbiome-Metabolite data analysis, and Simulation.
