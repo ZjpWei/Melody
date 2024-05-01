@@ -1,5 +1,5 @@
 # =============================================== #
-#         Figure 4 (b): Method overlapping        #
+#         Figure 3 (b): Method overlapping        #
 # =============================================== #
 
   # Packages ----
