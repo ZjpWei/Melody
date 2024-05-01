@@ -84,7 +84,7 @@
 
   p1 <- df.K401.K849 %>% ggplot(aes(x=methods, y=Jaccard, color = methods, linetype = type)) +
     geom_boxplot(position = position_dodge2(preserve = "single"), width=0.4) + 
-    ylim(0,1) + ylab("Jaccard Index") +
+    ylim(0,1) + ylab("Jaccard index") +
     scale_color_manual(
       breaks = c("Melody","MMUPHin", "CLR-LASSO","BW","ALDEx2", "ANCOM-BC2"),
       values = c("red", "purple", "orange","grey","green" ,"blue")) +
@@ -173,7 +173,7 @@
   
   p2 <- df.K401.order %>% ggplot(aes(x=methods, y=Jaccard, color = methods, linetype = type)) +
     geom_boxplot(position = position_dodge2(preserve = "single"), width=0.4) + 
-    ylim(0,1) + ylab("Jaccard Index") +
+    ylim(0,1) + ylab("Jaccard index") +
     scale_color_manual(
       breaks = c("Melody","MMUPHin", "CLR-LASSO","BW","ALDEx2","ANCOM-BC2"),
       values = c("red", "purple", "orange","grey","green" ,"blue")) +
@@ -256,7 +256,7 @@
       }
     }
     df.tmp <- data.frame(Jaccard = Jac.dist, methods = methods, type = data.type) %>% 
-      dplyr::transmute(methods, Jaccard, study = s, type = type)
+      dplyr::transmute(methods, Jaccard, study = paste0("CRC",s), type = type)
     df.K401.all <- rbind(df.K401.all, df.tmp)
   }
   df.K401.all$methods[df.K401.all$methods == "ANCOMBC2"] <- "ANCOM-BC2"
@@ -266,7 +266,7 @@
 
   p3 <- df.K401.all %>% ggplot(aes(x=factor(study), y=Jaccard, color = methods, linetype = type)) +
     geom_boxplot(position = position_dodge2(preserve = "single"), width=0.6) + 
-    ylim(0,1) + ylab("Jaccard Index") +
+    ylim(0,1) + ylab("Jaccard index") +
     scale_color_manual(
       breaks = c("Melody","MMUPHin", "CLR-LASSO","BW","ALDEx2","ANCOM-BC2"),
       values = c("red", "purple", "orange","grey","green" ,"blue")) +
