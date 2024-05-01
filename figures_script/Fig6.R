@@ -1,5 +1,5 @@
 # =============================================== #
-#     Figure 7: Analysis on Metabolites data      #
+#     Figure 6: Analysis on Metabolites data      #
 # =============================================== #
 
   # Packages ----
