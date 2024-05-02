@@ -10,4 +10,4 @@ This project include the analysis of `Melody` paper. Please follow the `README.m
 
 ## Contact
 
-If you have questions about the code or the analyses presented in this project, please feel free to contact me @[Weizhou](zwei74@wisc.edu).
+If you have questions about the code or the analyses presented in this project, please feel free to contact me [Weizhou](zwei74@wisc.edu).
