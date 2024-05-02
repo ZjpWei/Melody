@@ -1,18 +1,18 @@
 # =============================================== #
-#              Figure 4: Stability                #
+#          Figure 4: Bootstrap stability          #
 # =============================================== #
-  
+
   # Packages ----
   library("ggplot2")
   library("tidyverse")
   library("glmnet")
   library("ggtext")
-  
+
   # General ----
   rm(list = ls())
   fdr.cut <- 0.05
   method.name <- c("Melody", "ALDEx2", "ANCOMBC2", "MMUPHin", "clrlasso", "BW")
-  
+
   # K401 v.s. K849 ----
   Jac.dist <- NULL
   methods <- NULL
@@ -42,7 +42,7 @@
         Jac.dist <- c(Jac.dist, length(intersect(feature.1, feature.2)) / length(unique(c(feature.1, feature.2))))
         methods <- c(methods, meth)
         data.type <- c(data.type, "Original")
-        
+
         ## Batch-corrected data
         res_tmp <- res_K401 %>% dplyr::transmute(feature, coef_K401 = clrlasso_bat_coef) %>%
           dplyr::left_join(res_K849 %>% dplyr::transmute(feature, coef_K849 = clrlasso_bat_coef),
@@ -62,7 +62,7 @@
         Jac.dist <- c(Jac.dist, length(intersect(feature.1, feature.2)) / length(unique(c(feature.1, feature.2))))
         methods <- c(methods, meth)
         data.type <- c(data.type, "Original")
-        
+
         ## Batch-corrected data
         res_tmp <- res_K401 %>% dplyr::transmute(feature, fdr_K401 = get(paste0(meth, "_bat_fdr"))) %>%
           dplyr::left_join(res_K849 %>% dplyr::transmute(feature, fdr_K849 = get(paste0(meth, "_bat_fdr"))),
@@ -75,7 +75,7 @@
       }
     }
   }
-  df.K401.K849 <- data.frame(Jaccard = Jac.dist, methods = methods, type = data.type) %>% 
+  df.K401.K849 <- data.frame(Jaccard = Jac.dist, methods = methods, type = data.type) %>%
     dplyr::transmute(methods, Jaccard, type = type)
   df.K401.K849$methods[df.K401.K849$methods == "ANCOMBC2"] <- "ANCOM-BC2"
   df.K401.K849$methods[df.K401.K849$methods == "clrlasso"] <- "CLR-LASSO"
@@ -83,7 +83,7 @@
   df.K401.K849$type <- factor(df.K401.K849$type, levels = c("Original", "Study-effect corrected"))
 
   p1 <- df.K401.K849 %>% ggplot(aes(x=methods, y=Jaccard, color = methods, linetype = type)) +
-    geom_boxplot(position = position_dodge2(preserve = "single"), width=0.4) + 
+    geom_boxplot(position = position_dodge2(preserve = "single"), width=0.4) +
     ylim(0,1) + ylab("Jaccard index") +
     scale_color_manual(
       breaks = c("Melody","MMUPHin", "CLR-LASSO","BW","ALDEx2", "ANCOM-BC2"),
@@ -101,7 +101,7 @@
           panel.border = element_rect(colour = "black", fill=NA),
           legend.position = "none",  text = element_text(size=15)) +
     labs(linetype="Data") + guides(colour = guide_legend(nrow = 2))
-  
+
   # K401 v.s. order ----
   Jac.dist <- NULL
   methods <- NULL
@@ -131,7 +131,7 @@
         Jac.dist <- c(Jac.dist, length(intersect(feature.1, feature.2)) / length(unique(c(feature.1, feature.2))))
         methods <- c(methods, meth)
         data.type <- c(data.type, "Original")
-        
+
         ## Batch-corrected data
         res_tmp <- res_order %>% dplyr::transmute(feature, coef_order = clrlasso_bat_coef) %>%
           dplyr::left_join(res_K401 %>% dplyr::transmute(feature, coef_K401 = clrlasso_bat_coef),
@@ -151,7 +151,7 @@
         Jac.dist <- c(Jac.dist, length(intersect(feature.1, feature.2)) / length(unique(c(feature.1, feature.2))))
         methods <- c(methods, meth)
         data.type <- c(data.type, "Original")
-        
+
         ## Batch-corrected data
         res_tmp <- res_order %>% dplyr::transmute(feature, fdr_order = get(paste0(meth, "_bat_fdr"))) %>%
           dplyr::left_join(res_K401 %>% dplyr::transmute(feature, fdr_K401 = get(paste0(meth, "_bat_fdr"))),
@@ -164,15 +164,15 @@
       }
     }
   }
-  df.K401.order <- data.frame(Jaccard = Jac.dist, methods = methods, type = data.type) %>% 
+  df.K401.order <- data.frame(Jaccard = Jac.dist, methods = methods, type = data.type) %>%
     dplyr::transmute(methods, Jaccard, type = type)
   df.K401.order$methods[df.K401.order$methods == "ANCOMBC2"] <- "ANCOM-BC2"
   df.K401.order$methods[df.K401.order$methods == "clrlasso"] <- "CLR-LASSO"
   df.K401.order$methods <- factor(df.K401.order$methods, levels = c("Melody","MMUPHin", "CLR-LASSO","BW","ALDEx2","ANCOM-BC2"))
   df.K401.order$type <- factor(df.K401.order$type, levels = c("Original", "Study-effect corrected"))
-  
+
   p2 <- df.K401.order %>% ggplot(aes(x=methods, y=Jaccard, color = methods, linetype = type)) +
-    geom_boxplot(position = position_dodge2(preserve = "single"), width=0.4) + 
+    geom_boxplot(position = position_dodge2(preserve = "single"), width=0.4) +
     ylim(0,1) + ylab("Jaccard index") +
     scale_color_manual(
       breaks = c("Melody","MMUPHin", "CLR-LASSO","BW","ALDEx2","ANCOM-BC2"),
@@ -190,7 +190,7 @@
           panel.border = element_rect(colour = "black", fill=NA),
           legend.position = "none",  text = element_text(size=15)) +
     labs(linetype="Data") + guides(colour = guide_legend(nrow = 2))
-  
+
   # All v.s. loso ----
   df.K401.all <- NULL
   for(s in 1:5){
@@ -222,7 +222,7 @@
           Jac.dist <- c(Jac.dist, length(intersect(feature.1, feature.2)) / length(unique(c(feature.1, feature.2))))
           methods <- c(methods, meth)
           data.type <- c(data.type, "Original")
-          
+
           ## Batch-corrected data
           res_tmp <- res_all %>% dplyr::transmute(feature, coef_all = clrlasso_bat_coef) %>%
             dplyr::left_join(res_loso %>% dplyr::transmute(feature, coef_loso = clrlasso_bat_coef),
@@ -242,7 +242,7 @@
           Jac.dist <- c(Jac.dist, length(intersect(feature.1, feature.2)) / length(unique(c(feature.1, feature.2))))
           methods <- c(methods, meth)
           data.type <- c(data.type, "Original")
-          
+
           ## Batch-corrected data
           res_tmp <- res_all %>% dplyr::transmute(feature, fdr_all = get(paste0(meth, "_bat_fdr"))) %>%
             dplyr::left_join(res_loso %>% dplyr::transmute(feature, fdr_loso = get(paste0(meth, "_bat_fdr"))),
@@ -255,7 +255,7 @@
         }
       }
     }
-    df.tmp <- data.frame(Jaccard = Jac.dist, methods = methods, type = data.type) %>% 
+    df.tmp <- data.frame(Jaccard = Jac.dist, methods = methods, type = data.type) %>%
       dplyr::transmute(methods, Jaccard, study = paste0("CRC",s), type = type)
     df.K401.all <- rbind(df.K401.all, df.tmp)
   }
@@ -265,7 +265,7 @@
   df.K401.all$type <- factor(df.K401.all$type, levels = c("Original", "Study-effect corrected"))
 
   p3 <- df.K401.all %>% ggplot(aes(x=factor(study), y=Jaccard, color = methods, linetype = type)) +
-    geom_boxplot(position = position_dodge2(preserve = "single"), width=0.6) + 
+    geom_boxplot(position = position_dodge2(preserve = "single"), width=0.6) +
     ylim(0,1) + ylab("Jaccard index") +
     scale_color_manual(
       breaks = c("Melody","MMUPHin", "CLR-LASSO","BW","ALDEx2","ANCOM-BC2"),
@@ -293,7 +293,7 @@
           strip.text = element_text(size = 14)) +
     labs(linetype="Data") + guides(colour = guide_legend(nrow = 1))
 
-  
+
   pdf("./figures/Fig4_K401_K849.pdf", width = 4, height = 3.00, bg = "white")
 
   p1

@@ -24,12 +24,12 @@
   names(refs) <- names(covariate.interest)
 
   null.obj <- melody.null.model(rel.abd = rel.abd, ref = refs)
-  
+
   summary.stat.study <- melody.get.summary(null.obj = null.obj,
                                            covariate.interest = covariate.interest)
 
   # Meta-analysis
-  Melody.model <- melody.meta.summary(summary.stats = summary.stat.study, 
+  Melody.model <- melody.meta.summary(summary.stats = summary.stat.study,
                                       tune.path = "sequence",
                                       tune.size.sequence = 1:60,
                                       output.best.one = FALSE,
@@ -73,7 +73,7 @@
     taxa.id <- names(which(rank(-abs(clrlasso$glmnet.fit$beta[,which(len.tmp >= len.tax)[1]])) <= len.tax))
     taxa.id <- gsub("[][]", "",unlist(regmatches(taxa.id, gregexpr("\\[.*?\\]",taxa.id))))
     index[[6]] <- taxa.id
-    
+
     # prepare plotting ----
     index <- index[c(6,3,2,5,1,4)]
     Heatmap <- matrix(0,6,6)
@@ -84,11 +84,11 @@
       }
     }
     rownames(Heatmap) <- c("CLR-LASSO", "ANCOM-BC2", "ALDEx2", "BW", "Melody", "MMUPHin")
-    
+
     pdf(paste0("./figures/FigS5_top", tops,".pdf"), width = 6, height = 5, bg = "white")
 
-    pheatmap::pheatmap(Heatmap, cluster_rows = FALSE, cluster_cols = FALSE, breaks = c(1:100)/100,
-                       color = colorRampPalette(c("#2A788EFF", "#7AD151FF", "#FDE725FF"))(100),
+    pheatmap::pheatmap(Heatmap, cluster_rows = FALSE, cluster_cols = FALSE, breaks = c(20:100)/100,
+                       color = (colorRampPalette(c("#2A788EFF", "#7AD151FF", "#FDE725FF"))(100))[20:100],
                        display_numbers = TRUE,fontsize_number = 20, fontsize = 15, legend = FALSE)
 
     dev.off()

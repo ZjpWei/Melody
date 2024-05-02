@@ -18,7 +18,7 @@
   load("./CRC/Sensitivity/summary.stats.ref1.Rdata")
   load("./CRC/Sensitivity/Melody.model.ref1.Rdata")
   load("./CRC/Processed_data/data.org.K401.Rdata")
-  
+
   Melody.model <- Melody.model.ref1
   summary.stat.study <- summary.stat.study.ref1
   len.melody <- sum(Melody.model$disease$coef!=0)
@@ -40,7 +40,7 @@
   species.heatmap <- rownames(est.vals)[which(est.vals$all != 0)]
   est.vals.signed <- est.vals[species.heatmap,"all", drop=FALSE]
   species.heatmap.orderd <- c(rownames(est.vals.signed[order(est.vals.signed[,"all"],decreasing = T),,drop=FALSE]))
-  
+
 
   # Prepare plotting ----
   est.vals.plot <- est.vals[species.heatmap.orderd, "all"]
@@ -115,7 +115,7 @@
       scale_fill_gradientn(colours=col.hm, limits=c(-mx, mx),
                            breaks = c(-mx,-1,0,1,mx),
                            labels = as.character(c(-mx,-1,0,1,mx))) +
-      guides(fill = guide_colourbar(barwidth = 15, barheight = 0.6, 
+      guides(fill = guide_colourbar(barwidth = 15, barheight = 0.6,
                                     title = "Study-specific AA coefficient",
                                     title.position = "top"))
   }
@@ -138,7 +138,7 @@
           axis.title.x = element_blank(),
           legend.position = "right") +
     scale_y_continuous(limits=c(min(est.vals.plot) - 0.5, max(est.vals.plot) + 0.5), expand = c(0, 0)) +
-    scale_x_discrete(position='bottom') + 
+    scale_x_discrete(position='bottom') +
     scale_fill_manual(values=c('lightgrey', 'darkgrey'), guide="none") +
     geom_hline(aes(yintercept = 0),colour="#990000", linetype="dashed")
 

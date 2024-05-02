@@ -12,30 +12,30 @@
   library("gridExtra")
   library("ggplot2")
   library("miMeta")
-  
-  rm(list = ls())
+
   ## Read data
+  rm(list = ls())
   load("./Metabolites/Processed_data/processed_data.Rdata")
-  
+
   ## process data
   cluster <- lapply(metadata, function(d){
-    d <- d %>% dplyr::transmute(Sample, Subject) %>% data.frame() 
+    d <- d %>% dplyr::transmute(Sample, Subject) %>% data.frame()
     rownames(d) <- NULL
     d <- d %>% tibble::column_to_rownames("Sample")
     return(d)
   })
-  
+
   Metabolite.ids <- unique(common.pairs$Compound)
   Genera.id <- unique(common.pairs$Taxon)
-  
+
   covariates.disease <- lapply(metadata[datasets], function(d){
     case.names <- c("Healthy", "Control", "Normal", "H", "0", "nonIBD", "NA")
     return(d %>% tibble::rownames_to_column(var = "IDS") %>%
-             dplyr::transmute(Sample, Study.Group =  case_when(Study.Group %in% case.names ~ "0", 
-                                                               .default = "1")) 
+             dplyr::transmute(Sample, Study.Group =  case_when(Study.Group %in% case.names ~ "0",
+                                                               .default = "1"))
     )
   })
-  
+
   #################################### Choose original compounds ####################################
   datasets.cmpd <- c()
   covariates_adjust_lst <- list()
@@ -48,7 +48,7 @@
       cmpd.dat <- data.for.lm[[d]]$rel.cmpd[,data.for.lm[[d]]$cmpd.name %in% cmpd.name]
       otu_data[,colnames(data.for.lm[[d]]$rel.abd)] <- data.for.lm[[d]]$rel.abd %>% as.matrix()
       sample.kep <- intersect(rownames(otu_data), rownames(cmpd.dat))
-      
+
       cmpd.lst <- c()
       for(l in cmpd.name){
         cmpd.lst <- rbind(cmpd.lst,
@@ -61,24 +61,24 @@
         data.frame(row.names = NULL) %>% tibble::column_to_rownames(var = "Sample")
     }
   }
-  
+
   for(d in datasets){
     if(d %in% datasets.cmpd){
       load(paste0("./Metabolites/Metabolite_select/Compound_", d, ".Rdata"))
-      remove.cmpd <- setdiff(cmpd_sty_scan$Orig.Compound, cmpd_sty_scan %>% 
-                               dplyr::filter(selected_num == max(selected_num), .by = Compound) %>% 
-                               dplyr::filter(row_number() == 1, .by = Compound) %>% 
+      remove.cmpd <- setdiff(cmpd_sty_scan$Orig.Compound, cmpd_sty_scan %>%
+                               dplyr::filter(selected_num == max(selected_num), .by = Compound) %>%
+                               dplyr::filter(row_number() == 1, .by = Compound) %>%
                                pull(Orig.Compound))
       keep.cmpd <- !(colnames(data.for.lm[[d]]$rel.cmpd) %in% remove.cmpd)
       cmpd.dat <- data.for.lm[[d]]$rel.cmpd[,keep.cmpd]
       data.for.lm[[d]]$cmpd.name <- data.for.lm[[d]]$cmpd.name[keep.cmpd]
-      colnames(cmpd.dat) <- data.for.lm[[d]]$cmpd.name 
+      colnames(cmpd.dat) <- data.for.lm[[d]]$cmpd.name
       data.for.lm[[d]]$rel.cmpd <- cmpd.dat
     }else{
-      colnames(data.for.lm[[d]]$rel.cmpd) <- data.for.lm[[d]]$cmpd.name 
+      colnames(data.for.lm[[d]]$rel.cmpd) <- data.for.lm[[d]]$cmpd.name
     }
   }
-  
+
   ## Reform data
   otu_data_lst <- list()
   cmpd_data_lst <- list()
@@ -108,21 +108,21 @@
       otu_data_lst_sub[[d]] <- (otu_data_lst[[d]])[,!(colnames(otu_data_lst[[d]]) %in% rm.gn)]
       cmpd_data_lst_sub[[d]] <- cmpd_data_lst[[d]] %>% dplyr::transmute(HMDB0001161 = HMDB0001161)
     }
-    
+
     null.obj <- melody.null.model(rel.abd = otu_data_lst_sub, covariate.adjust = covariates_adjust_lst)
-    
-    summary.stat.study <- melody.get.summary(null.obj = null.obj, 
+
+    summary.stat.study <- melody.get.summary(null.obj = null.obj,
                                              covariate.interest = cmpd_data_lst_sub,
                                              cluster = cluster_data_lst)
-    
+
     Melody.model <- melody.meta.summary(summary.stats = summary.stat.study,
                                         tune.path = "sequence",
                                         output.best.one = TRUE)
 
     len.melody <- sum(Melody.model$HMDB0001161$coef!=0)
-    
+
     rm.gn <- names(which(rank(-Melody.model$HMDB0001161$coef) <= 5))
-    
+
     # Main ----
     L <- length(summary.stat.study)
     species.name <- names(Melody.model$HMDB0001161$coef)
@@ -143,7 +143,7 @@
     est.vals.signed <- est.vals[species.heatmap,"all", drop=FALSE]
     species.heatmap.orderd <- c(rownames(est.vals.signed[order(est.vals.signed[,"all"],decreasing = T),,drop=FALSE]))
     renames <- species.heatmap.orderd
-    
+
     # Prepare plotting
     est.vals.plot <- est.vals[species.heatmap.orderd,"all"]
     tab.AA.plot <- tab.AA[species.heatmap.orderd,]
@@ -156,7 +156,7 @@
                 colorRampPalette(brewer.pal(9, 'Reds'))(n))
     tab.AA.plot[tab.AA.plot >= mx] <- mx
     tab.AA.plot[tab.AA.plot <= -mx] <- -mx
-    
+
     # Heatmap plot ----
     rownames(tab.AA.plot) <- gsub(".*;g__","", rownames(tab.AA.plot))
     renames <- gsub(".*;g__", "", renames)
@@ -185,13 +185,13 @@
         scale_fill_gradientn(colours=col.hm, limits=c(-mx, mx),
                              breaks = c(-mx,-0.5,0,0.5,mx),
                              labels = as.character(c(-mx,-0.5,0,0.5,mx))) +
-        guides(fill = guide_colourbar(barwidth = 12, barheight = 0.6, 
+        guides(fill = guide_colourbar(barwidth = 12, barheight = 0.6,
                                       title = "Study-specific AA coefficient",
                                       title.position = "top"))
     }
     g1 <- plot.single.study.heatmap.ref(rev(ref.studies))
-    
-    
+
+
     # Scatter plot ----
     g2 <- tibble(species=factor(renames, levels=renames),
                  est.vals= est.vals.plot,
@@ -211,11 +211,11 @@
       scale_x_discrete(position='bottom') +
       scale_fill_manual(values=c('lightgrey', 'darkgrey'), guide="none") +
       geom_hline(aes(yintercept = 0),colour="#990000", linetype="dashed")
-    
+
     # Generate figures ----
     p_melody[[k]] <- plot_grid(g2, g1, nrow=2, align = 'v', rel_heights = c(.25,.75))
   }
-  
+
   # MMUPHin heatmap
   source("./utility/mmuphin.R")
   load("./Metabolites/Results/Melody.null.model.Rdata")
@@ -226,18 +226,18 @@
   ref.studies <- c()
   for(d in datasets){
     if("HMDB0001161" %in% colnames(data.for.lm[[d]]$rel.cmpd)){
-      sample.kep <- intersect(rownames(data.for.lm[[d]]$rel.abd), 
+      sample.kep <- intersect(rownames(data.for.lm[[d]]$rel.abd),
                               rownames(data.for.lm[[d]]$rel.cmpd)[!is.na(data.for.lm[[d]]$rel.cmpd[,"HMDB0001161"])])
-      covariates_adjust_lst <- rbind(covariates_adjust_lst, covariates.disease[[d]][match(sample.kep, covariates.disease[[d]]$Sample),] %>% 
+      covariates_adjust_lst <- rbind(covariates_adjust_lst, covariates.disease[[d]][match(sample.kep, covariates.disease[[d]]$Sample),] %>%
                                        data.frame(row.names = NULL) %>%
                                        tibble::column_to_rownames(var = "Sample"))
-      
-      tmp.otu <- matrix(0, nrow = length(sample.kep), ncol = length(Genera.id), 
+
+      tmp.otu <- matrix(0, nrow = length(sample.kep), ncol = length(Genera.id),
                         dimnames = list(sample.kep, Genera.id))
       inter.taxa <- colnames(null.obj[[d]]$res)
       tmp.otu[sample.kep, inter.taxa] <- as.matrix(data.for.lm[[d]]$rel.abd[sample.kep,inter.taxa])
       otu_data_lst <- rbind(otu_data_lst, tmp.otu)
-      tmp.cmpd <- matrix(0, nrow = length(sample.kep), ncol = 1, 
+      tmp.cmpd <- matrix(0, nrow = length(sample.kep), ncol = 1,
                          dimnames = list(sample.kep, "HMDB0001161"))
       tmp.cmpd[sample.kep, "HMDB0001161"] <- as.matrix(data.for.lm[[d]]$rel.cmpd[sample.kep,"HMDB0001161"])
       cmpd_data_lst <- rbind(cmpd_data_lst, tmp.cmpd)
@@ -246,10 +246,10 @@
     }
   }
   cluster_data_lst <- cluster_data_lst[rownames(otu_data_lst),]
-  meta.data <- cbind(cluster_data_lst, covariates_adjust_lst, ref.studies, cmpd_data_lst) 
+  meta.data <- cbind(cluster_data_lst, covariates_adjust_lst, ref.studies, cmpd_data_lst)
   colnames(meta.data) <- c("Subject", "Study.Group", "Study" ,"HMDB0001161")
   meta.data$Study <- factor(meta.data$Study)
-  
+
   p_mmuphin <- list()
   rm.gm <- c()
   for(k in 1:2){
@@ -271,7 +271,7 @@
                                         moderator_variables = NULL)
     }
     MMUPHin.model$maaslin_fits <- MMUPHin.model$maaslin_fits[order(match(names(MMUPHin.model$maaslin_fits), datasets))]
-    
+
     summary.stat.study <- list()
     for(l in 1:length(MMUPHin.model$maaslin_fits)){
       summary.stat.study[[l]] <- list(est = MMUPHin.model$maaslin_fits[[l]]$coef)
@@ -282,7 +282,7 @@
     MMUPHin.coef[p.adjust(MMUPHin.model$meta_fits$pval, method = "fdr") > 0.05] <- 0
     len.melody <- sum(MMUPHin.coef!=0)
     rm.gm <- names(which(rank(-MMUPHin.coef) <= 5))
-    
+
     # Main ----
     L <- length(summary.stat.study)
     species.name <- gsub(".*;g__","g__", names(MMUPHin.coef))
@@ -294,7 +294,7 @@
       tab.AA <- rbind(tab.AA, tmp.AA)
     }
     est.vals <- data.frame(all = MMUPHin.coef)
-    
+
     rownames(tab.AA) <- paste0("MTBL", as.character(sort(match(levels(meta.data$Study), datasets))))
     ref.studies <- paste0("MTBL", as.character(sort(match(levels(meta.data$Study), datasets))))
     tab.AA <- as.data.frame(t(tab.AA))
@@ -302,7 +302,7 @@
     est.vals.signed <- est.vals[species.heatmap,"all", drop=FALSE]
     species.heatmap.orderd <- c(rownames(est.vals.signed[order(est.vals.signed[,"all"],decreasing = T),,drop=FALSE]))
     renames <- gsub(".*;g__","g__",species.heatmap.orderd)
-    
+
     # Prepare plotting
     est.vals.plot <- est.vals[species.heatmap.orderd,"all"]
     tab.AA.plot <- tab.AA[species.heatmap.orderd,]
@@ -312,13 +312,13 @@
     n <- floor(0.5*num.col.steps)
     col.hm <-   col.hm <- c(rev(colorRampPalette(brewer.pal(9, 'Purples'))(n)),
                             rep('#FFFFFF', num.col.steps-2*n),
-                            colorRampPalette(c("#F9F9FC", "#FFE4E4", "#FFC5C5", 
-                                               "#FFA6A6", "#FF8787", "#FF6868", 
+                            colorRampPalette(c("#F9F9FC", "#FFE4E4", "#FFC5C5",
+                                               "#FFA6A6", "#FF8787", "#FF6868",
                                                "#FF4848", "#FF2929", "#FF0000"))(n))
-    
+
     tab.AA.plot[tab.AA.plot >= mx] <- mx
     tab.AA.plot[tab.AA.plot <= -mx] <- -mx
-    
+
     # Heatmap plot ----
     rownames(tab.AA.plot) <- gsub(".*;g__","", rownames(tab.AA.plot))
     renames <- gsub("g__", "", renames)
@@ -347,12 +347,12 @@
         scale_fill_gradientn(colours=col.hm, limits=c(-mx, mx),
                              breaks = c(-mx,-mx/2,0,mx/2,mx),
                              labels = as.character(c(-mx,-mx/2,0,mx/2,mx))) +
-        guides(fill = guide_colourbar(barwidth = 12, barheight = 0.6, 
+        guides(fill = guide_colourbar(barwidth = 12, barheight = 0.6,
                                       title = "Study-specific coefficient",
                                       title.position = "top"))
     }
     g1 <- plot.single.study.heatmap.ref(rev(ref.studies))
-    
+
     # Scatter plot ----
     g2 <- tibble(species=factor(renames, levels=renames),
                  est.vals= est.vals.plot,
@@ -372,36 +372,35 @@
       scale_x_discrete(position='bottom') +
       scale_fill_manual(values=c('lightgrey', 'darkgrey'), guide="none") +
       geom_hline(aes(yintercept = 0),colour="#990000", linetype="dashed")
-    
+
     # Generate figures ----
     p_mmuphin[[k]] <- plot_grid(g2, g1, nrow=2, align = 'v', rel_heights = c(.25,.75))
   }
-  
-  
+
+
   pdf("./figures/FigS10_melody_bf.pdf", width = 6.75, height = 5.10, bg = "white")
-  
+
   p_melody[[1]]
-  
+
   dev.off()
-  
+
   pdf("./figures/FigS10_melody_af.pdf", width = 6.75, height = 5.10, bg = "white")
-  
+
   p_melody[[2]]
-  
+
   dev.off()
-  
-  
+
+
   pdf("./figures/FigS10_mmuphin_bf.pdf", width = 6.75, height = 5.10, bg = "white")
-  
+
   p_mmuphin[[1]]
-  
+
   dev.off()
-  
+
   pdf("./figures/FigS10_mmphin_af.pdf", width = 6.75, height = 5.10, bg = "white")
-  
+
   p_mmuphin[[2]]
-  
+
   dev.off()
-  
-  
-  
+
+

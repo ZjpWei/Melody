@@ -11,7 +11,8 @@
   library(grid)
   library(randomcoloR)
   library(ggtext)
-  
+
+  # Main ----
   rm(list = ls())
   load("./Metabolites/Processed_data/processed_data.Rdata")
   load("./Metabolites/Results/Melody.meta.all.Rdata")
@@ -30,7 +31,7 @@
   MMUPHin_qval_mat <- apply(MMUPHin_pval_mat, 2, p.adjust, method = "fdr")
   MMUPHin_coef_mat[MMUPHin_qval_mat > 0.05] <- 0
   MMUPHin_coef_mat[is.na(MMUPHin_coef_mat)] <- 0
-  
+
   sample.id <- as.vector(unlist(lapply(data.for.lm, function(d){rownames(d$rel.abd)})))
   taxa <- NULL
   for(d in names(data.for.lm)){
@@ -44,16 +45,16 @@
   }
   tax.prevalence <- colMeans(Otu_big_mat / rowSums(Otu_big_mat))
   names(tax.prevalence) <- gsub(".*;g__","g__", names(tax.prevalence))
-  
-  df_genera <- data.frame(Melody = rowSums(Melody_coef_mat!=0)) %>% 
+
+  df_genera <- data.frame(Melody = rowSums(Melody_coef_mat!=0)) %>%
     tibble::rownames_to_column(var = "Genera") %>% dplyr::left_join(
-      data.frame(MMUPHin = rowSums(MMUPHin_coef_mat!=0)) %>% 
-        tibble::rownames_to_column(var = "Genera"), by = "Genera") %>% 
-    dplyr::mutate(Genera = gsub(".*;g__","g__",Genera)) %>% 
-    dplyr::arrange(desc(Melody)) %>% 
+      data.frame(MMUPHin = rowSums(MMUPHin_coef_mat!=0)) %>%
+        tibble::rownames_to_column(var = "Genera"), by = "Genera") %>%
+    dplyr::mutate(Genera = gsub(".*;g__","g__",Genera)) %>%
+    dplyr::arrange(desc(Melody)) %>%
     dplyr::mutate(group = dplyr::case_when(Genera %in%  c("g__Ruminococcus_B",
                                                           "g__Faecalimonas",
-                                                          "g__Sutterella",         
+                                                          "g__Sutterella",
                                                           "g__Clostridium_Q",
                                                           "g__Anaerostipes",
                                                           "g__Phocaeicola",
@@ -66,22 +67,22 @@
                                                           "g__Haemophilus_D") ~ "unique genera",
     TRUE ~ "common genera")) %>%
     dplyr::mutate(label = dplyr::case_when(group == "unique genera" ~ gsub("g__","", Genera),
-                                           TRUE ~ "")) %>% 
+                                           TRUE ~ "")) %>%
     dplyr::mutate(vjust = rep(-1, 101)) %>% dplyr::mutate(hjust = rep(0.5, 101)) %>%
     dplyr::left_join(data.frame(tax.prevalence = tax.prevalence) %>% tibble::rownames_to_column("Genera"), by = "Genera") %>%
     dplyr::mutate(prevalence = dplyr::case_when(tax.prevalence >=  0.1 ~ "1 \u00D7 10 <sup>-1</sup>",
                                                 tax.prevalence < 0.1 & tax.prevalence >= 0.01 ~ "1 \u00D7 10 <sup>-2</sup>",
                                                 tax.prevalence < 0.01 & tax.prevalence >= 0.001 ~ "1 \u00D7 10 <sup>-3</sup>",
                                                 tax.prevalence < 0.001 & tax.prevalence >= 0.0001 ~ "1 \u00D7 10 <sup>-4</sup>",
-                                                TRUE ~ "")) 
-  
-  df_cmpd <- data.frame(Melody = colSums(Melody_coef_mat != 0)) %>% 
+                                                TRUE ~ ""))
+
+  df_cmpd <- data.frame(Melody = colSums(Melody_coef_mat != 0)) %>%
     tibble::rownames_to_column(var = "Compounds") %>% dplyr::left_join(
-      data.frame(MMUPHin = colSums(MMUPHin_coef_mat != 0)) %>% 
+      data.frame(MMUPHin = colSums(MMUPHin_coef_mat != 0)) %>%
         tibble::rownames_to_column(var = "Compounds"), by = "Compounds"
-    ) %>% dplyr::arrange(desc(Melody)) %>% 
+    ) %>% dplyr::arrange(desc(Melody)) %>%
     dplyr::mutate(HMDB.Class = "TRUE")
-  
+
   df_genera$hjust[df_genera$label == "Blautia"] <- 0.8
   df_genera$hjust[df_genera$label == "Phocaeicola"] <- 0.2
   df_genera$vjust[df_genera$label == "Faecalimonas"] <- -3
@@ -92,23 +93,25 @@
   df_genera$vjust[df_genera$label == "Haemophilus_D"] <- -2
   df_genera$vjust[df_genera$label == "Clostridium"] <- -1
   df_genera$vjust[df_genera$label == "Erysipelatoclostridium"] <- -3.5
+  df_genera$hjust[df_genera$label == "Erysipelatoclostridium"] <- 0.7
   df_genera$vjust[df_genera$label == "Clostridium_Q"] <- 1.4
-  df_genera$hjust[df_genera$label == "Clostridium_Q"] <- 0
-  
-  p_genus <- df_genera %>% ggplot(aes(x = MMUPHin, y = Melody, color = group, label = label)) + 
-    geom_point(aes(size = prevalence)) + 
+  df_genera$hjust[df_genera$label == "Clostridium_Q"] <- -0.1
+  df_genera$hjust[df_genera$label == "Clostridium"] <- 0.7
+
+  p_genus <- df_genera %>% ggplot(aes(x = MMUPHin, y = Melody, color = group, label = label)) +
+    geom_point(aes(size = prevalence)) +
     geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "gray") +
     xlab("Count in MMUPHin results")+ ylab("Count in Melody results") +
     theme_minimal() + ylim(0, 200) + xlim(0, 200) + ggtitle("") +
-    scale_color_manual(values=c("gray", "darkolivegreen3")) + 
-    scale_size_manual(values = c(4,3,2,1), 
+    scale_color_manual(values=c("gray", "darkolivegreen3")) +
+    scale_size_manual(values = c(4,3,2,1),
                       breaks = c("1 \u00D7 10 <sup>-1</sup>",
                                  "1 \u00D7 10 <sup>-2</sup>",
                                  "1 \u00D7 10 <sup>-3</sup>",
                                  "1 \u00D7 10 <sup>-4</sup>")) +
-    geom_text(hjust=df_genera$hjust, vjust=df_genera$vjust, size = 3, color = "black") + 
+    geom_text(hjust=df_genera$hjust, vjust=df_genera$vjust, size = 4, color = "black") +
     theme(axis.title.x = element_text(size = 17),
-          axis.title.y = element_text(size = 17), 
+          axis.title.y = element_text(size = 17),
           title = element_blank(),
           plot.title = element_text(hjust = 0.5, vjust = 0.1, size = 18),
           axis.ticks = element_blank(),
@@ -121,16 +124,16 @@
           legend.text = element_markdown(size = 15),
           legend.position = c(0.85,0.2)) + labs(size="Trimmed average <br> proportion") +
     guides(color = "none")
-  
- 
-  p_cmpd <- df_cmpd %>% ggplot(aes(x = MMUPHin, y = Melody, color = HMDB.Class)) + 
+
+
+  p_cmpd <- df_cmpd %>% ggplot(aes(x = MMUPHin, y = Melody, color = HMDB.Class)) +
     geom_point() +  geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "gray") +
-    xlab("Count in MMUPHin results")+ 
+    xlab("Count in MMUPHin results")+
     ylab("Count in Melody results") +
     theme_minimal() + ylim(0, 70) + xlim(0, 70) + ggtitle("") +
-    scale_color_manual(values="orange") + 
+    scale_color_manual(values="orange") +
     theme(axis.title.x = element_text(size = 17),
-          axis.title.y = element_text(size = 17), 
+          axis.title.y = element_text(size = 17),
           title = element_blank(),
           plot.title = element_text(hjust = 0.5, vjust = 0.1, size = 18),
           axis.ticks = element_blank(),
@@ -144,15 +147,14 @@
           legend.position = "none")
 
   pdf("./figures/FigS9_genus.pdf", width = 7.04, height = 6.64, bg = "white")
-  
+
   p_genus
-  
+
   dev.off()
-  
-  pdf("./figures/FigS9_cmpd.pdf", width = 7.04, height = 6.04, bg = "white")
-  
+
+  pdf("./figures/FigS9_cmpd.pdf", width = 7.04, height = 6.64, bg = "white")
+
   p_cmpd
-  
+
   dev.off()
-  
-  
+

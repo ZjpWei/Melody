@@ -49,7 +49,7 @@
   taxa.id <- names(which(rank(-abs(clrlasso$glmnet.fit$beta[,which(len.tmp >= len.tax)[1]])) <= len.tax))
   taxa.id <- gsub("[][]", "",unlist(regmatches(taxa.id, gregexpr("\\[.*?\\]",taxa.id))))
   index[[6]] <- taxa.id
-  
+
   # prepare plotting ----
   Heatmap <- matrix(0,6,6)
   for(l in 1:length(index)){
@@ -63,8 +63,8 @@
   # Generate figures ----
   pdf("./figures/Fig3_b.pdf", width = 8, height = 5.68, bg = "white")
 
-  pheatmap::pheatmap(round(Heatmap,2), cluster_rows = TRUE, cluster_cols = TRUE, 
-                     color = colorRampPalette(c("#2A788EFF", "#7AD151FF", "#FDE725FF"))(100),
-                     breaks = c(1:100)/100, display_numbers = TRUE,fontsize_number = 22, fontsize = 18)
+  pheatmap::pheatmap(round(Heatmap,2), cluster_rows = TRUE, cluster_cols = TRUE,
+                     color = (colorRampPalette(c("#2A788EFF", "#7AD151FF", "#FDE725FF"))(100))[20:100],
+                     breaks = c(20:100)/100, display_numbers = TRUE,fontsize_number = 22, fontsize = 18)
 
   dev.off()

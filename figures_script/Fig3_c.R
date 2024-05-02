@@ -1,5 +1,5 @@
 # =============================================== #
-#             Figure 3 (c): Stability             #
+#       Figure 3 (c): Reference sensitivity       #
 # =============================================== #
 
   # Packages ----
@@ -34,8 +34,8 @@
   pdf("./figures/Fig3_c.pdf", width = 8, height = 5.68, bg = "white")
 
   pheatmap::pheatmap(round(Jaccard,2), cluster_rows = FALSE, cluster_cols = FALSE,
-                     color = colorRampPalette(c("#2A788EFF", "#7AD151FF", "#FDE725FF"))(100),
-                     breaks = c(1:100)/100, display_numbers = TRUE,
+                     color = (colorRampPalette(c("#2A788EFF", "#7AD151FF", "#FDE725FF"))(100))[20:100],
+                     breaks = c(20:100)/100, display_numbers = TRUE,
                      fontsize_number = 24, fontsize_row=22)
 
   dev.off()
