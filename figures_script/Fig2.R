@@ -7,12 +7,12 @@
   library("tidyverse")
   library("latex2exp")
   library("ggtext")
-  
+
   # Main ----
   rm(list = ls())
   load("./CRC/Processed_data/data.org.K401.Rdata")
   tax.names <- colnames(data.rel[[1]]$Y)
-  
+
   # Scenario: n = 100 ~ 180 ----
   ## Signature effect size ----
   data.loc <- "./Simulation/large/Independent/"
@@ -34,15 +34,15 @@
   PRC_all <- PRC_all[PRC_all$batch_type %in% c("Original","MMUPHin"),]
   PRC_all$batch_type[PRC_all$batch_type == "MMUPHin"] <- "Study-effect corrected"
   PRC_all$scenarios <- "<i>n</i> = 100 ~ 180 <br> Signature effect size"
-  
-  p11 <- PRC_all %>% filter(method != "Melody-Pooled") %>% 
+
+  p11 <- PRC_all %>% filter(method != "Melody-Pooled") %>%
     ggplot(aes(x=x.label, y=AUPRC, group = interaction(Method, batch_type), linetype = batch_type))  +
     xlab(TeX('$\\Delta$', bold = TRUE)) + ylim(0.39,0.83) +
     geom_line(linewidth = 0.7, aes(color=Method)) + geom_point(size = 2,aes(color = Method), pch = 18) +
     scale_color_manual(
       breaks =  c("Melody", "MMUPHin","CLR-LASSO","BW", "ALDEx2", "ANCOM-BC2"),
       values = c("red","purple", "orange", "grey", "green" ,"blue"))  +
-    scale_linetype_manual(breaks = c( "Original", "Study-effect corrected"), values=c("solid", "dashed")) + 
+    scale_linetype_manual(breaks = c( "Original", "Study-effect corrected"), values=c("solid", "dashed")) +
     theme_bw() +
     theme(panel.grid.major = element_line(colour = "grey", linetype = "dotted"),
           panel.grid.minor = element_blank(),
@@ -64,7 +64,7 @@
     labs(linetype="Data") +
     facet_wrap(facets = vars(scenarios)) + guides(colour = guide_legend(nrow = 1))
   PRC_all$scenarios <- "<i>n</i> = 100 ~ 180<br> Signature effect size"
-  
+
   ## Signature sparsity ----
   facts <- c("20", "30", "40", "50","60", "70", "80")
   PRC_all <- NULL
@@ -84,8 +84,8 @@
   PRC_all <- PRC_all[PRC_all$batch_type %in% c("Original","MMUPHin"),]
   PRC_all$batch_type[PRC_all$batch_type == "MMUPHin"] <- "Study-effect corrected"
   PRC_all$scenarios <- "<i>n</i> = 100 ~ 180 <br> Signature number"
-  
-  p12 <-  PRC_all %>% filter(method != "Melody-Pooled") %>% 
+
+  p12 <-  PRC_all %>% filter(method != "Melody-Pooled") %>%
     ggplot(aes(x=x.label, y=AUPRC, group = interaction(Method, batch_type), linetype = batch_type))  +
     xlab(TeX("d", italic = TRUE)) + ylim(0.39,0.83) +
     geom_line(linewidth = 0.7, aes(color=Method)) + geom_point(size = 2,aes(color = Method), pch = 18) +
@@ -109,7 +109,7 @@
           strip.text = element_markdown(size = 16)) +
     facet_wrap(facets = vars(scenarios)) + guides(colour = guide_legend(nrow = 1))
   PRC_all$scenarios <- "<i>n</i> = 100 ~ 180<br> Signature number"
- 
+
   ## Signature effect direction ----
   facts <- c("50","60", "70", "80", "90","100")
   PRC_all <- NULL
@@ -129,7 +129,7 @@
   PRC_all <- PRC_all[PRC_all$batch_type %in% c("Original","MMUPHin"),]
   PRC_all$batch_type[PRC_all$batch_type == "MMUPHin"] <- "Study-effect corrected"
   PRC_all$scenarios <- "<i>n</i> = 100 ~ 180 <br> Signature effect direction"
-  
+
   p13 <- PRC_all %>% filter(method != "Melody-Pooled") %>%
     ggplot(aes(x=x.label, y=AUPRC, group = interaction(Method, batch_type), linetype = batch_type))  +
     xlab(TeX("pos%", italic = TRUE)) + ylim(0.39,0.83) +
@@ -154,9 +154,9 @@
           strip.text = element_markdown(size = 16)) +
     facet_wrap(facets = vars(scenarios)) + guides(colour = guide_legend(nrow = 1))
   PRC_all$scenarios <- "<i>n</i> = 100 ~ 180<br> Signature effect direction"
-  
+
   ## Case/control sequence depth unevenness ----
-  facts <- c("0", "0.25", "0.50","0.75", "1")
+  facts <- c("0", "0.25", "0.5","0.75", "1")
   PRC_all <- NULL
   for(tag in facts){
     PRC_tmp <- NULL
@@ -174,15 +174,15 @@
   PRC_all <- PRC_all[PRC_all$batch_type %in% c("Original","MMUPHin"),]
   PRC_all$batch_type[PRC_all$batch_type == "MMUPHin"] <- "Study-effect corrected"
   PRC_all$scenarios <- "<i>n</i> = 100 ~ 180 <br> Sequencing depth unevenness"
-  
+
   p14 <- PRC_all %>% filter(method != "Melody-Pooled") %>%
     ggplot(aes(x=x.label, y=AUPRC, group = interaction(Method, batch_type), linetype = batch_type))  +
-    xlab(TeX('u', italic = TRUE)) + ylim(0.39,0.83)+ 
+    xlab(TeX('u', italic = TRUE)) + ylim(0.39,0.83)+
     geom_line(linewidth = 0.7, aes(color=Method)) + geom_point(size = 2, aes(color = Method), pch = 18) +
     scale_color_manual(
       breaks =  c("Melody", "MMUPHin","CLR-LASSO","BW", "ALDEx2", "ANCOM-BC2"),
       values = c("red","purple", "orange", "grey", "green" ,"blue"))  +
-    scale_linetype_manual(breaks = c( "Original", "Study-effect corrected"), values=c("solid", "dashed")) + 
+    scale_linetype_manual(breaks = c( "Original", "Study-effect corrected"), values=c("solid", "dashed")) +
     theme_bw() +
     theme(panel.grid.major = element_line(colour = "grey", linetype = "dotted"),
           panel.grid.minor = element_blank(),
@@ -198,7 +198,7 @@
           strip.text = element_markdown(size = 16)) +
     facet_wrap(facets = vars(scenarios)) + guides(colour = guide_legend(nrow = 1))
   PRC_all$scenarios <- "<i>n</i> = 100 ~ 180<br> Sequencing depth unevenness"
-  
+
   # Scenario: n = 20 ~ 60 ----
   ## Signature effect size ----
   data.loc <- "./Simulation/small/Independent/"
@@ -221,15 +221,15 @@
   PRC_all <- PRC_all[PRC_all$batch_type %in% c("Original","MMUPHin"),]
   PRC_all$batch_type[PRC_all$batch_type == "MMUPHin"] <- "Study-effect corrected"
   PRC_all$scenarios <- "<i>n</i> = 20 ~ 60 <br> Signature effect size"
-  
-  p21 <- PRC_all %>% filter(method != "Melody-Pooled") %>% 
+
+  p21 <- PRC_all %>% filter(method != "Melody-Pooled") %>%
     ggplot(aes(x=x.label, y=AUPRC, group = interaction(Method, batch_type), linetype = batch_type))  +
     xlab(TeX('$\\Delta$', bold = TRUE)) + ylim(0.39,0.83) +
     geom_line(linewidth = 0.7, aes(color=Method)) + geom_point(size = 2,aes(color = Method), pch = 18) +
     scale_color_manual(
       breaks =  c("Melody", "MMUPHin","CLR-LASSO","BW", "ALDEx2", "ANCOM-BC2"),
       values = c("red","purple", "orange", "grey", "green" ,"blue"))  +
-    scale_linetype_manual(breaks = c( "Original", "Study-effect corrected"), values=c("solid", "dashed")) + 
+    scale_linetype_manual(breaks = c( "Original", "Study-effect corrected"), values=c("solid", "dashed")) +
     theme_bw() +
     theme(panel.grid.major = element_line(colour = "grey", linetype = "dotted"),
           panel.grid.minor = element_blank(),
@@ -251,14 +251,14 @@
     labs(linetype="Data") +
     facet_wrap(facets = vars(scenarios)) + guides(colour = guide_legend(nrow = 1))
   PRC_all$scenarios <- "<i>n</i> = 20 ~ 60<br> Signature effect size"
-  
+
   ## Signature sparsity ----
   facts <- c("20", "30", "40", "50","60", "70", "80")
   PRC_all <- NULL
   for(tag in facts){
     PRC_tmp <- NULL
     for(s in 1:100){
-      load(paste0(data.loc, "AUPRC_Ka", tag, "_Pos0.7_effsz2_mu0_", as.character(s), ".Rdata"))
+      load(paste0(data.loc, "AUPRC_Ka", tag, "_Pos0.7_effsz5_mu0_", as.character(s), ".Rdata"))
       PRC_tmp <- rbind(PRC_tmp, PRC)
     }
     tmp.prc <- data.frame(PRC_tmp) %>% group_by(method, batch_type, data_type) %>% summarize(AUPRC = mean(AUPRC, na.rm = TRUE))
@@ -272,8 +272,8 @@
   PRC_all <- PRC_all[PRC_all$batch_type %in% c("Original","MMUPHin"),]
   PRC_all$batch_type[PRC_all$batch_type == "MMUPHin"] <- "Study-effect corrected"
   PRC_all$scenarios <- "<i>n</i> = 20 ~ 60 <br> Signature number"
-  
-  p22 <-  PRC_all %>% filter(method != "Melody-Pooled") %>% 
+
+  p22 <-  PRC_all %>% filter(method != "Melody-Pooled") %>%
     ggplot(aes(x=x.label, y=AUPRC, group = interaction(Method, batch_type), linetype = batch_type))  +
     xlab(TeX("d", italic = TRUE)) + ylim(0.39,0.83) +
     geom_line(linewidth = 0.7, aes(color=Method)) + geom_point(size = 2,aes(color = Method), pch = 18) +
@@ -297,14 +297,14 @@
           strip.text = element_markdown(size = 16)) +
     facet_wrap(facets = vars(scenarios)) + guides(colour = guide_legend(nrow = 1))
   PRC_all$scenarios <- "<i>n</i> = 20 ~ 60<br> Signature number"
-  
+
   ## Signature effect direction ----
   facts <- c("50","60", "70", "80", "90","100")
   PRC_all <- NULL
   for(tag in facts){
     PRC_tmp <- NULL
     for(s in 1:100){
-      load(paste0(data.loc, "AUPRC_Ka40_Pos", as.numeric(tag)/100, "_effsz2_mu0_", as.character(s), ".Rdata"))
+      load(paste0(data.loc, "AUPRC_Ka40_Pos", as.numeric(tag)/100, "_effsz5_mu0_", as.character(s), ".Rdata"))
       PRC_tmp <- rbind(PRC_tmp, PRC)
     }
     tmp.prc <- data.frame(PRC_tmp) %>% group_by(method, batch_type, data_type) %>% summarize(AUPRC = mean(AUPRC, na.rm = TRUE))
@@ -317,7 +317,7 @@
   PRC_all <- PRC_all[PRC_all$batch_type %in% c("Original","MMUPHin"),]
   PRC_all$batch_type[PRC_all$batch_type == "MMUPHin"] <- "Study-effect corrected"
   PRC_all$scenarios <- "<i>n</i> = 20 ~ 60 <br> Signature effect direction"
-  
+
   p23 <- PRC_all %>% filter(method != "Melody-Pooled") %>%
     ggplot(aes(x=x.label, y=AUPRC, group = interaction(Method, batch_type), linetype = batch_type))  +
     xlab(TeX("pos%", italic = TRUE)) + ylim(0.39,0.83) +
@@ -342,14 +342,14 @@
           strip.text = element_markdown(size = 16)) +
     facet_wrap(facets = vars(scenarios)) + guides(colour = guide_legend(nrow = 1))
   PRC_all$scenarios <- "<i>n</i> = 20 ~ 60<br> Signature effect direction"
-  
+
   ## Case/control sequence depth unevenness ----
-  facts <- c("0", "0.25", "0.50","0.75", "1")
+  facts <- c("0", "0.25", "0.5","0.75", "1")
   PRC_all <- NULL
   for(tag in facts){
     PRC_tmp <- NULL
     for(s in 1:100){
-      load(paste0(data.loc, "AUPRC_Ka40_Pos0.7_effsz2_mu", tag, "_", as.character(s), ".Rdata"))
+      load(paste0(data.loc, "AUPRC_Ka40_Pos0.7_effsz5_mu", tag, "_", as.character(s), ".Rdata"))
       PRC_tmp <- rbind(PRC_tmp, PRC)
     }
     tmp.prc <- data.frame(PRC_tmp) %>% group_by(method, batch_type, data_type) %>% summarize(AUPRC = mean(AUPRC, na.rm = TRUE))
@@ -362,15 +362,15 @@
   PRC_all <- PRC_all[PRC_all$batch_type %in% c("Original","MMUPHin"),]
   PRC_all$batch_type[PRC_all$batch_type == "MMUPHin"] <- "Study-effect corrected"
   PRC_all$scenarios <- "<i>n</i> = 20 ~ 60 <br> Sequencing depth unevenness"
-  
+
   p24 <- PRC_all %>% filter(method != "Melody-Pooled") %>%
     ggplot(aes(x=x.label, y=AUPRC, group = interaction(Method, batch_type), linetype = batch_type))  +
-    xlab(TeX('u', italic = TRUE)) + ylim(0.39,0.83)+ 
+    xlab(TeX('u', italic = TRUE)) + ylim(0.39,0.83)+
     geom_line(linewidth = 0.7, aes(color=Method)) + geom_point(size = 2, aes(color = Method), pch = 18) +
     scale_color_manual(
       breaks =  c("Melody", "MMUPHin","CLR-LASSO","BW", "ALDEx2", "ANCOM-BC2"),
       values = c("red","purple", "orange", "grey", "green" ,"blue"))  +
-    scale_linetype_manual(breaks = c( "Original", "Study-effect corrected"), values=c("solid", "dashed")) + 
+    scale_linetype_manual(breaks = c( "Original", "Study-effect corrected"), values=c("solid", "dashed")) +
     theme_bw() +
     theme(panel.grid.major = element_line(colour = "grey", linetype = "dotted"),
           panel.grid.minor = element_blank(),
@@ -386,15 +386,14 @@
           strip.text = element_markdown(size = 16)) +
     facet_wrap(facets = vars(scenarios)) + guides(colour = guide_legend(nrow = 1))
   PRC_all$scenarios <- "<i>n</i> = 20 ~ 60<br> Sequencing depth unevenness"
- 
+
   pdf("./figures/Fig2.pdf", width = 15, height = 7.5, bg = "white")
-  
+
   ggpubr::annotate_figure(
     ggpubr::ggarrange(p11, p12, p13, p14, p21, p22, p23, p24, nrow = 2, ncol = 4,
                       common.legend = TRUE, legend = "bottom", label.y = "AUPRC"),
-    left = grid::textGrob("AUPRC", rot = 90, hjust = -0.5, vjust = 0.5, 
+    left = grid::textGrob("AUPRC", rot = 90, hjust = -0.5, vjust = 0.5,
                           gp = grid::gpar(cex = 1.6))
   )
-  
+
   dev.off()
-  
