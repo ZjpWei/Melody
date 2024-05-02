@@ -42,10 +42,10 @@ ancombc.fun <- function(feature.table,
                       group = group, struc_zero = FALSE, neg_lb = FALSE,
                       alpha = 0.05, n_cl = 1, verbose = TRUE,
                       global = FALSE, pairwise = FALSE,
-                      dunnet = FALSE, trend = FALSE)
-                      # iter_control = list(tol = 1e-5, max_iter = 20,
-                      #                     verbose = FALSE),
-                      # em_control = list(tol = 1e-5, max_iter = 100))
+                      dunnet = FALSE, trend = FALSE,
+                      iter_control = list(tol = 1e-5, max_iter = 20,
+                                          verbose = FALSE),
+                      em_control = list(tol = 1e-5, max_iter = 100))
   }
   return(model)
 }
