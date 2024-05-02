@@ -7,7 +7,7 @@ run_aldex2 <- function(otu.tab=feature.table, meta = meta.data, formula){
   mm <- model.matrix(formula(paste0("~", formula)), meta)
   aldex.fit <- aldex.clr(countdata, mm, denom="all")
   x.e <- aldex.glm(aldex.fit)
-  glm.effect <- NULL #aldex.glm.effect(aldex.fit)
+  glm.effect <- aldex.glm.effect(aldex.fit)
   
   ### adjust p-val by BH, aldex.glm only provide holm q-val.
   p.fdr <- apply(x.e[,grepl("pval", colnames(x.e)) & !grepl("pval.holm", colnames(x.e))], 
