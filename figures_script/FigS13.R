@@ -37,7 +37,7 @@
 
   p11 <- PRC_all %>% filter(method != "Melody-Pooled") %>%
     ggplot(aes(x=x.label, y=AUPRC, group = interaction(Method, batch_type), linetype = batch_type))  +
-    xlab(TeX('$\\Delta$', bold = TRUE)) + ylim(0.39,0.83) +
+    xlab(TeX('$\\Delta$', bold = TRUE)) + ylim(0.2,0.83) +
     geom_line(linewidth = 0.7, aes(color=Method)) + geom_point(size = 2,aes(color = Method), pch = 18) +
     scale_color_manual(
       breaks =  c("Melody", "MMUPHin","CLR-LASSO","BW", "ALDEx2", "ANCOM-BC2"),
@@ -87,7 +87,7 @@
 
   p12 <-  PRC_all %>% filter(method != "Melody-Pooled") %>%
     ggplot(aes(x=x.label, y=AUPRC, group = interaction(Method, batch_type), linetype = batch_type))  +
-    xlab(TeX("d", italic = TRUE)) + ylim(0.39,0.83) +
+    xlab(TeX("d", italic = TRUE)) + ylim(0.2,0.83) +
     geom_line(linewidth = 0.7, aes(color=Method)) + geom_point(size = 2,aes(color = Method), pch = 18) +
     scale_color_manual(
       breaks =  c("Melody", "MMUPHin","CLR-LASSO","BW", "ALDEx2", "ANCOM-BC2"),
@@ -132,7 +132,7 @@
 
   p13 <- PRC_all %>% filter(method != "Melody-Pooled") %>%
     ggplot(aes(x=x.label, y=AUPRC, group = interaction(Method, batch_type), linetype = batch_type))  +
-    xlab(TeX("pos%", italic = TRUE)) + ylim(0.39,0.83) +
+    xlab(TeX("pos%", italic = TRUE)) + ylim(0.2,0.83) +
     geom_line(linewidth = 0.7, aes(color=Method)) + geom_point(size = 2,aes(color = Method), pch = 18) +
     scale_color_manual(
       breaks =  c("Melody", "MMUPHin","CLR-LASSO","BW", "ALDEx2", "ANCOM-BC2"),
@@ -177,7 +177,7 @@
 
   p14 <- PRC_all %>% filter(method != "Melody-Pooled") %>%
     ggplot(aes(x=x.label, y=AUPRC, group = interaction(Method, batch_type), linetype = batch_type))  +
-    xlab(TeX('u', italic = TRUE)) + ylim(0.39,0.83)+
+    xlab(TeX('u', italic = TRUE)) + ylim(0.2,0.83)+
     geom_line(linewidth = 0.7, aes(color=Method)) + geom_point(size = 2, aes(color = Method), pch = 18) +
     scale_color_manual(
       breaks =  c("Melody", "MMUPHin","CLR-LASSO","BW", "ALDEx2", "ANCOM-BC2"),
@@ -224,7 +224,7 @@
 
   p21 <- PRC_all %>% filter(method != "Melody-Pooled") %>%
     ggplot(aes(x=x.label, y=AUPRC, group = interaction(Method, batch_type), linetype = batch_type))  +
-    xlab(TeX('$\\Delta$', bold = TRUE)) + ylim(0.39,0.83) +
+    xlab(TeX('$\\Delta$', bold = TRUE)) + ylim(0.2,0.83) +
     geom_line(linewidth = 0.7, aes(color=Method)) + geom_point(size = 2,aes(color = Method), pch = 18) +
     scale_color_manual(
       breaks =  c("Melody", "MMUPHin","CLR-LASSO","BW", "ALDEx2", "ANCOM-BC2"),
@@ -275,7 +275,7 @@
 
   p22 <-  PRC_all %>% filter(method != "Melody-Pooled") %>%
     ggplot(aes(x=x.label, y=AUPRC, group = interaction(Method, batch_type), linetype = batch_type))  +
-    xlab(TeX("d", italic = TRUE)) + ylim(0.39,0.83) +
+    xlab(TeX("d", italic = TRUE)) + ylim(0.2,0.83) +
     geom_line(linewidth = 0.7, aes(color=Method)) + geom_point(size = 2,aes(color = Method), pch = 18) +
     scale_color_manual(
       breaks =  c("Melody", "MMUPHin","CLR-LASSO","BW", "ALDEx2", "ANCOM-BC2"),
@@ -320,7 +320,7 @@
 
   p23 <- PRC_all %>% filter(method != "Melody-Pooled") %>%
     ggplot(aes(x=x.label, y=AUPRC, group = interaction(Method, batch_type), linetype = batch_type))  +
-    xlab(TeX("pos%", italic = TRUE)) + ylim(0.39,0.83) +
+    xlab(TeX("pos%", italic = TRUE)) + ylim(0.2,0.83) +
     geom_line(linewidth = 0.7, aes(color=Method)) + geom_point(size = 2,aes(color = Method), pch = 18) +
     scale_color_manual(
       breaks =  c("Melody", "MMUPHin","CLR-LASSO","BW", "ALDEx2", "ANCOM-BC2"),
@@ -365,7 +365,7 @@
 
   p24 <- PRC_all %>% filter(method != "Melody-Pooled") %>%
     ggplot(aes(x=x.label, y=AUPRC, group = interaction(Method, batch_type), linetype = batch_type))  +
-    xlab(TeX('u', italic = TRUE)) + ylim(0.39,0.83)+
+    xlab(TeX('u', italic = TRUE)) + ylim(0.2,0.83)+
     geom_line(linewidth = 0.7, aes(color=Method)) + geom_point(size = 2, aes(color = Method), pch = 18) +
     scale_color_manual(
       breaks =  c("Melody", "MMUPHin","CLR-LASSO","BW", "ALDEx2", "ANCOM-BC2"),
