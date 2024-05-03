@@ -1,3 +1,4 @@
+## Sequence depth rarify function for BW model
 .rarefy <- function (otu.tab, ss) {  
   set.seed(ss)
   depth = min(rowSums(otu.tab))  
@@ -18,7 +19,7 @@
   return(otu.tab.rff)
 }
 
-## avoid samples repeat too manyin bootstrap
+## Bootstrap function for simulation
 boostrap <- function(vec){
   boot <- sample(vec, size = length(vec), replace = TRUE)
   return(sort(boot))
