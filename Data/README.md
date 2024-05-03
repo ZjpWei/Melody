@@ -2,7 +2,7 @@
 
 ## Data download
 
-The `Microbime-Metabolite` data for analysis in this project can be obtained from the [`processed_data`](https://uwmadison.box.com/s/njqfn1bjafxmphe118rixijp5bsujm4z) folder. The original data is from [here]. (They may update their data in the future, so to reproduce the results in this project, please use the data from th first link.)
+The `Microbime-Metabolite` data for analysis in this project can be obtained from the [`processed_data`](https://uwmadison.box.com/s/njqfn1bjafxmphe118rixijp5bsujm4z) folder. 
 
 ## Data time stampes
 
