@@ -76,6 +76,8 @@
   ## Generate signal and signature size
   source("./utility/GDM_utility.R")
   set.seed(s + seed)
+  ## Randomize uneveness
+  uneveness.ind <- rbernoulli(n = L, p = 0.5)
   ## Randomize signal
   ave.prop <- colMeans(count / rowSums(count))
   ## Detect most abundant taxa and less abundant taxa
@@ -146,8 +148,13 @@
     
     # Simulate relative abundant data
     Simulate.depth.1 <- rep(0, n.sample[l])
-    Simulate.depth.1[cluster %in% case.idx.1] <- sample(x = rowSums(Y.study[[l]]), size = sum(cluster %in% case.idx.1), replace = TRUE) * (mu + 1)
-    Simulate.depth.1[!(cluster %in% case.idx.1)]<- sample(x = rowSums(Y.study[[l]]), size = n.sample[l] - sum(cluster %in% case.idx.1), replace = TRUE)
+    if(uneveness.ind[l]){
+      Simulate.depth.1[cluster %in% case.idx.1] <- sample(x = rowSums(Y.study[[l]]), size = sum(cluster %in% case.idx.1), replace = TRUE) * (mu + 1)
+      Simulate.depth.1[!(cluster %in% case.idx.1)]<- sample(x = rowSums(Y.study[[l]]), size = n.sample[l] - sum(cluster %in% case.idx.1), replace = TRUE)
+    }else{
+      Simulate.depth.1[cluster %in% case.idx.1] <- sample(x = rowSums(Y.study[[l]]), size = sum(cluster %in% case.idx.1), replace = TRUE)
+      Simulate.depth.1[!(cluster %in% case.idx.1)]<- sample(x = rowSums(Y.study[[l]]), size = n.sample[l] - sum(cluster %in% case.idx.1), replace = TRUE) * (mu + 1)
+    }
     Simulate.count.rel.1 = NULL
     for(ll in 1:nrow(Simulate.count.1)){
       if(Simulate.otc.1[ll] == 1){
