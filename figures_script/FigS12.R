@@ -123,7 +123,7 @@
     labs(linetype="Data") + facet_grid(u ~ pos) +
     guides(colour = guide_legend(nrow = 1))
 
-  pdf("./Simulation_v2/FigS13.pdf", width = 13.83, height = 9, bg = "white")
+  pdf("./figures/FigS12.pdf", width = 13.83, height = 9, bg = "white")
 
   ggpubr::annotate_figure(
     ggpubr::ggarrange(p.large, p.small, nrow = 1, ncol = 2,
