@@ -4,10 +4,6 @@
 
 This project includes the analyses of `Melody` paper. Please follow the `README.md` file in each folder to reproduce the CRC data analysis, Microbiome-Metabolite data analysis, Simulation.
 
-## Figures
-
-The analysis results are also available in this project. You can directly use the R scripts in the `figures_script` folder to generate the figures without performing data analyses.
-
 ## References
 
 * Wei Z, Chen G, Tang ZZ. Melody: Meta-analysis of Microbiome Association Studies for Discovering Generalizable Microbial Signatures.
