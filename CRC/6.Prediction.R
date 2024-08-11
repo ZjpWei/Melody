@@ -183,11 +183,10 @@
       Make_prediction(data.rel.train = data.rel.train, data.rel.test = data.rel.test, 
                       index = Org.indices[[nm.id]], method = nm.id))
   }
-  rm(list = setdiff(ls(), c("s", "ss", "split.info", "AUROC.org")))
+  rm(list = setdiff(ls(), c("s", "ss", "split.info", "AUROC.org", "data.rel.train", "data.rel.test")))
   
   # Prepare batch-corrected data ----
   load("./CRC/Processed_data/data.bat.K401.Rdata")
-  data.rel.test <- data.rel.batch[s]
   data.rel.loso <- data.rel.batch[-s]
   L <- length(data.rel.loso)
   K <- ncol(data.rel.loso[[1]]$Y)
@@ -202,9 +201,6 @@
     control.rg <- round(c(0.75,1) * length(control.id))
     data.rel.analysis[[l]] <- list(Y = data.rel.loso[[l]]$Y[sort(c(case.id[1:case.rg[1]], control.id[1:control.rg[1]])),],
                                    X = data.rel.loso[[l]]$X[sort(c(case.id[1:case.rg[1]], control.id[1:control.rg[1]]))])
-    
-    data.rel.train[[l]] <- list(Y = data.rel.loso[[l]]$Y[sort(c(case.id[(case.rg[1]+1):case.rg[2]], control.id[(control.rg[1]+1):control.rg[2]])),],
-                                X = data.rel.loso[[l]]$X[sort(c(case.id[(case.rg[1]+1):case.rg[2]], control.id[(control.rg[1]+1):control.rg[2]]))])
   }
   
   # Original data analysis ----
