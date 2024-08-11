@@ -192,7 +192,6 @@
   K <- ncol(data.rel.loso[[1]]$Y)
   
   data.rel.analysis <- list()
-  data.rel.train <- list()
   for(l in 1:L){
     case.id <- split.info[[l]]$case.id
     control.id <- split.info[[l]]$control.id
