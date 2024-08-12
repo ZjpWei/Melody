@@ -14,7 +14,9 @@
   # General ----
   rm(list = ls())
   seed <- 2024
+  ## s is the study id for leave-out in preition. s = 1, 2, 3, 4, 5.
   s <- 1
+  ## ss is the id of simulation replicate. It's range from 1 to 100.
   ss <- 1
   
   # Prepare original data ----
