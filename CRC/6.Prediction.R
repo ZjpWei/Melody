@@ -45,7 +45,7 @@
   # Original data analysis ----
   Org.indices <- list()
   
-  source("./utility/rarify.R")
+  source("./utility/CRC_utility.R")
   study <- NULL
   Y.pool <- NULL
   X.pool <- NULL
@@ -205,7 +205,7 @@
   # Original data analysis ----
   Bat.indices <- list()
   
-  source("./utility/rarify.R")
+  source("./utility/CRC_utility.R")
   study <- NULL
   Y.pool <- NULL
   X.pool <- NULL
