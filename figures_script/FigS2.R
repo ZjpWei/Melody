@@ -5,6 +5,7 @@
   # Packages ----
   library("phyloseq")
   library("ggplot2")
+  library("Rfast")
 
   # General ----
   rm(list = ls())
