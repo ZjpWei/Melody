@@ -30,7 +30,7 @@
   ## Replicate number: integer range from 1 to 100
   s <- 1
 
-  ## Signature effect size {4, 20, 40 (default), 80, 160}
+  ## Signature effect size {4, 20, 40, 80, 160}
   Ka <- 40
 
   ## Signature effect direction {0.6, 0.8, 1}
