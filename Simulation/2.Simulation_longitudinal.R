@@ -2,7 +2,7 @@
 #      Simulation 2. Simulation analysis on       #
 #               Longitudinal data                 #
 # =============================================== #
-  
+
   # Packages ----
   library("phyloseq")
   library("coin")
@@ -14,59 +14,68 @@
   library('ALDEx2')
   library("ANCOMBC")
   library('MMUPHin')
-  
+
   rm(list = ls())
   # Simulation settings ----
-  ## Sample size vector in simulation. 
-  ## Sample size for large scenario: c(100, 120,140, 160, 180) 
-  ## Sample size for small scenario: c(20, 30, 40, 50, 60) 
+  ## ---- Sample size vector in simulation.
+  ## ---- Sample size for large scenario: c(100, 120,140, 160, 180)
+  ## ---- Sample size for small scenario: c(20, 30,40, 50, 60)
+
   Setting <- "large"
   if(Setting == "large"){
     n.sample <- c(100, 120, 140, 160, 180)
   }else if(Setting == "small"){
     n.sample <- c(20, 30, 40, 50, 60)
   }
-  ## Replicate number: integer range from 1 to 100
+
+  ## ---- Inputs
+  args = commandArgs(trailingOnly=TRUE)
+  if(length(args)==0){
+    stop("The analysis tag needs to be provided! Exiting...\n")
+  }
+  print(args)
+
+  ## ---- Replicate number: integer range from 1 to 100
   s <- 1
 
-  ## Signature effect size {4, 20, 40, 80, 160}
-  Ka <- 40
+  ## ---- Signature effect size {4, 20, 40, 80, 160}
+  Ka <- 4
 
-  ## Signature effect direction {0.6, 0.8, 1}
+  ## ---- Signature effect direction {0.6, 0.8, 1}
   pos.pt <- 0.6
 
-  ## Signature effect size
-  ## Sample size for large scenario: 2
-  ## Sample size for small scenario: 5
+  ## ---- Signature effect size
+  ## ---- Sample size for large scenario: 2
+  ## ---- Sample size for small scenario: 5
   effect.sz <- 2
 
-  ## Case/control sequence depth unevenness {0, 0.5, 1}
+  ## ---- Case/control sequence depth unevenness {0, 0.5, 1}
   mu <-  0
 
   ## Directory for saving AUPRC
-  data.loc <- paste0("./Simulation/", Setting, "/Longitudinal/AUPRC_Ka", Ka, "_Pos", pos.pt, "_effsz", effect.sz, "_mu", mu, "_", s,".Rdata")  
-  
+  data.loc <- paste0("./Simulation/", Setting, "/Longitudinal/AUPRC_Ka", Ka, "_Pos", pos.pt, "_effsz", effect.sz, "_mu", mu, "_", s,".Rdata")
+
   # Simulate data ----
   ## random seed
   seed <- 2023
-  ## Signature sparsity 
+  ## Signature sparsity
   abd.pt <- 0.5
-  
+
   ## Data processing, remove samples with sequence depth < 2000, apply 0.2 prevalence filter.
   load("./Data/CRC_data/data/count.Rdata")
   load("./Data/CRC_data/data/meta.Rdata")
-  
+
   meta <- as.data.frame(meta)
   study <- c("AT-CRC", "CN-CRC", "DE-CRC", "FR-CRC", "US-CRC")
   rownames(meta) <- meta$Sample_ID
   meta$Group <- factor(meta$Group, level = c("CTR", "CRC"))
   meta$Study <- factor(meta$Study, levels = study)
-  sample.id.kp <- names(which(rowSums(count) >= 2000)) 
+  sample.id.kp <- names(which(rowSums(count) >= 2000))
   meta <- meta[sample.id.kp,]
   count <- count[sample.id.kp,]
   pre.filter <- colMeans(count != 0) >= 0.2
   count <- count[,pre.filter]
-  
+
   L <- length(study)
   K <- ncol(count)
   Y.study <- list()
@@ -77,7 +86,7 @@
     Y.study[[l]] <- count[id.set,]
     X.study[[l]] <- c(condition == 'CRC') + 0
   }
-  
+
   ## Generate signal and signature size
   source("./utility/GDM_utility.R")
   set.seed(s + seed)
@@ -100,7 +109,7 @@
   for(l in 1:L){
     signal.add <- rbind(signal.add, tmp.add)
   }
-  
+
   ## Simulate null data
   data.null.cluster <- list()
   for(l in 1:L){
@@ -109,7 +118,7 @@
     dmData <- r.GDM(X = X, mod = mod.gdm)
     data.null.cluster[[l]] <- list(Y = dmData, X = rep(0, nrow(dmData)))
   }
-  
+
   # Simulate longitudinal null data
   data.null <- list()
   for(l in 1:L){
@@ -136,7 +145,7 @@
     c.name <- colnames(org.data)
     cluster <- data.null[[l]]$cluster
     n = length(unique(cluster))
-    
+
     # Shuffle subjects (we always assign the first half subjects to cases)
     case.idx.1 = 1:round(n/2)
     Simulate.count.1 = data.null[[l]]$Y
@@ -150,7 +159,7 @@
     }
     Simulate.otc.1[cluster %in% case.idx.1] = 1
     Prob.abs.1 = Simulate.count.1/rowSums(Simulate.count.1)
-    
+
     # Simulate relative abundant data
     Simulate.depth.1 <- rep(0, n.sample[l])
     if(uneveness.ind[l]){
@@ -169,7 +178,7 @@
       }
     }
     Simulate.count.rel.1 <- t(Simulate.count.rel.1)
-    
+
     # Assign taxa and sample names
     data.rel[[l]] <- list(Y=Simulate.count.rel.1, X=Simulate.otc.1, cluster = cluster)
     sample.nm <- paste0("Cohort.",as.character(l),".s",as.character(1:n.sample[l]))
@@ -179,7 +188,7 @@
 
   ## Summarize data
   signal.names <- colnames(data.rel[[1]]$Y)[signal.idx]
-  
+
   ## Batch correction by MMUPHin
   Study <- NULL
   Group <- NULL
@@ -197,14 +206,14 @@
                                      covariates = "Group",
                                      data = meta)
   Y.pool <- t(batch_adj$feature_abd_adj)
-  
+
   data.rel.mmuphin <- list()
   for(l in 1:L){
     data.rel.mmuphin[[l]] <- list(Y = Y.pool[meta$Study == as.character(l),],
                                   X = data.rel[[l]]$X,
                                   cluster = data.rel[[l]]$cluster)
   }
-  
+
   # ============================================================================================== #
   # Analysis on original data ----
   rm(list = setdiff(ls(), c("data.rel", "data.rel.mmuphin", "signal.names", "s", "data.loc", "Ka")))
@@ -214,8 +223,8 @@
   method <- NULL
   batch_type <- NULL
   data_type <- NULL
-  
-  L <- length(data.rel)  
+
+  L <- length(data.rel)
   K <- ncol(data.rel[[1]]$Y)
   study = NULL
   Y.pool = NULL
@@ -236,7 +245,7 @@
 
   ## ANCOM-BC2
   source("./utility/ancombc.R")
-  
+
   ANCOMBC2.model <- ancombc.fun(feature.table = feature.table,
                                 meta = meta.data,
                                 formula = "labels + study",
@@ -244,7 +253,7 @@
                                 group = NULL,
                                 subject = "cluster",
                                 method = "ancombc2")
-  
+
   ## Calculate AUPRC
   rank.fdr <- rank(ANCOMBC2.model$res$p_labels1)
   true.active <- rep(0, length(ANCOMBC2.model$res$taxon))
@@ -260,11 +269,11 @@
   batch_type <- c(batch_type, "Original")
   data_type <- c(data_type, "Longitudinal")
   method <- c(method, "ANCOM-BC2")
-  
-  ## MMUPHin 
+
+  ## MMUPHin
   ## function use for ANCOMBC2
   source("./utility/mmuphin.R")
-  
+
   ## MMUPHin random effect model
   MMUPHin.model <- fit_metaAnalysis(feature.abd = feature.table,
                                     data = meta.data,
@@ -274,7 +283,7 @@
                                     covariates = NULL,
                                     covariates.random = "cluster",
                                     moderator_variables = NULL)
-  
+
   ## Calculate AUPRC
   rank.fdr <- rank(MMUPHin.model$meta_fits$pval)
   true.active <- rep(0, nrow(MMUPHin.model$meta_fits))
@@ -331,12 +340,12 @@
   batch_type <- c(batch_type, "Original")
   data_type <- c(data_type, "Longitudinal")
   method <- c(method, "Melody")
-  
+
   # ============================================================================================== #
   # Analysis on MMUPHin batch corrected data ----
-  rm(list = setdiff(ls(), c("AUPRC", "S", "data_type", "batch_type", "method", 
+  rm(list = setdiff(ls(), c("AUPRC", "S", "data_type", "batch_type", "method",
                             "s", "data.rel.mmuphin", "signal.names", "data.loc")))
-  
+
   source("./utility/roc.R")
   L <- length(data.rel.mmuphin)
   K <- ncol(data.rel.mmuphin[[1]]$Y)
@@ -350,7 +359,7 @@
     Y.pool = rbind(Y.pool, data.rel.mmuphin[[l]]$Y)
     X.pool = c(X.pool, data.rel.mmuphin[[l]]$X)
   }
-  
+
   outcome <- X.pool
   feature.table <- Y.pool
   names(outcome) <- rownames(feature.table)
@@ -367,7 +376,7 @@
                                 group = NULL,
                                 subject = "cluster",
                                 method = "ancombc2")
-  
+
   ## Calculate AUPRC
   rank.fdr <- rank(ANCOMBC2.model$res$p_labels1)
   true.active <- rep(0, length(ANCOMBC2.model$res$taxon))
@@ -397,7 +406,7 @@
                                     covariates = NULL,
                                     covariates.random = "cluster",
                                     moderator_variables = NULL)
-  
+
   # Calculate AUPRC
   rank.fdr <- rank(MMUPHin.model$meta_fits$pval)
   true.active <- rep(0, nrow(MMUPHin.model$meta_fits))
@@ -417,6 +426,6 @@
   # ============================================================================================== #
   # Save AUPRC ----
   PRC <- data.frame(AUPRC = AUPRC, S = S, method = method, batch_type = batch_type, data_type = data_type)
-  
+
   save(PRC, file = data.loc)
-  
+

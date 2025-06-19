@@ -1,5 +1,5 @@
 # =============================================== #
-#      Simulation 1. Simulation analysis on       #
+#    Simulation set (1). Simulation analysis on   #
 #               Independent data                  #
 # =============================================== #
 
@@ -14,21 +14,13 @@
   library('ALDEx2')
   library("ANCOMBC")
   library('MMUPHin')
-  library('radEmu')
   library('miMeta')
   library('abess')
 
   rm(list = ls())
+
   # Simulation settings ----
-  ## ---- Sample size vector in simulation.
-  ## ---- Sample size for large scenario: c(100, 120,140, 160, 180)
-  ## ---- Sample size for small scenario: c(20, 30,40, 50, 60)
-  Setting <- "large"
-  if(Setting == "large"){
-    n.sample <- c(100, 120, 140, 160, 180)
-  }else if(Setting == "small"){
-    n.sample <- c(20, 30, 40, 50, 60)
-  }
+  n.sample <- c(100, 120, 140, 160, 180)
 
   ## ---- Replicate number: integer range from 1 to 100
   s <- 1
@@ -47,8 +39,12 @@
   ## ---- Case/control sequence depth unevenness {0, 0.5, 1}
   mu <-  0
 
+  ## ---- Noise level: {0.5, 1, 1.5, 2}
+  B.level <-  1
+  sigma_l <- 0.2 * c(1:5) ^ B.level
+
   ## ---- Directory for saving AUPRC
-  data.loc <- paste0("./Independent/AUPRC_Ka", Ka, "_Pos", pos.pt, "_effsz", effect.sz, "_mu", mu, "_", s,".Rdata")
+  data.loc <- paste0("./Simulation/large/Independent_FigS4d/AUPRC_Ka", Ka, "_Pos", pos.pt, "_effsz", effect.sz, "_mu", mu, "_B", B.level, "_", s,".Rdata")
 
   # Simulate data ----
   ## ---- random seed
@@ -108,22 +104,6 @@
     signal.add <- rbind(signal.add, tmp.add)
   }
 
-  ## ---- Simulate null AA data
-  data.null <- list()
-  for(l in 1:L){
-    load(paste0("./GDM_fit/GDM.", as.character(l), ".Rdata"))
-    X <- matrix(1, nrow = n.sample[l], ncol = 1)
-    dmData <- r.GDM(X = X, mod = mod.gdm)
-    Y.tmp <- Y.study[[l]]
-    idx <- order(colMeans(Y.tmp/rowSums(Y.tmp)), decreasing = TRUE)
-    idx.rev <- rank(-colMeans(Y.tmp/rowSums(Y.tmp)))
-    ## Stop if dimension doesn't match
-    stopifnot(sum(colMeans(Y.tmp/rowSums(Y.tmp)) != 0) == ncol(dmData))
-    dmData <- cbind(dmData, matrix(0, nrow = n.sample[l], ncol = K - ncol(dmData)))[,idx.rev]
-    colnames(dmData) <- colnames(Y.study[[l]])
-    data.null[[l]] <- list(Y = dmData, X = rep(0, nrow(dmData)))
-  }
-
   ## ---- Simulate relative abundant data
   data.rel <- list()
   for(l in 1:L){
@@ -131,10 +111,28 @@
     c.name <- colnames(org.data)
     n = n.sample[l]
 
-    ## ---- Shuffle subjects (we always regard the first half subjects as cases)
+    ## ---- Fit GDM with parameters
+    #load(paste0("./Simulation/GDM_fit/GDM.", as.character(l), ".Rdata"))
+    load(paste0("./GDM_fit/GDM.", as.character(l), ".Rdata"))
+    X <- matrix(1, nrow = n, ncol = 1)
+    dmData <- r.GDM(X = X, mod = mod.gdm)
+    idx <- order(colMeans(org.data/rowSums(org.data)), decreasing = TRUE)
+    idx.rev <- rank(-colMeans(org.data/rowSums(org.data)))
+
+    ## ---- Stop if dimension doesn't match
+    stopifnot(sum(colMeans(org.data/rowSums(org.data)) != 0) == ncol(dmData))
+    dmData <- cbind(dmData, matrix(0, nrow = n.sample[l], ncol = K - ncol(dmData)))[,idx.rev]
+    colnames(dmData) <- c.name
+
+    ## ---- Simulate microbial lood
+    total.load <- pmax(stats::rnbinom(n = n, mu = 1e8, size = 1), 1000)
+
+    ## ---- Construct AA
+    Simulate.count.1 <- dmData / rowSums(dmData) * total.load
+    Simulate.otc.1 = rep(0, n)
+
+    ## ---- Add differential AA signal using spike-in (we always regard the first half subjects as cases)
     case.idx.1 = 1:round(n/2)
-    Simulate.count.1 = data.null[[l]]$Y
-    Simulate.otc.1 = data.null[[l]]$X
     for(ll in 1:Ka){
       if(signal.sig[ll]){
         Simulate.count.1[case.idx.1, signal.idx[ll]] <- Simulate.count.1[case.idx.1, signal.idx[ll]] * signal.add[l,ll]
@@ -143,9 +141,15 @@
       }
     }
     Simulate.otc.1[case.idx.1] = 1
+
+    ## ---- Add feature-specific processing bias.
+    log.b <- rnorm(n = ncol(Simulate.count.1), mean = 0, sd = sigma_l[l])
+    for(k in 1:length(log.b)){
+      Simulate.count.1[,k] <- Simulate.count.1[,k] * exp(log.b[k])
+    }
     Prob.abs.1 = Simulate.count.1/rowSums(Simulate.count.1)
 
-    ## ---- Simulate relative abundant data
+    ## ---- Generate observed counts
     Simulate.depth.1 <- rep(0, n)
     if(uneveness.ind[l]){
       Simulate.depth.1[case.idx.1] <- sample(x = rowSums(Y.study[[l]]), size = length(case.idx.1), replace = TRUE) * (mu + 1)
@@ -199,7 +203,7 @@
 
   # ============================================================================================== #
   # Analysis on original data ----
-  rm(list = setdiff(ls(), c("data.rel", "data.rel.mmuphin", "signal.names", "s", "data.loc", "Ka")))
+  rm(list = setdiff(ls(), c("data.rel", "data.rel.mmuphin", "data.rel.conqur", "signal.names", "s", "data.loc", "Ka")))
   source("./utility/CRC_utility.R")
   source("./utility/roc.R")
   AUPRC = S = method = batch_type = data_type <- NULL
@@ -269,45 +273,7 @@
   S <- c(S, s)
   batch_type <- c(batch_type, "Original")
   data_type <- c(data_type, "Independent")
-  method <- c(method, "ALDEx2-default")
-
-  ## ---- ALDEx2 model with gamma = 0.5
-  Aldex2.model.gamma_5e1 <- run_aldex2(otu.tab = feature.table, meta = meta.data, formula = "labels + study", gamma = 0.5)
-
-  ## ---- Calculate AUPRC
-  true.active <- rep(0, nrow(Aldex2.model.gamma_5e1$glmfit))
-  names(true.active) <- rownames(Aldex2.model.gamma_5e1$glmfit)
-  true.active[signal.names] <- 1
-  rank.fdr <- rank(Aldex2.model.gamma_5e1$glmfit$`labels1:pval`)
-  Paths <- list()
-  for(ll in 1:length(rank.fdr)){
-    Paths[[ll]] <- rank.fdr <= ll
-  }
-  hg.pr <- huge.pr(Paths, as.vector(true.active), verbose=FALSE, plot = FALSE)
-  AUPRC <- c(AUPRC, hg.pr$AUPRC)
-  S <- c(S, s)
-  batch_type <- c(batch_type, "Original")
-  data_type <- c(data_type, "Independent")
-  method <- c(method, "ALDEx2-gamma0.5")
-
-  ## ---- ALDEx2 model with gamma = 1 which is recommoned by ALDEx2 paper
-  Aldex2.model.default_1e0 <- run_aldex2(otu.tab = feature.table, meta = meta.data, formula = "labels + study", gamma = 1)
-
-  ## ---- Calculate AUPRC
-  true.active <- rep(0, nrow(Aldex2.model.default_1e0$glmfit))
-  names(true.active) <- rownames(Aldex2.model.default_1e0$glmfit)
-  true.active[signal.names] <- 1
-  rank.fdr <- rank(Aldex2.model.default_1e0$glmfit$`labels1:pval`)
-  Paths <- list()
-  for(ll in 1:length(rank.fdr)){
-    Paths[[ll]] <- rank.fdr <= ll
-  }
-  hg.pr <- huge.pr(Paths, as.vector(true.active), verbose=FALSE, plot = FALSE)
-  AUPRC <- c(AUPRC, hg.pr$AUPRC)
-  S <- c(S, s)
-  batch_type <- c(batch_type, "Original")
-  data_type <- c(data_type, "Independent")
-  method <- c(method, "ALDEx2-gamma1")
+  method <- c(method, "ALDEx2")
 
   ## ANCOM-BC2 ----
   ## ---- function use for ANCOM-BC2
@@ -428,68 +394,10 @@
   data_type <- c(data_type, "Independent")
   method <- c(method, "Melody")
 
-  ## Meta-median ----
-  source("./utility/melody.meta.summary.median.R")
-  Melody.median.model <- melody.meta.summary.median(summary.stats = summary.stat.study,
-                                                    tune.path = "sequence",
-                                                    tune.size.sequence = 1:min((Ka + 150), 400),
-                                                    output.best.one = FALSE)
-
-  ## ---- Calculate AUPRC
-  true.active <- rep(0, nrow(Melody.median.model$disease$coef))
-  names(true.active) <- rownames(Melody.median.model$disease$coef)
-  true.active[intersect(signal.names, rownames(Melody.median.model$disease$coef))] <- 1
-  Paths <- list()
-  for(ll in 1:ncol(Melody.median.model$disease$coef)){
-    Paths[[ll]] <- Melody.median.model$disease$coef[,ll]!=0
-  }
-  hg.pr <- huge.pr(Paths, as.vector(true.active), verbose=FALSE, plot = FALSE)
-  AUPRC <- c(AUPRC, hg.pr$AUPRC)
-  S <- c(S, s)
-  batch_type <- c(batch_type, "Original")
-  data_type <- c(data_type, "Independent")
-  method <- c(method, "Melody-median")
-
-  ## Melody-Pooled ----
-  Y.pool <- NULL
-  X.pool <- NULL
-  for(l in 1:length(data.rel)){
-    Y.pool <- rbind(Y.pool, data.rel[[l]]$Y)
-    X.pool <- c(X.pool, data.rel[[l]]$X)
-  }
-  rel.abd <- list("Pool_data" = Y.pool)
-  covariate.interest <- list("Pool_data" = data.frame(disease = X.pool))
-
-  ## ---- Generate null model
-  null.obj <- melody.null.model(rel.abd = rel.abd, ref = "Coprococcus catus [ref_mOTU_v2_4874]")
-
-  ## ---- Generate summary statistics
-  summary.stat.study <- melody.get.summary(null.obj = null.obj, covariate.interest = covariate.interest)
-
-  ## ---- Melody model
-  Melody.model <- melody.meta.summary(summary.stats = summary.stat.study,
-                                      tune.path = "sequence",
-                                      tune.size.sequence = 1:min((Ka + 150), 400),
-                                      output.best.one = FALSE)
-
-  true.active <- rep(0, nrow(Melody.model$disease$coef))
-  names(true.active) <- rownames(Melody.model$disease$coef)
-  true.active[intersect(signal.names, rownames(Melody.model$disease$coef))] <- 1
-  Paths <- list()
-  for(ll in 1:ncol(Melody.model$disease$coef)){
-    Paths[[ll]] <- Melody.model$disease$coef[,ll]!=0
-  }
-  hg.pr <- huge.pr(Paths, as.vector(true.active), verbose=FALSE, plot = FALSE)
-  AUPRC <- c(AUPRC, hg.pr$AUC)
-  S <- c(S, s)
-  batch_type <- c(batch_type, "Original")
-  data_type <- c(data_type, "Independent")
-  method <- c(method, "Melody-Pooled")
-
   # ============================================================================================== #
   # Analysis on MMUPHin batch corrected data ----
   rm(list = setdiff(ls(), c("AUPRC", "S", "data_type", "batch_type", "method", "Ka",
-                            "s", "data.rel.mmuphin","signal.names", "data.loc")))
+                            "s", "data.rel.mmuphin", "data.rel.conqur", "signal.names", "data.loc")))
 
   source("./utility/CRC_utility.R")
   source("./utility/roc.R")
@@ -560,45 +468,7 @@
   S <- c(S, s)
   batch_type <- c(batch_type, "MMUPHin")
   data_type <- c(data_type, "Independent")
-  method <- c(method, "ALDEx2-default")
-
-  ## ---- ALDEx2 model with gamma = 0.5
-  Aldex2.model.gamma_5e1 <- run_aldex2(otu.tab = feature.table, meta = meta.data, formula = "labels + study", gamma = 0.5)
-
-  ## ---- Calculate AUPRC
-  true.active <- rep(0, nrow(Aldex2.model.gamma_5e1$glmfit))
-  names(true.active) <- rownames(Aldex2.model.gamma_5e1$glmfit)
-  true.active[signal.names] <- 1
-  rank.fdr <- rank(Aldex2.model.gamma_5e1$glmfit$`labels1:pval`)
-  Paths <- list()
-  for(ll in 1:length(rank.fdr)){
-    Paths[[ll]] <- rank.fdr <= ll
-  }
-  hg.pr <- huge.pr(Paths, as.vector(true.active), verbose=FALSE, plot = FALSE)
-  AUPRC <- c(AUPRC, hg.pr$AUPRC)
-  S <- c(S, s)
-  batch_type <- c(batch_type, "MMUPHin")
-  data_type <- c(data_type, "Independent")
-  method <- c(method, "ALDEx2-gamma0.5")
-
-  ## ---- ALDEx2 model with gamma = 1 which is recommoned by ALDEx2 paper
-  Aldex2.model.default_1e0 <- run_aldex2(otu.tab = feature.table, meta = meta.data, formula = "labels + study", gamma = 1)
-
-  ## ---- Calculate AUPRC
-  true.active <- rep(0, nrow(Aldex2.model.default_1e0$glmfit))
-  names(true.active) <- rownames(Aldex2.model.default_1e0$glmfit)
-  true.active[signal.names] <- 1
-  rank.fdr <- rank(Aldex2.model.default_1e0$glmfit$`labels1:pval`)
-  Paths <- list()
-  for(ll in 1:length(rank.fdr)){
-    Paths[[ll]] <- rank.fdr <= ll
-  }
-  hg.pr <- huge.pr(Paths, as.vector(true.active), verbose=FALSE, plot = FALSE)
-  AUPRC <- c(AUPRC, hg.pr$AUPRC)
-  S <- c(S, s)
-  batch_type <- c(batch_type, "MMUPHin")
-  data_type <- c(data_type, "Independent")
-  method <- c(method, "ALDEx2-gamma1")
+  method <- c(method, "ALDEx2")
 
   ## ANCOM-BC2 ----
   ## ---- function use for ANCOM-BC2
@@ -681,44 +551,6 @@
   batch_type <- c(batch_type, "MMUPHin")
   data_type <- c(data_type, "Independent")
   method <- c(method, "CLR-LASSO")
-
-  ## Melody-Pooled ----
-  Y.pool <- NULL
-  X.pool <- NULL
-  for(l in 1:length(data.rel.mmuphin)){
-    Y.pool <- rbind(Y.pool, data.rel.mmuphin[[l]]$Y)
-    X.pool <- c(X.pool, data.rel.mmuphin[[l]]$X)
-  }
-  rel.abd <- list("Pool_data" = Y.pool)
-  covariate.interest <- list("Pool_data" = data.frame(disease = X.pool))
-
-  ## ---- Generate null model
-  null.obj <- melody.null.model(rel.abd = rel.abd, ref = "Coprococcus catus [ref_mOTU_v2_4874]")
-
-  ## ---- Generate summary statistics
-  summary.stat.study <- melody.get.summary(null.obj = null.obj,
-                                           covariate.interest = covariate.interest)
-
-  ## ---- Melody model
-  Melody.model <- melody.meta.summary(summary.stats = summary.stat.study,
-                                      tune.path = "sequence",
-                                      tune.size.sequence = 1:min((Ka + 150), 400),
-                                      output.best.one = FALSE)
-
-  ## ---- Calculate AUPRC
-  true.active <- rep(0, nrow(Melody.model$disease$coef))
-  names(true.active) <- rownames(Melody.model$disease$coef)
-  true.active[intersect(signal.names, rownames(Melody.model$disease$coef))] <- 1
-  Paths <- list()
-  for(ll in 1:ncol(Melody.model$disease$coef)){
-    Paths[[ll]] <- Melody.model$disease$coef[,ll]!=0
-  }
-  hg.pr <- huge.pr(Paths, as.vector(true.active), verbose=FALSE, plot = FALSE)
-  AUPRC <- c(AUPRC, hg.pr$AUC)
-  S <- c(S, s)
-  batch_type <- c(batch_type, "MMUPHin")
-  data_type <- c(data_type, "Independent")
-  method <- c(method, "Melody-Pooled")
 
   # ============================================================================================== #
   # Save AUPRC ----
