@@ -29,15 +29,19 @@
   }
   ## Replicate number: integer range from 1 to 100
   s <- 1
-  ## Signature effect size {20, 30, 40 (default), 50, 60, 70, 80}
+
+  ## Signature effect size {4, 20, 40 (default), 80, 160}
   Ka <- 40
-  ## Signature effect direction {0.5, 0.6, 0.7(default), 0.8, 0.9, 1}
+
+  ## Signature effect direction {0.6, 0.8, 1}
   pos.pt <- 0.7
+
   ## Signature effect size
-  ## Sample size for large scenario: {1, 1.5, 2(default), 2.5, 3}
-  ## Sample size for small scenario: {4, 4.5, 5(default), 5.5, 6}
+  ## Sample size for large scenario: 2
+  ## Sample size for small scenario: 5
   effect.sz <- 2
-  ## Case/control sequence depth unevenness {0(default), 0.25 0.5, 0.75, 1}
+
+  ## Case/control sequence depth unevenness {0, 0.5, 1}
   mu <-  0
   ## Directory for saving AUPRC
   data.loc <- paste0("./Simulation/", Setting, "/Independent/AUPRC_Ka", Ka, "_Pos", pos.pt, "_effsz", effect.sz, "_mu", mu, "_", s,".Rdata")  
