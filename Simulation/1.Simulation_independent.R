@@ -34,7 +34,7 @@
   Ka <- 40
 
   ## Signature effect direction {0.6, 0.8, 1}
-  pos.pt <- 0.7
+  pos.pt <- 0.6
 
   ## Signature effect size
   ## Sample size for large scenario: 2
