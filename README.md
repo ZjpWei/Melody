@@ -6,7 +6,7 @@ This project includes the analyses of `Melody` paper. Please follow the `README.
 
 ## References
 
-* Wei, Z., Chen, G. & Tang, ZZ. Melody: meta-analysis of microbiome association studies for discovering generalizable microbial signatures. Genome Biol 26, 245 (2025). https://doi.org/10.1186/s13059-025-03721-4
+* Wei, Z., Chen, G. & Tang, ZZ. *Melody: meta-analysis of microbiome association studies for discovering generalizable microbial signatures*. Genome Biol 26, 245 (2025). https://doi.org/10.1186/s13059-025-03721-4
 
 ## Contact
 
